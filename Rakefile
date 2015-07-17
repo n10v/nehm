@@ -1,4 +1,4 @@
-require 'nehm/version'
+require_relative 'lib/nehm/version.rb'
 task default: %w(build install delete)
 
 file = 'nehm-' + Nehm::VERSION + '.gem'

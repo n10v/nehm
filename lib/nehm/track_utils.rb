@@ -5,6 +5,7 @@ require_relative 'path_control.rb'
 require_relative 'client.rb'
 require_relative 'user.rb'
 require_relative 'track.rb'
+require_relative 'os.rb'
 
 module TrackUtils
   # Public
@@ -34,7 +35,7 @@ module TrackUtils
     tracks.each do |track|
       dl(track)
       tag(track)
-      cp(track) unless (dl == :dl) || (linux?)
+      cp(track) unless (dl == :dl) || (OS.linux?)
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
