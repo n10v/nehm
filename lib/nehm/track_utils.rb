@@ -26,8 +26,9 @@ module TrackUtils
       when %r{https:\/\/soundcloud.com\/}
         track_from_url(args.last)
       else
-        puts Paint['Invalid argument(s)']
+        puts Paint['Invalid argument(s)', :red]
         puts "Input #{Paint['nehm help', :yellow]} for help"
+        exit
       end
 
     tracks.each do |track|
