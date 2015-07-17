@@ -1,7 +1,7 @@
-require_relative 'nehm/version.rb'
+require 'nehm/version'
 task default: %w(build install delete)
 
-file = 'nehm-' + Nehm.VERSION + '.gem'
+file = 'nehm-' + Nehm::VERSION + '.gem'
 
 task :build do
   system('gem build nehm.gemspec')
