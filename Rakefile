@@ -17,4 +17,5 @@ end
 
 task :push => :build do
   system('gem push ' + file)
+  File.delete('./' + file)
 end
