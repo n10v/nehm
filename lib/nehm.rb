@@ -6,6 +6,7 @@ require_relative 'nehm/config.rb'
 require_relative 'nehm/configure.rb'
 require_relative 'nehm/help.rb'
 module App
+  
   # Public
 
   def self.do(args)

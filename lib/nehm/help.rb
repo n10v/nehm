@@ -1,3 +1,4 @@
+# Help module responds to 'nehm help ...' command
 module Help
 
   # Public
@@ -23,19 +24,11 @@ module Help
 
   module_function
 
-  def permalink
-    puts 'Permalink is the last word in your profile url'
-    puts 'Example: for profile url ' + Paint['soundcloud.com/qwerty', :magenta] + ' permalink is ' + Paint['qwerty', :magenta]
-  end
-
-  def get
-    puts Paint['Input: ', :yellow] + 'nehm get [options]'
+  def configure
+    puts Paint['Input: ', :yellow] + 'nehm configure'
 
     puts Paint['Available options:', :yellow]
-    puts '  ' + Paint['track', :green]           + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
-    puts '  ' + Paint['[number] tracks', :green] + ' - Downloading, setting tags and adding to your iTunes library last [number] posts from your profile'
-    puts '  ' + Paint['like', :green]            + ' - Downloading, setting tags and adding to your iTunes library your last like'
-    puts '  ' + Paint['[number] likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last [number] likes'
+    puts '  No options'
   end
 
   def dl
@@ -48,10 +41,19 @@ module Help
     puts '  ' + Paint['[number] likes', :green]  + ' - Downloading and setting tags your last [number] likes'
   end
 
-  def configure
-    puts Paint['Input: ', :yellow] + 'nehm configure'
+  def get
+    puts Paint['Input: ', :yellow] + 'nehm get [options]'
 
     puts Paint['Available options:', :yellow]
-    puts '  No options'
+    puts '  ' + Paint['track', :green]           + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
+    puts '  ' + Paint['[number] tracks', :green] + ' - Downloading, setting tags and adding to your iTunes library last [number] posts from your profile'
+    puts '  ' + Paint['like', :green]            + ' - Downloading, setting tags and adding to your iTunes library your last like'
+    puts '  ' + Paint['[number] likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last [number] likes'
   end
+
+  def permalink
+    puts 'Permalink is the last word in your profile url'
+    puts 'Example: for profile url ' + Paint['soundcloud.com/qwerty', :magenta] + ' permalink is ' + Paint['qwerty', :magenta]
+  end
+
 end

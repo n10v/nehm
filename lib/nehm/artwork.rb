@@ -1,3 +1,4 @@
+# Artwork objects contains all needed information of track's artwork
 class Artwork
   def initialize(track)
     @track = track

@@ -1,6 +1,8 @@
 require 'yaml'
 
+# Config module manipulate with nehm's config file (~/.nehmconfig)
 module Config
+
   # Public
 
   def self.[](key)

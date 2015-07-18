@@ -18,15 +18,6 @@ class Track
     end
   end
 
-  def title
-    if @hash['title'].include?('-')
-      title = @hash['title'].split('-')
-      title[1].lstrip
-    else
-      @hash['title']
-    end
-  end
-
   def artwork
     Artwork.new(self)
   end
@@ -46,4 +37,14 @@ class Track
   def id
     @hash['id'].to_s
   end
+
+  def title
+    if @hash['title'].include?('-')
+      title = @hash['title'].split('-')
+      title[1].lstrip
+    else
+      @hash['title']
+    end
+  end
+
 end

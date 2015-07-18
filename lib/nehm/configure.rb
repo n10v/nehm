@@ -5,6 +5,7 @@ require_relative 'os.rb'
 require_relative 'config.rb'
 require_relative 'path_control.rb'
 
+# Configure module responds to 'nehm configure' command
 module Configure
   def self.menu
     puts 'Download path: ' + Paint[PathControl.dl_path, :magenta]
