@@ -26,5 +26,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency             'faraday',     '>= 0.9.1'
   spec.add_dependency             'highline',    '>= 1.7.2'
   spec.add_dependency             'paint'
-  spec.add_dependency             'terminal_helpers'
 end

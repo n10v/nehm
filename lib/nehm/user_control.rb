@@ -1,15 +1,15 @@
 require 'highline'
 require 'paint'
+require 'terminal_helpers'
 require_relative 'config.rb'
 require_relative 'client.rb'
 
 module UserControl
-
   def self.default_id
     if UserControl.logged_in?
       Config[:default_id]
     else
-      puts Paint["You didn't logged in", :red]
+      TerminalHelpers.error "You didn't logged in", true
       puts "Input #{Paint['nehm configure', :yellow]} to login"
       exit
     end
