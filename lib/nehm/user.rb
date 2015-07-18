@@ -1,5 +1,6 @@
 require 'json'
 require 'faraday'
+require 'paint'
 require_relative 'client.rb'
 require_relative 'config.rb'
 require_relative 'user_control.rb'
@@ -17,12 +18,22 @@ class User
   end
 
   def likes(count)
+    unless count.class == Fixnum
+      puts Paint['Invalid number of likes!', :red]
+      exit
+    end
+
     client = Client.new
     likes = client.get("/users/#{@id}/favorites?limit=#{count}")
     likes.map { |like| Track.new(like) }
   end
 
   def posts(count)
+    unless count.class == Fixnum
+      puts Paint['Invalid number of posts!', :red]
+      exit
+    end
+
     conn = Faraday.new(url: 'https://api-v2.soundcloud.com/') do |faraday|
       faraday.request :url_encoded             # form-encode POST params
       faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
