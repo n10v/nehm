@@ -13,22 +13,35 @@ module TrackUtils
   # Public
 
   def self.get(dl, args)
+    user =
+      # If option 'from ...' wrote
+      if args.include? 'from'
+        index = args.index('from')
+        username = args[index + 1]
+
+        args.delete_at(index + 1)
+        args.delete_at(index)
+        User.new(username)
+      else
+        User.new
+      end
+
     tracks = []
     tracks +=
       case args.last
       when 'like'
-        User.new.likes(1)
+        user.likes(1)
 
       when 'post'
-        User.new.posts(1)
+        user.posts(1)
 
       when 'likes'
         count = args[-2].to_i
-        User.new.likes(count)
+        user.likes(count)
 
       when 'posts'
         count = args[-2].to_i
-        User.new.posts(count)
+        user.posts(count)
 
       when %r{https:\/\/soundcloud.com\/}
         track_from_url(args.last)
