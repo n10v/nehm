@@ -28,6 +28,7 @@ class User
     likes.map { |like| Track.new(like) }
   end
 
+  # Post is last track or repost in profile
   def posts(count)
     unless count.class == Fixnum
       puts Paint['Invalid number of posts!', :red]
