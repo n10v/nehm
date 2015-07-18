@@ -32,7 +32,7 @@ module Help
   end
 
   def dl
-    puts Paint['Input: ', :yellow] + 'nehm dl [options]'
+    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS'
 
     puts Paint['Available options:', :yellow]
     puts '  ' + Paint['track', :green]           + ' - Downloading and setting tags last post(track or repost) from your profile'
@@ -42,7 +42,7 @@ module Help
   end
 
   def get
-    puts Paint['Input: ', :yellow] + 'nehm get [options]'
+    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS'
 
     puts Paint['Available options:', :yellow]
     puts '  ' + Paint['track', :green]           + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
