@@ -1,5 +1,4 @@
 require 'soundcloud'
-require_relative 'config.rb'
 
 # Just a Soundcloud API client.
 module Client

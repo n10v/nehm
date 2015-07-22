@@ -1,7 +1,3 @@
-require_relative 'client.rb'
-require_relative 'artwork.rb'
-require_relative 'path_control.rb'
-
 class Track
   attr_reader :hash
 

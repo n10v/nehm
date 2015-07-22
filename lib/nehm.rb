@@ -1,10 +1,18 @@
-require_relative 'nehm/os.rb'
-require_relative 'nehm/track_utils.rb'
-require_relative 'nehm/path_control.rb'
-require_relative 'nehm/user_control.rb'
-require_relative 'nehm/config.rb'
-require_relative 'nehm/configure.rb'
-require_relative 'nehm/help.rb'
+require 'highline'
+require 'paint'
+require 'yaml'
+
+require 'nehm/artwork'
+require 'nehm/config'
+require 'nehm/configure'
+require 'nehm/client'
+require 'nehm/help'
+require 'nehm/os'
+require 'nehm/path_control'
+require 'nehm/track'
+require 'nehm/track_utils'
+require 'nehm/track'
+require 'nehm/user_control'
 module App
 
   # Public

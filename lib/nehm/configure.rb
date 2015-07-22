@@ -1,10 +1,3 @@
-require 'highline'
-require 'paint'
-require_relative 'user_control.rb'
-require_relative 'os.rb'
-require_relative 'config.rb'
-require_relative 'path_control.rb'
-
 # Configure module responds to 'nehm configure' command
 module Configure
   def self.menu

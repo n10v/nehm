@@ -1,8 +1,3 @@
-require 'highline'
-require 'paint'
-require_relative 'config.rb'
-require_relative 'client.rb'
-
 module UserControl
   def self.default_id
     if UserControl.logged_in?

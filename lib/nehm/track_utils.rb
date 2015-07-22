@@ -1,11 +1,5 @@
 require 'taglib'
 require 'fileutils'
-require 'paint'
-require_relative 'path_control.rb'
-require_relative 'client.rb'
-require_relative 'user.rb'
-require_relative 'track.rb'
-require_relative 'os.rb'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module TrackUtils

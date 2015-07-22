@@ -1,6 +1,3 @@
-require 'highline'
-require 'paint'
-require_relative 'config.rb'
 class PathControl
   def self.dl_path
     @@temp_dl_path ? @@temp_dl_path : Config[:dl_path]
