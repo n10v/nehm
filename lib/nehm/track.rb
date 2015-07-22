@@ -18,7 +18,7 @@ class Track
     Artwork.new(self)
   end
 
-  def dl_url
+  def url
     "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
   end
 
