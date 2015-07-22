@@ -30,6 +30,9 @@ module TrackUtils
     if args.include? 'to'
       index = args.index('to')
       path = args[index + 1]
+
+      path = File.join(ENV['HOME'], path[1..-1]) if path[0] == '~'
+
       PathControl.temp_dl_path = path
 
       args.delete_at(index + 1)

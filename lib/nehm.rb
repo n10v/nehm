@@ -6,7 +6,7 @@ require_relative 'nehm/config.rb'
 require_relative 'nehm/configure.rb'
 require_relative 'nehm/help.rb'
 module App
-  
+
   # Public
 
   def self.do(args)
@@ -40,11 +40,17 @@ module App
     puts Paint['Hello!', :green]
     puts 'Before using the nehm, you should set it up:'
     Config.create unless Config.exist?
+
     PathControl.set_dl_path
     puts "\n"
-    PathControl.set_itunes_path unless OS.linux?
-    puts "\n" unless OS.linux?
+
+    unless OS.linux?
+      PathControl.set_itunes_path
+      puts "\n"
+    end
+
     UserControl.log_in
+    
     puts Paint['Now you can use nehm :)', :green]
   end
 
