@@ -4,7 +4,7 @@ class Artwork
     @track = track
   end
 
-  def dl_url
+  def url
     hash = @track.hash
     url =
       if hash['artwork_url'].nil?
