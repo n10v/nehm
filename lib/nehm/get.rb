@@ -61,6 +61,7 @@ module Get
 
     tracks.each do |track|
       dl(track)
+      dl(track.artwork)
       tag(track)
       cp(track) unless (dl == :dl) || (OS.linux?)
       track.artwork.suicide
@@ -81,18 +82,10 @@ module Get
     tracks << Track.new(track)
   end
 
-  def dl(track)
-    # Downloading track and artwork
-    puts 'Downloading ' + track.artist + ' - ' + track.title
-    path = track.file_path
-    dl_url = track.dl_url
-    command = "curl -# -o '" + path + "' -L " + dl_url
-    system(command)
-
-    puts 'Downloading artwork'
-    artwork = track.artwork
-    path = artwork.file_path
-    dl_url = artwork.dl_url
+  def dl(arg)
+    puts 'Downloading ' + arg.dl_name
+    path = arg.file_path
+    dl_url = arg.dl_url
     command = "curl -# -o '" + path + "' -L " + dl_url
     system(command)
   end
