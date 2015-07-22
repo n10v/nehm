@@ -26,33 +26,33 @@ module Help
 
   def configure
     puts Paint['Input: ', :yellow] + 'nehm configure'
-
+    puts "\n"
     puts Paint['Available options:', :yellow]
     puts '  No options'
   end
 
   def dl
     puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK]'
-
+    puts "\n"
     puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post(track or repost) from your profile'
     puts '  ' + Paint['<number> posts', :green]  + ' - Downloading and setting tags last <number> posts from your profile'
     puts '  ' + Paint['like', :green]            + ' - Downloading and setting tags your last like'
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading and setting tags your last <number> likes'
-
+    puts "\n"
     puts Paint['Extra options:', :yellow]
     puts '  ' + Paint['from PERMALINK', :green] + ' - Do the aforecited operations from the custom user profile'
   end
 
   def get
     puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK]'
-
-    puts Paint['Available options:', :yellow]
+    puts "\n"
+    puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
     puts '  ' + Paint['<number> posts', :green]  + ' - Downloading, setting tags and adding to your iTunes library last <number> posts from your profile'
     puts '  ' + Paint['like', :green]            + ' - Downloading, setting tags and adding to your iTunes library your last like'
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last <number> likes'
-
+    puts "\n"
     puts Paint['Extra options:', :yellow]
     puts '  ' + Paint['from PERMALINK', :green] + ' - Do the aforecited operations from the profile with PERMALINK'
   end
