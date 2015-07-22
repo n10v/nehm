@@ -1,6 +1,5 @@
 require 'highline'
 require 'paint'
-require 'yaml'
 
 require 'nehm/artwork'
 require 'nehm/config'
@@ -13,6 +12,7 @@ require 'nehm/track'
 require 'nehm/track_utils'
 require 'nehm/track'
 require 'nehm/user_control'
+
 module App
 
   # Public
