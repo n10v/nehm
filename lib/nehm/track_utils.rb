@@ -14,7 +14,7 @@ module TrackUtils
 
   def self.get(dl, args)
     user =
-      # If option 'from ...' wrote
+      # If option 'from ...' typed
       if args.include? 'from'
         index = args.index('from')
         username = args[index + 1]
@@ -26,7 +26,7 @@ module TrackUtils
         User.new
       end
 
-    # If option 'to ...' wrote
+    # If option 'to ...' typed
     if args.include? 'to'
       index = args.index('to')
       path = args[index + 1]

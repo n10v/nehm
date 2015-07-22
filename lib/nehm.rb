@@ -50,7 +50,7 @@ module App
     end
 
     UserControl.log_in
-    
+
     puts Paint['Now you can use nehm :)', :green]
   end
 
