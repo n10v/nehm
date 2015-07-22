@@ -9,18 +9,6 @@ module UserControl
     end
   end
 
-  def self.user_exist?(url)
-    Client.new.get('/resolve', url: url)
-    rescue SoundCloud::ResponseError => e
-      if e.message =~ /404/
-        raise e
-      else
-        false
-      end
-    else
-      true
-  end
-
   def self.logged_in?
     Config.key?(:default_id)
   end
@@ -40,5 +28,18 @@ module UserControl
         puts Paint['Invalid permalink. Please enter correct permalink', :red]
       end
     end
+  end
+
+
+  def self.user_exist?(url)
+    Client.new.get('/resolve', url: url)
+    rescue SoundCloud::ResponseError => e
+      if e.message =~ /404/
+        raise e
+      else
+        false
+      end
+    else
+      true
   end
 end
