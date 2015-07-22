@@ -13,7 +13,8 @@ class Artwork
     end
   end
 
-  def dl_name
+  # Use in Get.dl
+  def name
     'artwork'
   end
 

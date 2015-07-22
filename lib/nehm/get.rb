@@ -83,7 +83,7 @@ module Get
   end
 
   def dl(arg)
-    puts 'Downloading ' + arg.dl_name
+    puts 'Downloading ' + arg.name
     path = arg.file_path
     dl_url = arg.dl_url
     command = "curl -# -o '" + path + "' -L " + dl_url

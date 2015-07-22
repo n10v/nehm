@@ -22,12 +22,8 @@ class Track
     "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
   end
 
-  def dl_name
-    artist + ' - ' + title
-  end
-
   def file_name
-    "#{artist} - #{title}.mp3".tr('/', '')
+    "#{name}.mp3".tr('/', '')
   end
 
   def file_path
@@ -38,6 +34,11 @@ class Track
     @hash['id'].to_s
   end
 
+  # Use in Get.dl and in Track.file_name
+  def name
+    artist + ' - ' + title
+  end
+
   def title
     if @hash['title'].include?('-')
       title = @hash['title'].split('-')
@@ -46,5 +47,4 @@ class Track
       @hash['title']
     end
   end
-
 end
