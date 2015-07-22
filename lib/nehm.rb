@@ -5,11 +5,11 @@ require 'nehm/artwork'
 require 'nehm/config'
 require 'nehm/configure'
 require 'nehm/client'
+require 'nehm/get'
 require 'nehm/help'
 require 'nehm/os'
 require 'nehm/path_control'
 require 'nehm/track'
-require 'nehm/track_utils'
 require 'nehm/track'
 require 'nehm/user_control'
 
@@ -23,9 +23,9 @@ module App
     command = args.shift
     case command
     when 'get'
-      TrackUtils.get(:get, args)
+      Get[:get, args]
     when 'dl'
-      TrackUtils.get(:dl, args)
+      Get[:dl, args]
     when 'configure'
       Configure.menu
     when 'login'

@@ -2,7 +2,7 @@ require 'taglib'
 require 'fileutils'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
-module TrackUtils
+module Get
 
   # Public
 
@@ -67,6 +67,8 @@ module TrackUtils
     end
     puts Paint['Done!', :green]
   end
+
+  alias [] get
 
   # Private
 
