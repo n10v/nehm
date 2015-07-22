@@ -2,9 +2,6 @@ require 'yaml'
 
 # Config module manipulate with nehm's config file (~/.nehmconfig)
 module Config
-
-  # Public
-
   def self.[](key)
     config_hash = load_config
     config_hash[key.to_s]
@@ -28,10 +25,8 @@ module Config
     load_config.key?(key.to_s)
   end
 
-  # Private
-
   module_function
-
+  
   def file_path
     File.join(ENV['HOME'], '.nehmconfig')
   end

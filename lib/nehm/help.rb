@@ -1,8 +1,5 @@
 # Help module responds to 'nehm help ...' command
 module Help
-
-  # Public
-
   def self.available_commands
     puts Paint['Avalaible nehm commands:', :yellow]
     puts '  ' + Paint['get', :green]       + ' - Downloading, setting tags and adding to your iTunes library last post or like from your profile'
@@ -23,8 +20,6 @@ module Help
       Help.available_commands
     end
   end
-
-  # Private
 
   module_function
 

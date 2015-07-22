@@ -3,9 +3,6 @@ require 'fileutils'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
-
-  # Public
-
   def self.get(dl, args)
     user =
       # If option 'from ...' typed
@@ -71,15 +68,12 @@ module Get
 
   alias [] get
 
-  # Private
-
   module_function
 
   def track_from_url(url)
     client = Client.new
     track = client.get('/resolve', url: url)
-    tracks = []
-    tracks << Track.new(track)
+    [*Track.new(track)]
   end
 
   def dl(arg)
