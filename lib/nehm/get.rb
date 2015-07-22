@@ -4,17 +4,18 @@ require 'fileutils'
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
   def self.get(dl, args)
+
     user =
       # If option 'from ...' typed
       if args.include? 'from'
         index = args.index('from')
-        username = args[index + 1]
+        permalink = args[index + 1]
 
         args.delete_at(index + 1)
         args.delete_at(index)
-        User.new(username)
+        UserControl.user(permalink)
       else
-        User.new
+        UserControl.default_user
       end
 
     # If option 'to ...' typed

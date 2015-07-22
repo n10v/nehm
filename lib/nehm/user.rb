@@ -6,15 +6,8 @@ require_relative 'config.rb'
 require_relative 'user_control.rb'
 
 class User
-  def initialize(permalink = nil)
-    client = Client.new
-    @id =
-      if permalink.nil?
-        UserControl.default_id
-      else
-        user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-        user.id
-      end
+  def initialize(id)
+    @id = id
   end
 
   def likes(count)
@@ -35,10 +28,10 @@ class User
       exit
     end
 
-    conn = Faraday.new(url: 'https://api-v2.soundcloud.com/') do |faraday|
-      faraday.request :url_encoded             # form-encode POST params
-      faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
-    end
+    conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')# do |faraday|
+      #faraday.request :url_encoded             # form-encode POST params
+      #faraday.adapter Faraday.default_adapter  # make requests with Net::HTTP
+    #end
 
     response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{count}&offset=0")
 

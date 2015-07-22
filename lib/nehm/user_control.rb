@@ -1,7 +1,7 @@
 module UserControl
-  def self.default_id
+  def self.default_user
     if UserControl.logged_in?
-      Config[:default_id]
+      User.new(Config[:default_id])
     else
       puts Paint["You didn't logged in", :red]
       puts "Input #{Paint['nehm configure', :yellow]} to login"
@@ -30,6 +30,11 @@ module UserControl
     end
   end
 
+  def self.user(permalink)
+    client = Client.new
+    user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
+    User.new(user.id)
+  end
 
   def self.user_exist?(url)
     Client.new.get('/resolve', url: url)
