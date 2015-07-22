@@ -9,11 +9,11 @@ class User
   def initialize(permalink = nil)
     client = Client.new
     @id =
-      unless permalink.nil?
+      if permalink.nil?
+        UserControl.default_id
+      else
         user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
         user.id
-      else
-        UserControl.default_id
       end
   end
 
