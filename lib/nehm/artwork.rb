@@ -6,11 +6,13 @@ class Artwork
 
   def dl_url
     hash = @track.hash
-    if hash['artwork_url'].nil?
-      hash['user']['avatar_url'].sub('large', 't500x500')
-    else
-      hash['artwork_url'].sub('large', 't500x500')
-    end
+    url =
+      if hash['artwork_url'].nil?
+        hash['user']['avatar_url']
+      else
+        hash['artwork_url']
+      end
+    url.sub('large', 't500x500')
   end
 
   # Use in Get.dl
