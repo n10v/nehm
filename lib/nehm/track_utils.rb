@@ -26,6 +26,16 @@ module TrackUtils
         User.new
       end
 
+    # If option 'to ...' wrote
+    if args.include? 'to'
+      index = args.index('to')
+      path = args[index + 1]
+      PathControl.temp_dl_path = path
+
+      args.delete_at(index + 1)
+      args.delete_at(index)
+    end
+
     tracks = []
     tracks +=
       case args.last

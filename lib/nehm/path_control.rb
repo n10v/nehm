@@ -1,8 +1,18 @@
 require 'highline'
+require 'paint'
 require_relative 'config.rb'
-module PathControl
+class PathControl
   def self.dl_path
-    Config[:dl_path]
+    @@temp_dl_path ? @@temp_dl_path : Config[:dl_path]
+  end
+
+  def self.temp_dl_path=(path)
+    if Dir.exist?(path)
+      @@temp_dl_path = path
+    else
+      puts Paint['Invalid path!', :red]
+      exit
+    end
   end
 
   def self.set_dl_path
