@@ -85,8 +85,8 @@ module Get
   def dl(arg)
     puts 'Downloading ' + arg.name
     path = arg.file_path
-    dl_url = arg.dl_url
-    command = "curl -# -o '" + path + "' -L " + dl_url
+    url = arg.url
+    command = "curl -# -o '" + path + "' -L " + url
     system(command)
   end
 
