@@ -58,6 +58,10 @@ Go to usage for further instructions
 
   `nehm get 3 posts` or `nehm get 3 likes`
 
+* To get last post(s) or like(s) from another user
+
+  `nehm get post from nasa` or `nehm get like from nasa`
+
 * To just download and set tags any track, you can input
 
   `nehm dl post` or `nehm dl like` or `nehm dl 3 likes` and etc.
