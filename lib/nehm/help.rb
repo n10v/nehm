@@ -15,7 +15,11 @@ module Help
     case command
     when 'get', 'dl', 'configure'
       Help.send(command)
+    when nil
+      Help.available_commands
     else
+      puts Paint["Command #{command} doesn't exist", :red]
+      puts "\n"
       Help.available_commands
     end
   end
