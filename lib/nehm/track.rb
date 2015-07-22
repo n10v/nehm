@@ -22,6 +22,10 @@ class Track
     "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
   end
 
+  def dl_name
+    artist + ' - ' + title
+  end
+
   def file_name
     "#{artist} - #{title}.mp3".tr('/', '')
   end

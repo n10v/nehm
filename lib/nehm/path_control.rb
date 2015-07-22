@@ -49,7 +49,6 @@ class PathControl
         puts "\n"
         puts Paint["This directory doesn't exist. Please enter path again", :red]
       end
-
     end
   end
 end

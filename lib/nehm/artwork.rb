@@ -4,6 +4,19 @@ class Artwork
     @track = track
   end
 
+  def dl_url
+    hash = @track.hash
+    if hash['artwork_url'].nil?
+      hash['user']['avatar_url'].sub('large', 't500x500')
+    else
+      hash['artwork_url'].sub('large', 't500x500')
+    end
+  end
+
+  def dl_name
+    'artwork'
+  end
+
   def file_path
     id = @track.id
     file_name = "#{id}.jpg"
@@ -14,12 +27,4 @@ class Artwork
     File.delete(file_path)
   end
 
-  def dl_url
-    hash = @track.hash
-    if hash['artwork_url'].nil?
-      hash['user']['avatar_url'].sub('large', 't500x500')
-    else
-      hash['artwork_url'].sub('large', 't500x500')
-    end
-  end
 end

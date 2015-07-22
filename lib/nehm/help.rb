@@ -65,5 +65,4 @@ module Help
     puts 'Permalink is the last word in your profile url'
     puts 'Example: for profile url ' + Paint['soundcloud.com/qwerty', :magenta] + ' permalink is ' + Paint['qwerty', :magenta]
   end
-
 end
