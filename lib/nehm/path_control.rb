@@ -18,7 +18,7 @@ class PathControl
   def self.set_dl_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music')
-      path = HighLine.new.ask("Enter a FULL path to desirable download directory (press enter to set it to #{default_path}): ")
+      path = HighLine.new.ask("Enter a FULL path to default download directory (press enter to set it to #{default_path}): ")
       path = default_path if path == ''
 
       if Dir.exist?(path)
