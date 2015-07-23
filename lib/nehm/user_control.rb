@@ -18,7 +18,7 @@ module UserControl
       permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
       client = Client.new
       url = "https://soundcloud.com/#{permalink}"
-      if UserControl.user_exist?(url)
+      if user_exist?(url)
         user = client.get('/resolve', url: url)
         Config[:default_id] = user.id
         Config[:permalink] = permalink
@@ -33,7 +33,7 @@ module UserControl
   def self.user(permalink)
     client = Client.new
     user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-    if UserControl.user_exist?(user)
+    if user_exist?(user)
       User.new(user.id)
     else
       puts Paint['Invalid permalink. Please enter correct permalink', :red]
@@ -41,7 +41,11 @@ module UserControl
     end
   end
 
-  def self.user_exist?(url)
+
+
+  module_function
+
+  def user_exist?(url)
     Client.new.get('/resolve', url: url)
 
     rescue SoundCloud::ResponseError => e
