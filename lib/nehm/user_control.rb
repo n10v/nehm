@@ -38,12 +38,15 @@ module UserControl
 
   def self.user_exist?(url)
     Client.new.get('/resolve', url: url)
+
     rescue SoundCloud::ResponseError => e
+
       if e.message =~ /404/
-        raise e
-      else
         false
+      else
+        raise e
       end
+
     else
       true
   end
