@@ -3,7 +3,7 @@ require 'fileutils'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
-  def self.get(dl, args)
+  def self.get(get_or_dl, args)
 
     user =
       # If option 'from ...' typed
@@ -61,7 +61,7 @@ module Get
       dl(track)
       dl(track.artwork)
       tag(track)
-      cp(track) unless (dl == :dl) || (OS.linux?)
+      cp(track) unless (get_or_dl == :dl) || (OS.linux?)
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
