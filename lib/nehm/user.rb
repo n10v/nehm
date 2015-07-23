@@ -18,7 +18,7 @@ class User
 
     client = Client.new
     likes = client.get("/users/#{@id}/favorites?limit=#{count}")
-    likes.map { |like| Track.new(like) }
+    likes.map { |hash| Track.new(hash) }
   end
 
   # Post is last track or repost in profile
@@ -37,6 +37,6 @@ class User
 
     parsed = JSON.parse(response.body)
     parsed = parsed['collection']
-    parsed.map { |track| Track.new(track['track']) }
+    parsed.map { |hash| Track.new(hash['track']) }
   end
 end
