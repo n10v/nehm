@@ -40,7 +40,8 @@ module Help
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading and setting tags your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green] + ' - Do the aforecited operations from the custom user profile'
+    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from the custom user profile'
+    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to the custom directory'
   end
 
   def get
@@ -53,7 +54,8 @@ module Help
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green] + ' - Do the aforecited operations from the profile with PERMALINK'
+    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from the profile with PERMALINK'
+    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to the custom directory'
   end
 
   def permalink
