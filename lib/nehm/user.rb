@@ -13,8 +13,7 @@ class User
       exit
     end
 
-    client = Client.new
-    likes = client.get("/users/#{@id}/favorites?limit=#{count}")
+    likes = Client.get("/users/#{@id}/favorites?limit=#{count}")
     likes.map { |hash| Track.new(hash) }
   end
 

@@ -16,10 +16,9 @@ module UserControl
   def self.log_in
     loop do
       permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
-      client = Client.new
       url = "https://soundcloud.com/#{permalink}"
       if user_exist?(url)
-        user = client.get('/resolve', url: url)
+        user = Client.get('/resolve', url: url)
         Config[:default_id] = user.id
         Config[:permalink] = permalink
         puts Paint['Successfully logged in!', :green]
@@ -31,8 +30,7 @@ module UserControl
   end
 
   def self.user(permalink)
-    client = Client.new
-    user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
+    user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
     if user_exist?(user)
       User.new(user.id)
     else
@@ -41,21 +39,17 @@ module UserControl
     end
   end
 
-
-
   module_function
 
   def user_exist?(url)
-    Client.new.get('/resolve', url: url)
+    Client.get('/resolve', url: url)
 
     rescue SoundCloud::ResponseError => e
-
       if e.message =~ /404/
         false
       else
         raise e
       end
-
     else
       true
   end

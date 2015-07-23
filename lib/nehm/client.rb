@@ -7,7 +7,13 @@ module Client
 
   CLIENT_ID = '11a37feb6ccc034d5975f3f803928a32'
 
-  def self.new
+  def self.get(args)
+    sc_client.get(args)
+  end
+
+  module_function
+
+  def sc_client
     @client ||= Soundcloud.new(client_id: CLIENT_ID)
   end
 end

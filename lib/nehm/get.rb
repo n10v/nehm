@@ -70,8 +70,7 @@ module Get
   module_function
 
   def track_from_url(url)
-    client = Client.new
-    hash = client.get('/resolve', url: url)
+    hash = Client.get('/resolve', url: url)
     [*Track.new(hash)]
   end
 
