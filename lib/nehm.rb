@@ -28,8 +28,6 @@ module App
       Get[:dl, args]
     when 'configure'
       Configure.menu
-    when 'login'
-      UserControl.log_in
     when 'init'
       init
     when 'help'
