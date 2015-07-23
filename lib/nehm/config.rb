@@ -26,18 +26,16 @@ module Config
   end
 
   module_function
-  
+
   def file_path
     File.join(ENV['HOME'], '.nehmconfig')
   end
 
   def load_config
-    file = file_path
-    YAML.load_file(file)
+    YAML.load_file(file_path)
   end
 
   def save_config(config_hash)
-    file = file_path
-    IO.write(file, config_hash.to_yaml)
+    IO.write(file_path, config_hash.to_yaml)
   end
 end
