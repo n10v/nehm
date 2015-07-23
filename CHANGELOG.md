@@ -2,7 +2,7 @@
 
 ## 1.1
 
-* Add 'from PERMALINK' feature
+* Add 'from PERMALINK' feature. See the 'Usage'
 
 ## 1.0.7.1
 
