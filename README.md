@@ -14,7 +14,7 @@ or
 
 `sudo port install taglib`
 
-**Linux** (depends on your package manager):
+**Linux:**
 
 Debian/Ubuntu: ` sudo apt-get install libtag1-dev`
 
