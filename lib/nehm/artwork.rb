@@ -29,5 +29,4 @@ class Artwork
   def suicide
     File.delete(file_path)
   end
-
 end

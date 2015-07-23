@@ -4,7 +4,6 @@ require 'fileutils'
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
   def self.[](get_or_dl, args)
-
     user =
       # If option 'from ...' typed
       if args.include? 'from'

@@ -18,10 +18,6 @@ class Track
     Artwork.new(self)
   end
 
-  def url
-    "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
-  end
-
   def file_name
     "#{name}.mp3".tr('/', '')
   end
@@ -46,5 +42,9 @@ class Track
     else
       @hash['title']
     end
+  end
+  
+  def url
+    "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
   end
 end

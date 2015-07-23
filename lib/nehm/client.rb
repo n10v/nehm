@@ -5,9 +5,10 @@ module Client
   # Set a SSL certificate file path for SC API
   ENV['SSL_CERT_FILE'] = File.join(__dir__, 'cacert.pem')
 
+  # SoundCloud API client ID
   CLIENT_ID = '11a37feb6ccc034d5975f3f803928a32'
 
-  def self.get(args)
+  def self.get(*args)
     sc_client.get(args)
   end
 
