@@ -1,9 +1,9 @@
 # Configure module responds to 'nehm configure' command
 module Configure
   def self.menu
-    puts 'Download path: ' + Paint[PathControl.dl_path, :magenta]
-    puts 'iTunes path: ' + Paint[PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", ''), :magenta] unless OS.linux?
-    puts 'Permalink: ' + Paint[Config[:permalink], :cyan]
+    puts 'Download path: ' + Paint[PathControl.dl_path, :magenta] if PathControl.dl_path
+    puts 'iTunes path: ' + Paint[PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", ''), :magenta] if PathControl.itunes_path
+    puts 'Permalink: ' + Paint[Config[:permalink], :cyan] if Config[:permalink]
     puts "\n"
 
     HighLine.new.choose do |menu|
