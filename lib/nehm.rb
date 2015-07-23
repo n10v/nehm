@@ -14,9 +14,6 @@ require 'nehm/user'
 require 'nehm/user_control'
 
 module App
-
-  # Public
-
   def self.do(args)
     init unless initialized?
 
@@ -35,8 +32,6 @@ module App
       puts "Input #{Paint['nehm help', :yellow]} for all avalaible commands"
     end
   end
-
-  # Private
 
   module_function
 
