@@ -33,6 +33,11 @@ class PathControl
     Config[:itunes_path]
   end
 
+  # Use in Configure.menu
+  def self.itunes_path_name
+    PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", '')
+  end
+
   def self.set_itunes_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music/iTunes')
