@@ -28,8 +28,6 @@ module App
       Get[:dl, args]
     when 'configure'
       Configure.menu
-    when 'init'
-      init
     when 'help'
       Help.show(args.first)
     else

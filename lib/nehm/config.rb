@@ -14,7 +14,7 @@ module Config
   end
 
   def self.create
-    File.open(file_path, 'w+') { |f| f.write("---\napp: nehm")}
+    File.open(file_path, 'w+') { |f| f.write("---\napp: nehm") }
   end
 
   def self.exist?
