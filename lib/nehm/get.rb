@@ -3,7 +3,7 @@ require 'fileutils'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
-  def self.get(get_or_dl, args)
+  def self.[](get_or_dl, args)
 
     user =
       # If option 'from ...' typed
@@ -66,8 +66,6 @@ module Get
     end
     puts Paint['Done!', :green]
   end
-
-  alias [] get
 
   module_function
 

@@ -33,7 +33,12 @@ module UserControl
   def self.user(permalink)
     client = Client.new
     user = client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-    User.new(user.id)
+    if UserControl.user_exist?(user)
+      User.new(user.id)
+    else
+      puts Paint['Invalid permalink. Please enter correct permalink', :red]
+      exit
+    end
   end
 
   def self.user_exist?(url)

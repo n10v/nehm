@@ -10,7 +10,7 @@ require 'nehm/help'
 require 'nehm/os'
 require 'nehm/path_control'
 require 'nehm/track'
-require 'nehm/track'
+require 'nehm/user'
 require 'nehm/user_control'
 
 module App
