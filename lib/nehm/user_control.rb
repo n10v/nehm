@@ -17,7 +17,7 @@ module UserControl
     loop do
       permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
       url = "https://soundcloud.com/#{permalink}"
-      if user_exist?(url)
+      if user_exist?(permalink)
         user = Client.get('/resolve', url: url)
         Config[:default_id] = user.id
         Config[:permalink] = permalink
