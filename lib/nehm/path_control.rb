@@ -15,8 +15,16 @@ class PathControl
   def self.set_dl_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music')
-      path = HighLine.new.ask("Enter a FULL path to default download directory (press enter to set it to #{default_path}): ")
-      path = default_path if path == ''
+      path_ask = 'Enter a FULL path to default download directory'
+
+      if Dir.exist?(default_path)
+        path_ask << "(press enter to set it to #{default_path})"
+      else
+        default_path = nil
+      end
+
+      path = HighLine.new.ask(path_ask + ':')
+      path = default_path if path == '' && default_path
 
       if Dir.exist?(path)
         Config[:dl_path] = path
@@ -41,8 +49,16 @@ class PathControl
   def self.set_itunes_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music/iTunes')
-      path = HighLine.new.ask("Enter a FULL path to iTunes directory (press enter to set it to #{default_path}): ")
-      path = default_path if path == ''
+      path_ask = 'Enter a FULL path to iTunes directory'
+
+      if Dir.exist?(default_path)
+        path_ask << "(press enter to set it to #{default_path})"
+      else
+        default_path = nil
+      end
+
+      path = HighLine.new.ask(path_ask + ':')
+      path = default_path if path == '' && default_path
 
       path = File.join(path, "iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
 
