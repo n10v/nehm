@@ -68,7 +68,7 @@ Go to usage for further instructions
 
 * To download tracks to custom directory
 
-  `nehm get post to ~/Downloads` or `nehm dl like to /Users/john/Music`
+  `nehm dl like to /Users/john/Music` or `nehm get post from nasa to ~/Downloads`
 
 * And of course you can get or download track from url
 
