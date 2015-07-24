@@ -3,9 +3,7 @@
 ## 1.2
 
 * Add 'to PARHTODIRECTORY' feature. See the 'Usage' for instructions
-
 * Improve readability of help
-
 * Add some error checks
 
 ## 1.1

@@ -4,14 +4,16 @@ class Artwork
     @track = track
   end
 
+  def file_path
+    File.join('/tmp', "#{@track.id}.jpg")
+  end
+
+
   # Use in Get.dl
   def name
     'artwork'
   end
 
-  def file_path
-    File.join('/tmp', "#{@track.id}.jpg")
-  end
 
   def suicide
     File.delete(file_path)
