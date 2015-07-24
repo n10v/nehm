@@ -31,7 +31,7 @@ module Help
   end
 
   def dl
-    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK]'
+    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post(track or repost) from your profile'
@@ -45,7 +45,7 @@ module Help
   end
 
   def get
-    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK]'
+    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
