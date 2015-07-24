@@ -1,6 +1,5 @@
 require 'json'
 require 'faraday'
-require_relative 'config.rb'
 
 class User
   def initialize(id)
