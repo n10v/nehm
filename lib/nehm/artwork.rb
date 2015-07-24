@@ -21,9 +21,7 @@ class Artwork
   end
 
   def file_path
-    id = @track.id
-    file_name = "#{id}.jpg"
-    File.join('/tmp', file_name)
+    File.join('/tmp', "#{@track.id}.jpg")
   end
 
   def suicide
