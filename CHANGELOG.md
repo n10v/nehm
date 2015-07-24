@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.2.1
+
+* Minor technical update
+
 ## 1.2
 
 * Add 'to PARHTODIRECTORY' feature. See the 'Usage' for instructions
