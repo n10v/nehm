@@ -4,17 +4,6 @@ class Artwork
     @track = track
   end
 
-  def url
-    hash = @track.hash
-    url =
-      if hash['artwork_url'].nil?
-        hash['user']['avatar_url']
-      else
-        hash['artwork_url']
-      end
-    url.sub('large', 't500x500')
-  end
-
   # Use in Get.dl
   def name
     'artwork'
@@ -26,5 +15,16 @@ class Artwork
 
   def suicide
     File.delete(file_path)
+  end
+
+  def url
+    hash = @track.hash
+    url =
+      if hash['artwork_url'].nil?
+        hash['user']['avatar_url']
+      else
+        hash['artwork_url']
+      end
+    url.sub('large', 't500x500')
   end
 end
