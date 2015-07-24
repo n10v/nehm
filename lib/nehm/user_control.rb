@@ -30,8 +30,8 @@ module UserControl
   end
 
   def self.user(permalink)
-    user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-    if user_exist?(user)
+    if user_exist?(permalink)
+      user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
       User.new(user.id)
     else
       puts Paint['Invalid permalink. Please enter correct permalink', :red]
@@ -41,8 +41,8 @@ module UserControl
 
   module_function
 
-  def user_exist?(url)
-    Client.get('/resolve', url: url)
+  def user_exist?(permalink)
+    Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
 
     rescue SoundCloud::ResponseError => e
       if e.message =~ /404/
