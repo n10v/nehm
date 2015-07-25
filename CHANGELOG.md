@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.2.2
+
+* Tracks has now year tag
+
 ## 1.2.1
 
 * Minor technical update
