@@ -85,10 +85,10 @@ module Get
     path = track.file_path
     TagLib::MPEG::File.open(path) do |file|
       puts 'Setting tags'
-      #TODO: Add more tags (year)
       tag = file.id3v2_tag
       tag.artist = track.artist
       tag.title = track.title
+      tag.year = track.year
 
       # Adding artwork
       apic = TagLib::ID3v2::AttachedPictureFrame.new

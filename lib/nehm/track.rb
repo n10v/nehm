@@ -43,8 +43,12 @@ class Track
       @hash['title']
     end
   end
-  
+
   def url
     "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
+  end
+
+  def year
+    @hash['created_at'][0..3]
   end
 end
