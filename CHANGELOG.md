@@ -2,7 +2,7 @@
 
 ## 1.2.2
 
-* Tracks has now year tag
+* Tracks has got now year tag
 
 ## 1.2.1
 
