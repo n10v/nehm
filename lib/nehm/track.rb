@@ -49,6 +49,6 @@ class Track
   end
 
   def year
-    @hash['created_at'][0..3]
+    @hash['created_at'][0..3].to_i
   end
 end
