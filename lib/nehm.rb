@@ -43,11 +43,6 @@ module App
     PathControl.set_dl_path
     puts "\n"
 
-    unless OS.linux?
-      PathControl.set_itunes_path
-      puts "\n"
-    end
-
     UserControl.log_in
 
     puts Paint['Now you can use nehm :)', :green]
