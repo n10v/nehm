@@ -6,13 +6,17 @@ module Configure
     puts 'Permalink: ' + Paint[Config[:permalink], :cyan] if Config[:permalink]
     puts "\n"
 
-    HighLine.new.choose do |menu|
-      menu.prompt = Paint['Choose setting', :yellow]
+    loop do
+      HighLine.new.choose do |menu|
+        menu.prompt = Paint['Choose setting', :yellow]
 
-      menu.choice('Edit download path') { PathControl.set_dl_path }
-      menu.choice('Edit itunes path') { PathControl.set_itunes_path } unless OS.linux?
-      menu.choice('Edit permalink') { UserControl.log_in }
-      menu.choice('Exit') { exit }
+        menu.choice('Edit download path') { PathControl.set_dl_path }
+        menu.choice('Edit itunes path') { PathControl.set_itunes_path } unless OS.linux?
+        menu.choice('Edit permalink') { UserControl.log_in }
+        menu.choice('Exit') { exit }
+      end
+      sleep(1)
+      puts "\n"
     end
   end
 end
