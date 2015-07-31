@@ -16,9 +16,9 @@ or
 
 **Linux:**
 
-Debian/Ubuntu: ` sudo apt-get install libtag1-dev`
+Debian/Ubuntu: `sudo apt-get install libtag1-dev`
 
-Fedora/RHEL: ` sudo yum install taglib-devel`
+Fedora/RHEL: `sudo yum install taglib-devel`
 
 **2. Then you can install `nehm` gem:**
 
@@ -36,7 +36,7 @@ nehm should answer like this:
 ```
 Hello!
 Before using the nehm, you should set it up:
-Enter a FULL path to desirable download directory (press enter to set it to ...
+Enter path to desirable download directory (press enter to set it to ...
 ```
 
 **Now you can use nehm!**

@@ -6,7 +6,7 @@ class PathControl
   def self.set_dl_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music')
-      path_ask = 'Enter a FULL path to desirable download directory'
+      path_ask = 'Enter path to desirable download directory'
 
       if Dir.exist?(default_path)
         path_ask << " (press enter to set it to #{Paint[default_path, :magenta]})"
@@ -50,7 +50,7 @@ class PathControl
   def self.set_itunes_path
     loop do
       default_path = File.join(ENV['HOME'], '/Music/iTunes')
-      path_ask = 'Enter a FULL path to iTunes directory'
+      path_ask = 'Enter path to iTunes directory'
 
       if Dir.exist?(default_path)
         path_ask << " (press enter to set it to #{Paint[default_path, :magenta]})"
