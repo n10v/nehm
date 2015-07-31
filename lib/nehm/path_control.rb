@@ -75,6 +75,10 @@ class PathControl
     end
   end
 
+  def self.set_itunes_path_to_default
+    Config[:itunes_path] = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
+  end
+
   def self.tilde_to_home(path)
     File.join(ENV['HOME'], path[1..-1])
   end
