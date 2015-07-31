@@ -22,7 +22,7 @@ module Get
       index = args.index('to')
       path = args[index + 1]
 
-      path = File.join(ENV['HOME'], path[1..-1]) if path[0] == '~'
+      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
       PathControl.temp_dl_path = path
 

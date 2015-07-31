@@ -17,6 +17,8 @@ class PathControl
       path = HighLine.new.ask(path_ask + ':')
       path = default_path if path == '' && default_path
 
+      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+
       if Dir.exist?(path)
         Config[:dl_path] = path
         puts Paint['Download directory set up!', :green]
@@ -58,6 +60,8 @@ class PathControl
 
       path = HighLine.new.ask(path_ask + ':')
       path = default_path if path == '' && default_path
+
+      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
       path = File.join(path, "iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
 
