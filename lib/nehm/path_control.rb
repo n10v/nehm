@@ -21,7 +21,7 @@ class PathControl
 
       if Dir.exist?(path)
         Config[:dl_path] = path
-        puts Paint['Download directory set up!', :green]
+        puts Paint["Download directory set up to #{path} !", :green]
         break
       else
         puts Paint["This directory doesn't exist. Please enter path again", :red]
@@ -67,7 +67,7 @@ class PathControl
 
       if Dir.exist?(path)
         Config[:itunes_path] = path
-        puts Paint['iTunes directory set up!', :green]
+        puts Paint["iTunes directory set up to #{path} !", :green]
         break
       else
         puts Paint["This directory doesn't exist. Please enter path again", :red]
