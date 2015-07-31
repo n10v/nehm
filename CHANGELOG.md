@@ -1,5 +1,13 @@
 # nehm change log
 
+## 1.3
+
+* Now you can type short paths to download and iTunes paths while configuring nehm (e.g. ~/Music)
+
+* Configure menu doesn't automatically exit after choose
+
+* nehm doesn't ask for iTunes path by first run
+
 ## 1.2.2
 
 * Tracks has got now year tag
