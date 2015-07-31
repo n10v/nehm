@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.3.1
+
+* Edit looped configure menu
+
 ## 1.3
 
 * Now you can type short paths to download and iTunes paths while configuring nehm (e.g. ~/Music)
