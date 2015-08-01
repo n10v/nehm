@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.3.2
+
+* Add check for no user's posts/likes
+
 ## 1.3.1.1
 
 * Minor changes
