@@ -14,6 +14,12 @@ class User
     end
 
     likes = Client.get("/users/#{@id}/favorites?limit=#{count}")
+
+    if likes.empty?
+      puts Paint["There are no likes yet :(", :red]
+      exit
+    end
+
     likes.map { |hash| Track.new(hash) }
   end
 
@@ -31,7 +37,13 @@ class User
     response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{count}&offset=0")
 
     parsed = JSON.parse(response.body)
-    parsed = parsed['collection']
-    parsed.map { |hash| Track.new(hash['track']) }
+    posts = parsed['collection']
+
+    if posts.empty?
+      puts Paint["There are no posts yet :(", :red]
+      exit
+    end
+
+    posts.map { |hash| Track.new(hash['track']) }
   end
 end
