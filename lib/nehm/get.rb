@@ -9,9 +9,9 @@ module Get
       if args.include? 'from'
         index = args.index('from')
         permalink = args[index + 1]
-
         args.delete_at(index + 1)
         args.delete_at(index)
+
         UserControl.user(permalink)
       else
         UserControl.default_user
@@ -21,13 +21,12 @@ module Get
     if args.include? 'to'
       index = args.index('to')
       path = args[index + 1]
+      args.delete_at(index + 1)
+      args.delete_at(index)
 
       path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
       PathControl.temp_dl_path = path
-
-      args.delete_at(index + 1)
-      args.delete_at(index)
     end
 
     tracks = []
@@ -35,21 +34,16 @@ module Get
       case args.last
       when 'like'
         user.likes(1)
-
       when 'post'
         user.posts(1)
-
       when 'likes'
         count = args[-2].to_i
         user.likes(count)
-
       when 'posts'
         count = args[-2].to_i
         user.posts(count)
-
       when %r{https:\/\/soundcloud.com\/}
         track_from_url(args.last)
-
       else
         puts Paint['Invalid argument(s)', :red]
         puts "Input #{Paint['nehm help', :yellow]} for help"
