@@ -7,7 +7,7 @@ class User
   end
 
   def likes(count)
-    # Method to_i return 0, when there aren't any numbers in string
+    # Method to_i return 0, if there aren't any numbers in string
     if count == 0
       puts Paint['Invalid number of likes!', :red]
       exit
@@ -19,7 +19,7 @@ class User
 
   # Post is last track/repost in profile
   def posts(count)
-    # Method to_i return 0, when there aren't any numbers in string
+    # Method to_i return 0, if there aren't any numbers in string
     if count == 0
       puts Paint['Invalid number of posts!', :red]
       exit
