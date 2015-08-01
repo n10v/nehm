@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.3.1.1
+
+* Minor changes
+
 ## 1.3.1
 
 * Edit looped configure menu
