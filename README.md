@@ -70,7 +70,7 @@ Go to usage for further instructions
 
   `nehm get post from nasa to ~/Downloads` or `nehm dl like from bogem to current`
 
-  (if you type *..to current*, nehm will get track to current working directory)
+  (if you type `to current`, nehm will get track to current working directory)
 
 * And of course you can get or download track from url
 
