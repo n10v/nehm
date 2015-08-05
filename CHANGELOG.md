@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.3.3
+
+* Add `to current` feature
+
 ## 1.3.2
 
 * Add check for no user's posts/likes
@@ -15,9 +19,7 @@
 ## 1.3
 
 * Now you can type short paths to download and iTunes paths while configuring nehm (e.g. ~/Music)
-
 * Configure menu doesn't automatically exit after choose
-
 * nehm doesn't ask for iTunes path by first run
 
 ## 1.2.2
@@ -30,13 +32,13 @@
 
 ## 1.2
 
-* Add 'to PARHTODIRECTORY' feature. See the 'Usage' for instructions
+* Add `to PARHTODIRECTORY` feature. See the 'Usage' for instructions
 * Improve readability of help
 * Add some error checks
 
 ## 1.1
 
-* Add 'from PERMALINK' feature. See the 'Usage' for instructions
+* Add `from PERMALINK` feature. See the 'Usage' for instructions
 
 ## 1.0.7.1
 
@@ -54,8 +56,8 @@
 ## 1.0.6
 
 * Add check for invalid number of likes/posts
-* Add CHANGELOG.md
-* Use OPTIONS instead of [options] in help
+* Add `CHANGELOG.md`
+* Use `OPTIONS` instead of `[options]` in help
 
 ## 1.0.5
 
@@ -82,7 +84,7 @@
   * Modify tasks
 
 * Edit required Ruby version
-* Fix: if you invalid argument in 'nehm get', then app fails
+* Fix: if you type invalid argument in `nehm get`, then app fails
 
 ## 1.0
 
