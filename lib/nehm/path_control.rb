@@ -1,6 +1,6 @@
 class PathControl
   def self.dl_path
-    @temp_dl_path ? @temp_dl_path : Config[:dl_path]
+    @temp_dl_path || Config[:dl_path]
   end
 
   def self.set_dl_path
