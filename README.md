@@ -60,15 +60,17 @@ Go to usage for further instructions
 
 * To just download and set tags any track, you can input
 
-  `nehm dl post` or `nehm dl like` or `nehm dl 3 likes` and etc.
+  `nehm dl post` or `nehm dl like` or `nehm dl 3 likes`
 
 * To get tracks from another user
 
   `nehm get post from nasa` or `nehm dl like from bogem`
 
-* To download tracks to custom directory
+* To get tracks to custom directory
 
-  `nehm dl like to /Users/john/Music` or `nehm get post from nasa to ~/Downloads`
+  `nehm get post from nasa to ~/Downloads` or `nehm dl like from bogem to current`
+
+  (if you type *..to current*, nehm will get track to current working directory)
 
 * And of course you can get or download track from url
 

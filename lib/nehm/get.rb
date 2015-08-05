@@ -24,7 +24,11 @@ module Get
       args.delete_at(index + 1)
       args.delete_at(index)
 
+      # If 'to ~/../..' typed
       path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+
+      # If 'to current' typed
+      path = Dir.pwd if path == 'current'
 
       PathControl.temp_dl_path = path
     end
