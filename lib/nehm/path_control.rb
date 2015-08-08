@@ -69,7 +69,7 @@ module PathControl
 
       if Dir.exist?(path)
         Config[:itunes_path] = path
-        puts Paint["iTunes directory set up to #{Paint[path, :magenta]}", :green]
+        puts Paint["iTunes directory set up to #{Paint[PathControl.itunes_root_path, :magenta]}", :green]
         break
       else
         puts Paint["This directory doesn't exist. Please enter path again", :red]
@@ -101,7 +101,7 @@ module PathControl
       Config[:dl_path]
     else
       puts Paint["You don't set up download path!", :red]
-      puts "Set it up from #{Paint['nehm configure', :yellow]} or use 'to [PATHTODIRECTORY]' option"
+      puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATHTODIRECTORY]', :yellow]} option"
       exit
     end
   end
