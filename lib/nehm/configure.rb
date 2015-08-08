@@ -6,12 +6,12 @@ module Configure
       options = [{ value: Config[:dl_path], name: 'Download path', color: :magenta },
                  { value: Config[:permalink], name: 'Permalink', color: :cyan },
                  { value: PathControl.itunes_root_path, name: 'iTunes path', color: :magenta },
-                 { value: PlaylistControl.playlist.name, name: 'iTunes playlist', color: :cyan }]
+                 { value: PlaylistControl.playlist, name: 'iTunes playlist', color: :cyan }]
 
       options.each do |option|
         output << option[:name] + ': '
         output <<
-          if option[:value] && !option[:value].empty?
+          if option[:value] && !option[:value].to_s.empty?
             Paint[option[:value], option[:color]]
           else
             Paint["doesn't set up", 'gold']

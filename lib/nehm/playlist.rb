@@ -9,4 +9,8 @@ class Playlist
     puts 'Adding to playlist'
     AppleScript.add_track_to_playlist(track_path, @name)
   end
+
+  def to_s
+    @name
+  end
 end
