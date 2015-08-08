@@ -14,21 +14,21 @@ module Configure
         end
       output << "\n"
 
-      # iTunes path
-      output << 'iTunes path: '
-      output <<
-        if PathControl.itunes_path
-          Paint[PathControl.itunes_root_path, :magenta]
-        else
-          Paint["doesn't set up", 'gold']
-        end
-      output << "\n"
-
       # Permalink
       output << 'Permalink: '
       output <<
         if Config[:permalink]
           Paint[Config[:permalink], :cyan]
+        else
+          Paint["doesn't set up", 'gold']
+        end
+      output << "\n"
+
+      # iTunes path
+      output << 'iTunes path: '
+      output <<
+        if PathControl.itunes_path
+          Paint[PathControl.itunes_root_path, :magenta]
         else
           Paint["doesn't set up", 'gold']
         end
@@ -51,8 +51,8 @@ module Configure
         menu.prompt = Paint['Choose setting', :yellow]
 
         menu.choice('Edit download path'.freeze) { PathControl.set_dl_path }
-        menu.choice('Edit iTunes path'.freeze) { PathControl.set_itunes_path } unless OS.linux?
         menu.choice('Edit permalink'.freeze) { UserControl.log_in }
+        menu.choice('Edit iTunes path'.freeze) { PathControl.set_itunes_path } unless OS.linux?
         menu.choice('Edit iTunes playlist'.freeze) { PlaylistControl.set_playlist } unless OS.linux?
         menu.choice('Exit'.freeze) { puts 'Goodbye!'; exit }
       end
