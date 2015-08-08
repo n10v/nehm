@@ -43,7 +43,7 @@ module App
     PathControl.set_dl_path
     puts "\n"
 
-    PathControl.set_itunes_path_to_default
+    PathControl.set_itunes_path_to_default unless OS.linux
 
     UserControl.log_in
 

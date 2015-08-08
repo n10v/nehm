@@ -1,13 +1,5 @@
 module UserControl
-  def self.default_user
-    if UserControl.logged_in?
-      User.new(Config[:default_id])
-    else
-      puts Paint["You didn't logged in", :red]
-      puts "Input #{Paint['nehm configure', :yellow]} to login"
-      exit
-    end
-  end
+
 
   def self.logged_in?
     Config.key?(:default_id)
@@ -29,17 +21,31 @@ module UserControl
     end
   end
 
-  def self.user(permalink)
+  def self.temp_user=(permalink)
     if user_exist?(permalink)
       user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-      User.new(user.id)
+      @temp_user = User.new(user.id)
     else
       puts Paint['Invalid permalink. Please enter correct permalink', :red]
       exit
     end
   end
 
+  def self.user
+    @temp_user || default_user
+  end
+
   module_function
+
+  def default_user
+    if UserControl.logged_in?
+      User.new(Config[:default_id])
+    else
+      puts Paint["You didn't logged in", :red]
+      puts "Input #{Paint['nehm configure', :yellow]} to login"
+      exit
+    end
+  end
 
   def user_exist?(permalink)
     Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
