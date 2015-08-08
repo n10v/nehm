@@ -92,7 +92,7 @@ Go to usage for further instructions
 
 **Q: What is permalink?**
 
-A: Permalink is the last word in your profile url. Example: for profile url **soundcloud.com/qwerty** permalink is **qwerty**
+A: Permalink is the last word in your profile url. **Example:** for profile url ***soundcloud.com/qwerty*** permalink is ***qwerty***
 
 ## Contributing
 
