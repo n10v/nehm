@@ -21,7 +21,7 @@ module PlaylistControl
         puts Paint["Default iTunes playlist set up to #{playlist}", :green]
         break
       else
-        puts Paint['Invalid playlist name. Please enter correct playlist name', :red]
+        puts Paint['Invalid playlist name. Please enter correct name', :red]
       end
     end
   end
@@ -30,7 +30,7 @@ module PlaylistControl
     if AppleScript.list_of_playlists.include? playlist
       @temp_playlist = Playlist.new(playlist)
     else
-      puts Paint['Invalid playlist name. Please enter correct playlist name', :red]
+      puts Paint['Invalid playlist name. Please enter correct name', :red]
       exit
     end
   end

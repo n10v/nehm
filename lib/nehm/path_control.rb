@@ -26,7 +26,7 @@ module PathControl
         puts Paint["Download directory set up to #{Paint[path, :magenta]}", :green]
         break
       else
-        puts Paint["This directory doesn't exist. Please enter path again", :red]
+        puts Paint["This directory doesn't exist. Please enter correct path", :red]
       end
     end
   end
@@ -41,7 +41,7 @@ module PathControl
     if Dir.exist?(path)
       @temp_dl_path = path
     else
-      puts Paint['Invalid download path! Please enter path again', :red]
+      puts Paint['Invalid download path! Please enter correct path', :red]
       exit
     end
   end
@@ -78,7 +78,7 @@ module PathControl
         puts Paint["iTunes directory set up to #{Paint[PathControl.itunes_root_path, :magenta]}", :green]
         break
       else
-        puts Paint["This directory doesn't exist. Please enter path again", :red]
+        puts Paint["This directory doesn't exist. Please enter correct path", :red]
       end
     end
   end
