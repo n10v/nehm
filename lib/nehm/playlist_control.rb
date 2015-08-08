@@ -1,6 +1,12 @@
 module PlaylistControl
   def self.playlist
-    @temp_playlist || Playlist.new(Config[:playlist])
+    if @temp_playlist
+      @temp_playlist
+    elsif Config[:playlist]
+      Playlist.new(Config[:playlist])
+    else
+      nil
+    end
   end
 
   def self.set_playlist
