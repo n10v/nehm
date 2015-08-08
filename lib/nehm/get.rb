@@ -5,7 +5,7 @@ require 'fileutils'
 module Get
   def self.[](get_or_dl, args)
     # If option 'playlist ...' entered
-    if args.include? 'playlist' and !OS.linux
+    if (args.include? 'playlist') && (!OS.linux)
       index = args.index('playlist')
       playlist = args[index + 1]
       args.delete_at(index + 1)
@@ -68,8 +68,8 @@ module Get
       dl(track)
       dl(track.artwork)
       tag(track)
-      cp(track) unless (get_or_dl == :dl) || (OS.linux?)
-      playlist.add_track(track.file_path) if playlist || !OS.linux?
+      cp(track) unless (get_or_dl == :dl) && (OS.linux?)
+      playlist.add_track(track.file_path) if playlist && !OS.linux?
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
