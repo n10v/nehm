@@ -1,6 +1,5 @@
 require 'nehm/applescripts'
 class Playlist
-
   attr_reader :name
 
   def initialize(name)
