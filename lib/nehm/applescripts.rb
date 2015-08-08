@@ -1,6 +1,6 @@
 module AppleScripts
   def self.add_track_to_playlist(track_path, playlist_name)
-    system("osascript #{File.join(applescripts_path, 'add_track_to_playlist.applescript')}", track_path, playlist_name)
+    system("osascript #{File.join(applescripts_path, 'add_track_to_playlist.applescript')} #{track_path} #{playlist_name} > /dev/null")
   end
 
   def self.list_of_playlists
@@ -11,6 +11,6 @@ module AppleScripts
   module_function
 
   def applescripts_path
-    File.join(Gem::Specification.find_by_name('nehm').gem_dir,'/lib/nehm/applescripts/')
+    File.join(Gem::Specification.find_by_name('nehm').gem_dir, '/lib/nehm/applescripts/')
   end
 end
