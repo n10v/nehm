@@ -17,4 +17,13 @@ module PlaylistControl
       end
     end
   end
+
+  def self.temp_playlist=(playlist)
+    if AppleScripts.list_of_playlists.include? playlist
+      @temp_playlist = playlist
+    else
+      puts Paint['Invalid playlist!', :red]
+      exit
+    end
+  end
 end
