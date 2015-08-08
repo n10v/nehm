@@ -80,7 +80,7 @@ module Get
       cp(track) if itunes_set_up && !OS.linux? && get_or_dl == :get
 
       if itunes_set_up && !OS.linux? && playlist
-        wait_when_itunes_add_track_to_lib(track)
+        wait_while_itunes_add_track_to_lib(track)
         playlist.add_track(track.file_path)
       end
 
@@ -131,7 +131,7 @@ module Get
   end
 
   # Check when iTunes will add track to its library from 'Auto' directory
-  def wait_when_itunes_add_track_to_lib(track)
+  def wait_while_itunes_add_track_to_lib(track)
     loop do
       break unless File.exist?(File.join(PathControl.itunes_path, track.file_name))
     end

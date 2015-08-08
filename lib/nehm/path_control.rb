@@ -45,7 +45,7 @@ module PathControl
   end
 
   # Use in Configure.menu
-  def self.itunes_path_name
+  def self.itunes_root_path
     PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", '')
   end
 

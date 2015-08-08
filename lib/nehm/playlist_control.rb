@@ -7,7 +7,7 @@ module PlaylistControl
     loop do
       playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks')
 
-      if AppleScripts.list_of_playlists.include? playlist
+      if AppleScript.list_of_playlists.include? playlist
         Config[:playlist] = playlist
         puts Paint["Default iTunes playlist set up to #{playlist}", :green]
         break
@@ -18,7 +18,7 @@ module PlaylistControl
   end
 
   def self.temp_playlist=(playlist)
-    if AppleScripts.list_of_playlists.include? playlist
+    if AppleScript.list_of_playlists.include? playlist
       @temp_playlist = Playlist.new(playlist)
     else
       puts Paint['Invalid playlist name. Please enter correct playlist name', :red]

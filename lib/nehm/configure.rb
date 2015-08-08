@@ -18,7 +18,7 @@ module Configure
       output << 'iTunes path: '
       output <<
         if PathControl.itunes_path
-          Paint[PathControl.itunes_path_name, :magenta]
+          Paint[PathControl.itunes_root_path, :magenta]
         else
           Paint["doesn't set up", 'gold']
         end

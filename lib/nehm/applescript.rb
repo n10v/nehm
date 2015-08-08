@@ -1,4 +1,4 @@
-module AppleScripts
+module AppleScript
   def self.add_track_to_playlist(track_path, playlist_name)
     system("osascript #{File.join(applescripts_path, 'add_track_to_playlist.applescript')} #{track_path} #{playlist_name} > /dev/null")
   end
