@@ -2,16 +2,19 @@ module PlaylistControl
   def self.playlist
     if @temp_playlist
       @temp_playlist
-    elsif Config[:playlist]
+    elsif !Config[:playlist].empty?
       Playlist.new(Config[:playlist])
-    else
-      nil
     end
   end
 
   def self.set_playlist
     loop do
-      playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks')
+      playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks (press Enter to unset default playlist)')
+      if playlist == ''
+        Config[:playlist] = ''
+        puts Paint['Default iTunes playlist unset', :green]
+        break
+      end
 
       if AppleScript.list_of_playlists.include? playlist
         Config[:playlist] = playlist
