@@ -91,7 +91,7 @@ module PathControl
   end
 
   def self.tilde_at_top?(path)
-    path[0] == '~' ? true : false
+    path[0] == '~'
   end
 
   module_function
