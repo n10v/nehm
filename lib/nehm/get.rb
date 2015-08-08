@@ -14,18 +14,15 @@ module Get
       PlaylistControl.temp_playlist = playlist
     end
 
-    user =
-      # If option 'from ...' entered
-      if args.include? 'from'
-        index = args.index('from')
-        permalink = args[index + 1]
-        args.delete_at(index + 1)
-        args.delete_at(index)
+    # If option 'from ...' entered
+    if args.include? 'from'
+      index = args.index('from')
+      permalink = args[index + 1]
+      args.delete_at(index + 1)
+      args.delete_at(index)
 
-        UserControl.user(permalink)
-      else
-        UserControl.default_user
-      end
+      UserControl.temp_user = permalink
+    end
 
     # If option 'to ...' entered
     if args.include? 'to'
@@ -43,6 +40,7 @@ module Get
       PathControl.temp_dl_path = path
     end
 
+    user = UserControl.user
     tracks = []
     tracks +=
       case args.last
@@ -71,7 +69,7 @@ module Get
       dl(track.artwork)
       tag(track)
       cp(track) unless (get_or_dl == :dl) || (OS.linux?)
-      playlist.add_track(track.file_path)
+      playlist.add_track(track.file_path) if playlist || !OS.linux?
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
