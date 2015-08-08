@@ -4,8 +4,18 @@ require 'fileutils'
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
   def self.[](get_or_dl, args)
+    # If option 'playlist ...' entered
+    if args.include? 'playlist' and !OS.linux
+      index = args.index('playlist')
+      playlist = args[index + 1]
+      args.delete_at(index + 1)
+      args.delete_at(index)
+
+      PlaylistControl.temp_playlist = playlist
+    end
+
     user =
-      # If option 'from ...' typed
+      # If option 'from ...' entered
       if args.include? 'from'
         index = args.index('from')
         permalink = args[index + 1]
@@ -17,17 +27,17 @@ module Get
         UserControl.default_user
       end
 
-    # If option 'to ...' typed
+    # If option 'to ...' entered
     if args.include? 'to'
       index = args.index('to')
       path = args[index + 1]
       args.delete_at(index + 1)
       args.delete_at(index)
 
-      # If 'to ~/../..' typed
+      # If 'to ~/../..' entered
       path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
-      # If 'to current' typed
+      # If 'to current' entered
       path = Dir.pwd if path == 'current'
 
       PathControl.temp_dl_path = path
@@ -54,11 +64,14 @@ module Get
         exit
       end
 
+    playlist = PlaylistControl.playlist
+
     tracks.each do |track|
       dl(track)
       dl(track.artwork)
       tag(track)
       cp(track) unless (get_or_dl == :dl) || (OS.linux?)
+      playlist.add_track(track.file_path)
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
