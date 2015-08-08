@@ -3,7 +3,6 @@ module Configure
   def self.menu
     loop do
       output = ''
-
       options = [{ value: Config[:dl_path], name: 'Download path', color: :magenta },
                  { value: Config[:permalink], name: 'Permalink', color: :cyan },
                  { value: PathControl.itunes_root_path, name: 'iTunes path', color: :magenta },
