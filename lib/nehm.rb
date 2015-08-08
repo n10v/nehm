@@ -1,7 +1,7 @@
 require 'highline'
 require 'paint'
 
-require 'nehm/applescripts'
+require 'nehm/applescript'
 require 'nehm/artwork'
 require 'nehm/config'
 require 'nehm/configure'
