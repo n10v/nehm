@@ -34,6 +34,10 @@ module App
       puts Paint['Invalid command', :red]
       puts "Input #{Paint['nehm help', :yellow]} for all avalaible commands"
     end
+
+    # SIGINT
+    rescue Interrupt
+      puts "\nGoodbye!"
   end
 
   module_function
