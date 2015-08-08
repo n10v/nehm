@@ -11,7 +11,7 @@ module Configure
       options.each do |option|
         output << option[:name] + ': '
         output <<
-          if option[:value]
+          if option[:value] && option[:value] != ''
             Paint[option[:value], option[:color]]
           else
             Paint["doesn't set up", 'gold']
