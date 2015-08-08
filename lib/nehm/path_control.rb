@@ -32,6 +32,12 @@ module PathControl
   end
 
   def self.temp_dl_path=(path)
+    # If 'to ~/../..' entered
+    path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+
+    # If 'to current' entered
+    path = Dir.pwd if path == 'current'
+
     if Dir.exist?(path)
       @temp_dl_path = path
     else
