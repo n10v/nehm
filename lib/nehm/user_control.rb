@@ -1,6 +1,5 @@
 module UserControl
 
-
   def self.logged_in?
     Config.key?(:default_id)
   end
@@ -42,7 +41,7 @@ module UserControl
       User.new(Config[:default_id])
     else
       puts Paint["You didn't logged in", :red]
-      puts "Input #{Paint['nehm configure', :yellow]} to login"
+      puts "Enter #{Paint['nehm configure', :yellow]} to login"
       exit
     end
   end
