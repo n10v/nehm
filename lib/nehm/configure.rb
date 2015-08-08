@@ -54,7 +54,7 @@ module Configure
         menu.choice('Edit iTunes path'.freeze) { PathControl.set_itunes_path } unless OS.linux?
         menu.choice('Edit permalink'.freeze) { UserControl.log_in }
         menu.choice('Edit iTunes playlist'.freeze) { PlaylistControl.set_playlist } unless OS.linux?
-        menu.choice('Exit'.freeze) { exit }
+        menu.choice('Exit'.freeze) { puts 'Goodbye!'; exit }
       end
       puts "\n"
     end
