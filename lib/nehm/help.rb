@@ -34,7 +34,7 @@ module Help
     puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
-    puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post(track or repost) from your profile'
+    puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post (track or repost) from your profile'
     puts '  ' + Paint['<number> posts', :green]  + ' - Downloading and setting tags last <number> posts from your profile'
     puts '  ' + Paint['like', :green]            + ' - Downloading and setting tags your last like'
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading and setting tags your last <number> likes'
@@ -50,7 +50,7 @@ module Help
     puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
-    puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
+    puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post (track or repost) from your profile'
     puts '  ' + Paint['<number> posts', :green]  + ' - Downloading, setting tags and adding to your iTunes library last <number> posts from your profile'
     puts '  ' + Paint['like', :green]            + ' - Downloading, setting tags and adding to your iTunes library your last like'
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last <number> likes'

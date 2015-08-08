@@ -107,7 +107,7 @@ module PathControl
       Config[:dl_path]
     else
       puts Paint["You don't set up download path!", :red]
-      puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATHTODIRECTORY]', :yellow]} option"
+      puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATH_TO_DIRECTORY]', :yellow]} option"
       exit
     end
   end
