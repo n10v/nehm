@@ -62,14 +62,30 @@ module Get
         exit
       end
 
+    # Check for download path
+    unless PathControl.temp_dl_path && PathControl.dl_path
+      puts Paint["You don't set up download path!", :red]
+      puts "Set it up from #{Paint['nehm configure', :yellow]} or use 'to [PATHTODIRECTORY]' option"
+      exit
+    end
+
+    # Check for iTunes path
+    if !PathControl.itunes_path && get_or_dl == :get && !OS.linux?
+      puts Paint["You don't set up iTunes path!", :yellow]
+      puts "Your track won't copy to iTunes"
+      itunes_set_up = false
+    else
+      itunes_set_up = true
+    end
+
     playlist = PlaylistControl.playlist
 
     tracks.each do |track|
       dl(track)
       dl(track.artwork)
       tag(track)
-      cp(track) unless (get_or_dl == :dl) && (OS.linux?)
-      playlist.add_track(track.file_path) if playlist && !OS.linux?
+      cp(track) if itunes_set_up && !OS.linux? && get_or_dl == :get
+      playlist.add_track(track.file_path) if itunes_set_up && !OS.linux? && playlist
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
