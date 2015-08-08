@@ -1,4 +1,4 @@
-class PathControl
+module PathControl
   attr_reader :temp_dl_path
 
   def self.dl_path
@@ -82,7 +82,7 @@ class PathControl
     if Dir.exist?(itunes_path)
       Config[:itunes_path] = itunes_path
     else
-      puts Paint["Don't know where your iTunes path. Set it up manually from ", :gold] + Paint['nehm configure', :yellow]
+      puts Paint["Don't know where your iTunes path. Set it up manually from ", 'gold'] + Paint['nehm configure', :yellow]
     end
   end
 
