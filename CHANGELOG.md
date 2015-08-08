@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.4.1
+
+* Fix: app fails if you didn't set up playlist
+
 ## 1.4
 
 * Now nehm can automatically add track to iTunes playlist. Enter `nehm configure` to set it up
