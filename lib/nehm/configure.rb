@@ -4,45 +4,21 @@ module Configure
     loop do
       output = ''
 
-      # Download path
-      output << 'Download path: '
-      output <<
-        if Config[:dl_path]
-          Paint[Config[:dl_path], :magenta]
-        else
-          Paint["doesn't set up", 'gold']
-        end
-      output << "\n"
+      options = [{ value: Config[:dl_path], name: 'Download path', color: :magenta },
+                 { value: Config[:permalink], name: 'Permalink', color: :cyan },
+                 { value: PathControl.itunes_root_path, name: 'iTunes path', color: :magenta },
+                 { value: PlaylistControl.playlist.name, name: 'iTunes playlist', color: :cyan }]
 
-      # Permalink
-      output << 'Permalink: '
-      output <<
-        if Config[:permalink]
-          Paint[Config[:permalink], :cyan]
-        else
-          Paint["doesn't set up", 'gold']
-        end
-      output << "\n"
-
-      # iTunes path
-      output << 'iTunes path: '
-      output <<
-        if PathControl.itunes_path
-          Paint[PathControl.itunes_root_path, :magenta]
-        else
-          Paint["doesn't set up", 'gold']
-        end
-      output << "\n"
-
-      # Playlist
-      output << 'Playlist: '
-      output <<
-        if PlaylistControl.playlist.name
-          Paint[PlaylistControl.playlist.name, :cyan]
-        else
-          Paint["doesn't set up", 'gold']
-        end
-      output << "\n"
+      options.each do |option|
+        output << option[:name] + ': '
+        output <<
+          if option[:value]
+            Paint[option[:value], option[:color]]
+          else
+            Paint["doesn't set up", 'gold']
+          end
+        output << "\n"
+      end
 
       puts output
       puts "\n"
