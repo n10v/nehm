@@ -1,12 +1,11 @@
-require 'nehm/applescripts'
 module PlaylistControl
   def self.playlist
-    @temp_playlist || Config[:playlist]
+    @temp_playlist || Playlist.new(Config[:playlist])
   end
 
   def self.set_playlist
     loop do
-      playlist = Highline.new.ask('Enter name of default iTunes playlist to which you want add tracks')
+      playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks')
 
       if AppleScripts.list_of_playlists.include? playlist
         Config[:playlist] = playlist
