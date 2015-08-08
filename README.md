@@ -98,6 +98,10 @@ A: Permalink is the last word in your profile url. Example: for profile url 'sou
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/bogem/nehm.
 
+## License
+
+**MIT License**
+
 ## Links
 
 My SoundCloud profile: https://soundcloud.com/bogem
