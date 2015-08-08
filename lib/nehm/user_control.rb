@@ -41,7 +41,7 @@ module UserControl
       User.new(Config[:default_id])
     else
       puts Paint["You didn't logged in", :red]
-      puts "Enter #{Paint['nehm configure', :yellow]} to login"
+      puts "Login from #{Paint['nehm configure', :yellow]} or use #{Paint['[from PERMALINK]', :yellow]} option"
       exit
     end
   end
