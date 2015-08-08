@@ -31,7 +31,7 @@ module Help
   end
 
   def dl
-    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
+    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post(track or repost) from your profile'
@@ -40,13 +40,14 @@ module Help
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading and setting tags your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from custom user profile'
-    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to custom directory'
-    puts '  ' + Paint['to current', :green]         + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['from PERMALINK', :green]              + ' - Do the aforecited operations from custom user profile'
+    puts '  ' + Paint['to PATH_TO_DIRECTORY', :green]        + ' - Do the aforecited operations to custom directory'
+    puts '  ' + Paint['to current', :green]                  + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['playlist ITUNES_PLAYLIST', :green]    + ' - Do the aforecited operations to custom iTunes playlist'
   end
 
   def get
-    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
+    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
     puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
@@ -55,9 +56,10 @@ module Help
     puts '  ' + Paint['<number> likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from profile with PERMALINK'
-    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to custom directory'
-    puts '  ' + Paint['to current', :green]         + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['from PERMALINK', :green]              + ' - Do the aforecited operations from profile with PERMALINK'
+    puts '  ' + Paint['to PATH_TO_DIRECTORY', :green]        + ' - Do the aforecited operations to custom directory'
+    puts '  ' + Paint['to current', :green]                  + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['playlist ITUNES_PLAYLIST', :green]    + ' - Do the aforecited operations to custom iTunes playlist'
   end
 
   def permalink
