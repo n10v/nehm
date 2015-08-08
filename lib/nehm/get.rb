@@ -57,11 +57,10 @@ module Get
       dl(track)
       dl(track.artwork)
       tag(track)
-      cp(track) if itunes_set_up && !OS.linux? && get_or_dl == :get
-
-      if itunes_set_up && !OS.linux? && playlist
-        wait_while_itunes_add_track_to_lib(track)
-        playlist.add_track(track.file_path)
+      if itunes_set_up && !OS.linux? && get_or_dl == :get
+        cp(track)
+        wait_while_itunes_add_track_to_lib(track) if playlist
+        playlist.add_track(track.file_path) if playlist
       end
 
       track.artwork.suicide
