@@ -65,7 +65,7 @@ module Get
     # Check if iTunes path set up
     if !PathControl.itunes_path && get_or_dl == :get && !OS.linux?
       puts Paint["You don't set up iTunes path!", :yellow]
-      puts "Your track won't copy to iTunes"
+      puts "Your track won't add to iTunes library"
       itunes_set_up = false
     else
       itunes_set_up = true
