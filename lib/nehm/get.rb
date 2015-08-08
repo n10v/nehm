@@ -5,7 +5,7 @@ require 'fileutils'
 module Get
   def self.[](get_or_dl, args)
     # If option 'playlist ...' entered
-    if (args.include? 'playlist') && (!OS.linux)
+    if (args.include? 'playlist') && (!OS.linux?)
       index = args.index('playlist')
       playlist = args[index + 1]
       args.delete_at(index + 1)
