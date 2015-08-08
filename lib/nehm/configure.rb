@@ -10,7 +10,7 @@ module Configure
         if Config[:dl_path]
           Paint[Config[:dl_path], :magenta]
         else
-          Paint["doesn't set up", :gold]
+          Paint["doesn't set up", 'gold']
         end
       output << "\n"
 
@@ -20,7 +20,7 @@ module Configure
         if PathControl.itunes_path
           Paint[PathControl.itunes_path_name, :magenta]
         else
-          Paint["doesn't set up", :gold]
+          Paint["doesn't set up", 'gold']
         end
       output << "\n"
 
@@ -30,7 +30,7 @@ module Configure
         if Config[:permalink]
           Paint[Config[:permalink], :cyan]
         else
-          Paint["doesn't set up", :gold]
+          Paint["doesn't set up", 'gold']
         end
       output << "\n"
 
@@ -40,11 +40,12 @@ module Configure
         if PlaylistControl.playlist
           Paint[PlaylistControl.playlist, :cyan]
         else
-          Paint["doesn't set up", :gold]
+          Paint["doesn't set up", 'gold']
         end
       output << "\n"
 
       puts output
+      puts "\n"
 
       HighLine.new.choose do |menu|
         menu.prompt = Paint['Choose setting', :yellow]
