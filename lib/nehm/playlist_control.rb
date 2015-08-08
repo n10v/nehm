@@ -1,7 +1,7 @@
 require 'nehm/applescripts'
 module PlaylistControl
   def self.playlist
-    @temp_playlist || Playlist.new(Config[:playlist])
+    @temp_playlist || Config[:playlist]
   end
 
   def self.set_playlist
@@ -22,7 +22,7 @@ module PlaylistControl
     if AppleScripts.list_of_playlists.include? playlist
       @temp_playlist = Playlist.new(playlist)
     else
-      puts Paint['Invalid playlist!', :red]
+      puts Paint['Invalid playlist name. Please enter correct playlist name', :red]
       exit
     end
   end
