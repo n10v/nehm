@@ -4,40 +4,20 @@ require 'fileutils'
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
   def self.[](get_or_dl, args)
-    # If option 'playlist ...' entered
-    if (args.include? 'playlist') && (!OS.linux?)
-      index = args.index('playlist')
-      playlist = args[index + 1]
-      args.delete_at(index + 1)
-      args.delete_at(index)
+    # Processing arguments
+    options = [{ name: 'to', module: PathControl, setter: :temp_dl_path= },
+               { name: 'from', module: UserControl, setter: :temp_user= },
+               { name: 'playlist', module: PlaylistControl, setter: :temp_playlist= }]
 
-      PlaylistControl.temp_playlist = playlist
-    end
+    options.each do |option|
+      if args.include? option[:name]
+        index = args.index(option[:name])
+        value = args[index + 1]
+        args.delete_at(index + 1)
+        args.delete_at(index)
 
-    # If option 'from ...' entered
-    if args.include? 'from'
-      index = args.index('from')
-      permalink = args[index + 1]
-      args.delete_at(index + 1)
-      args.delete_at(index)
-
-      UserControl.temp_user = permalink
-    end
-
-    # If option 'to ...' entered
-    if args.include? 'to'
-      index = args.index('to')
-      path = args[index + 1]
-      args.delete_at(index + 1)
-      args.delete_at(index)
-
-      # If 'to ~/../..' entered
-      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
-
-      # If 'to current' entered
-      path = Dir.pwd if path == 'current'
-
-      PathControl.temp_dl_path = path
+        option[:module].send(option[:setter], value)
+      end
     end
 
     user = UserControl.user
