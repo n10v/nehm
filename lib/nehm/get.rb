@@ -78,7 +78,12 @@ module Get
       dl(track.artwork)
       tag(track)
       cp(track) if itunes_set_up && !OS.linux? && get_or_dl == :get
-      playlist.add_track(track.file_path) if itunes_set_up && !OS.linux? && playlist
+
+      if itunes_set_up && !OS.linux? && playlist
+        wait_when_itunes_add_track_to_lib(track)
+        playlist.add_track(track.file_path)
+      end
+
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
@@ -123,5 +128,12 @@ module Get
   def cp(track)
     puts 'Adding to iTunes library'
     FileUtils.cp(track.file_path, PathControl.itunes_path)
+  end
+
+  # Check when iTunes will add track to its library from 'Auto' directory
+  def wait_when_itunes_add_track_to_lib(track)
+    loop do
+      break unless File.exist?(File.join(PathControl.itunes_path, track.file_name))
+    end
   end
 end
