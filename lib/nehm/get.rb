@@ -62,13 +62,6 @@ module Get
         exit
       end
 
-    # Check for download path
-    unless PathControl.temp_dl_path && PathControl.dl_path
-      puts Paint["You don't set up download path!", :red]
-      puts "Set it up from #{Paint['nehm configure', :yellow]} or use 'to [PATHTODIRECTORY]' option"
-      exit
-    end
-
     # Check for iTunes path
     if !PathControl.itunes_path && get_or_dl == :get && !OS.linux?
       puts Paint["You don't set up iTunes path!", :yellow]

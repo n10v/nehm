@@ -1,6 +1,8 @@
 class PathControl
+  attr_reader :temp_dl_path
+
   def self.dl_path
-    @temp_dl_path || Config[:dl_path]
+    @temp_dl_path || default_dl_path
   end
 
   def self.set_dl_path
@@ -90,5 +92,17 @@ class PathControl
 
   def self.tilde_at_top?(path)
     path[0] == '~' ? true : false
+  end
+
+  module_function
+
+  def default_dl_path
+    if Config[:dl_path]
+      Config[:dl_path]
+    else
+      puts Paint["You don't set up download path!", :red]
+      puts "Set it up from #{Paint['nehm configure', :yellow]} or use 'to [PATHTODIRECTORY]' option"
+      exit
+    end
   end
 end
