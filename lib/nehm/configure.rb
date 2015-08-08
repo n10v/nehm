@@ -38,7 +38,7 @@ module Configure
       output << 'Playlist: '
       output <<
         if PlaylistControl.playlist
-          Paint[PlaylistControl.playlist, :cyan]
+          Paint[PlaylistControl.playlist.name, :cyan]
         else
           Paint["doesn't set up", 'gold']
         end
