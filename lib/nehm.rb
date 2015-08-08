@@ -50,7 +50,13 @@ module App
     PathControl.set_dl_path
     puts "\n"
 
-    PathControl.set_itunes_path_to_default unless OS.linux
+    unless OS.linux?
+      PathControl.set_itunes_path_to_default
+      puts "\n"
+
+      PlaylistControl.set_playlist
+      puts "\n"
+    end
 
     UserControl.log_in
 
