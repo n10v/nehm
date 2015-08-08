@@ -33,7 +33,7 @@ class PathControl
     if Dir.exist?(path)
       @temp_dl_path = path
     else
-      puts Paint['Invalid path!', :red]
+      puts Paint['Invalid download path! Please enter path again', :red]
       exit
     end
   end
@@ -76,7 +76,12 @@ class PathControl
   end
 
   def self.set_itunes_path_to_default
-    Config[:itunes_path] = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
+    itunes_path = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
+    if Dir.exist?(itunes_path)
+      Config[:itunes_path] = itunes_path
+    else
+      puts Paint["Don't know where your iTunes path. Set it up manually from ", :gold] + Paint['nehm configure', :yellow]
+    end
   end
 
   def self.tilde_to_home(path)
