@@ -62,7 +62,6 @@ module Get
         wait_while_itunes_add_track_to_lib(track) if playlist
         playlist.add_track(track.file_path) if playlist
       end
-
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
