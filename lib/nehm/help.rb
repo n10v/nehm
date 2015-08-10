@@ -26,38 +26,46 @@ module Help
   def configure
     puts Paint['Input: ', :yellow] + 'nehm configure'
     puts "\n"
-    puts Paint['Available options:', :yellow]
-    puts '  No options'
+    puts Paint['Summary:', :yellow]
+    puts '  Configuring nehm app'
   end
 
   def dl
-    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
+    puts Paint['Input: ', :yellow] + 'nehm dl OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
+    puts "\n"
+    puts Paint['Summary:', :yellow]
+    puts '  Downloading tracks from SoundCloud and setting tags'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
-    puts '  ' + Paint['post', :green]            + ' - Downloading and setting tags last post(track or repost) from your profile'
-    puts '  ' + Paint['<number> posts', :green]  + ' - Downloading and setting tags last <number> posts from your profile'
-    puts '  ' + Paint['like', :green]            + ' - Downloading and setting tags your last like'
-    puts '  ' + Paint['<number> likes', :green]  + ' - Downloading and setting tags your last <number> likes'
+    puts '  ' + Paint['post', :green] + '                       Do same with last post (track or repost) from your profile'
+    puts '  ' + Paint['<number> posts', :green] + '             Do same with last <number> posts from your profile'
+    puts '  ' + Paint['like', :green] + '                       Do same with tags your last like'
+    puts '  ' + Paint['<number> likes', :green] + '             Do same with tags your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from custom user profile'
-    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to custom directory'
-    puts '  ' + Paint['to current', :green]         + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['from PERMALINK', :green] + '             Do aforecited operations from custom user profile'
+    puts '  ' + Paint['to PATH_TO_DIRECTORY', :green] + '       Do aforecited operations to custom directory'
+    puts '  ' + Paint['to current', :green] + '                 Do aforecited operations to current working directory'
+    puts '  ' + Paint['playlist ITUNES_PLAYLIST', :green] + '   Do aforecited operations to custom iTunes playlist'
   end
 
   def get
-    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATHTODIRECTORY]'
+    puts Paint['Input: ', :yellow] + 'nehm get OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]'
+    puts "\n"
+    puts Paint['Summary:', :yellow]
+    puts '  Downloading tracks, setting tags and adding to your iTunes library tracks from Soundcloud'
     puts "\n"
     puts Paint['OPTIONS:', :yellow]
-    puts '  ' + Paint['post', :green]            + ' - Downloading, setting tags and adding to your iTunes library last post(track or repost) from your profile'
-    puts '  ' + Paint['<number> posts', :green]  + ' - Downloading, setting tags and adding to your iTunes library last <number> posts from your profile'
-    puts '  ' + Paint['like', :green]            + ' - Downloading, setting tags and adding to your iTunes library your last like'
-    puts '  ' + Paint['<number> likes', :green]  + ' - Downloading, setting tags and adding to your iTunes library your last <number> likes'
+    puts '  ' + Paint['post', :green] + '                       Do same with last post (track or repost) from your profile'
+    puts '  ' + Paint['<number> posts', :green] + '             Do same with last <number> posts from your profile'
+    puts '  ' + Paint['like', :green] + '                       Do same with your last like'
+    puts '  ' + Paint['<number> likes', :green] + '             Do same with your last <number> likes'
     puts "\n"
     puts Paint['Extra options:', :yellow]
-    puts '  ' + Paint['from PERMALINK', :green]     + ' - Do the aforecited operations from profile with PERMALINK'
-    puts '  ' + Paint['to PATHTODIRECTORY', :green] + ' - Do the aforecited operations to custom directory'
-    puts '  ' + Paint['to current', :green]         + ' - Do the aforecited operations to current working directory'
+    puts '  ' + Paint['from PERMALINK', :green] + '             Do aforecited operations from profile with PERMALINK'
+    puts '  ' + Paint['to PATH_TO_DIRECTORY', :green] + '       Do aforecited operations to custom directory'
+    puts '  ' + Paint['to current', :green] + '                 Do aforecited operations to current working directory'
+    puts '  ' + Paint['playlist ITUNES_PLAYLIST', :green] + '   Do aforecited operations to custom iTunes playlist'
   end
 
   def permalink

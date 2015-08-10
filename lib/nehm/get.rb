@@ -4,35 +4,23 @@ require 'fileutils'
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
   def self.[](get_or_dl, args)
-    user =
-      # If option 'from ...' typed
-      if args.include? 'from'
-        index = args.index('from')
-        permalink = args[index + 1]
+    # Processing arguments
+    options = [{ name: 'to', module: PathControl, setter: :temp_dl_path= },
+               { name: 'from', module: UserControl, setter: :temp_user= },
+               { name: 'playlist', module: PlaylistControl, setter: :temp_playlist= }]
+
+    options.each do |option|
+      if args.include? option[:name]
+        index = args.index(option[:name])
+        value = args[index + 1]
         args.delete_at(index + 1)
         args.delete_at(index)
 
-        UserControl.user(permalink)
-      else
-        UserControl.default_user
+        option[:module].send(option[:setter], value)
       end
-
-    # If option 'to ...' typed
-    if args.include? 'to'
-      index = args.index('to')
-      path = args[index + 1]
-      args.delete_at(index + 1)
-      args.delete_at(index)
-
-      # If 'to ~/../..' typed
-      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
-
-      # If 'to current' typed
-      path = Dir.pwd if path == 'current'
-
-      PathControl.temp_dl_path = path
     end
 
+    user = UserControl.user
     tracks = []
     tracks +=
       case args.last
@@ -54,11 +42,27 @@ module Get
         exit
       end
 
+    # Check if iTunes path set up
+    if !PathControl.itunes_path && get_or_dl == :get && !OS.linux?
+      puts Paint["You don't set up iTunes path!", :yellow]
+      puts "Your track won't add to iTunes library"
+      itunes_set_up = false
+    else
+      itunes_set_up = true
+    end
+
+    playlist = PlaylistControl.playlist
+
     tracks.each do |track|
       dl(track)
       dl(track.artwork)
       tag(track)
-      cp(track) unless (get_or_dl == :dl) || (OS.linux?)
+      if itunes_set_up && !OS.linux? && get_or_dl == :get
+        cp(track)
+        wait_while_itunes_add_track_to_lib(track) if playlist
+        playlist.add_track(track.file_path) if playlist
+      end
+
       track.artwork.suicide
     end
     puts Paint['Done!', :green]
@@ -103,5 +107,12 @@ module Get
   def cp(track)
     puts 'Adding to iTunes library'
     FileUtils.cp(track.file_path, PathControl.itunes_path)
+  end
+
+  # Check when iTunes will add track to its library from 'Auto' directory
+  def wait_while_itunes_add_track_to_lib(track)
+    loop do
+      break unless File.exist?(File.join(PathControl.itunes_path, track.file_name))
+    end
   end
 end

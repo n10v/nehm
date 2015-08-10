@@ -1,5 +1,20 @@
 # nehm change log
 
+## 1.4.1
+
+* Fix: app fails if you didn't set up playlist
+
+## 1.4
+
+* Now nehm can automatically add track to iTunes playlist. Enter `nehm configure` to set it up
+* Also you can download tracks with custom iTunes playlist with `playlist PLAYLIST` feature. See the 'Usage' for instructions
+* Handle more errors
+* Update `nehm help` command:
+  * Add 'Summary' article
+  * Convenient read improvements
+* Edit warning messages
+* Minor improvements and fixes
+
 ## 1.3.3
 
 * Add `to current` feature

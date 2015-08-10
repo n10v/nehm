@@ -1,6 +1,8 @@
-class PathControl
+module PathControl
+  attr_reader :temp_dl_path
+
   def self.dl_path
-    @temp_dl_path || Config[:dl_path]
+    @temp_dl_path || default_dl_path
   end
 
   def self.set_dl_path
@@ -24,16 +26,22 @@ class PathControl
         puts Paint["Download directory set up to #{Paint[path, :magenta]}", :green]
         break
       else
-        puts Paint["This directory doesn't exist. Please enter path again", :red]
+        puts Paint["This directory doesn't exist. Please enter correct path", :red]
       end
     end
   end
 
   def self.temp_dl_path=(path)
+    # If 'to ~/../..' entered
+    path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+
+    # If 'to current' entered
+    path = Dir.pwd if path == 'current'
+
     if Dir.exist?(path)
       @temp_dl_path = path
     else
-      puts Paint['Invalid path!', :red]
+      puts Paint['Invalid download path! Please enter correct path', :red]
       exit
     end
   end
@@ -43,7 +51,7 @@ class PathControl
   end
 
   # Use in Configure.menu
-  def self.itunes_path_name
+  def self.itunes_root_path
     PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", '')
   end
 
@@ -67,16 +75,21 @@ class PathControl
 
       if Dir.exist?(path)
         Config[:itunes_path] = path
-        puts Paint["iTunes directory set up to #{Paint[path, :magenta]}", :green]
+        puts Paint["iTunes directory set up to #{Paint[PathControl.itunes_root_path, :magenta]}", :green]
         break
       else
-        puts Paint["This directory doesn't exist. Please enter path again", :red]
+        puts Paint["This directory doesn't exist. Please enter correct path", :red]
       end
     end
   end
 
   def self.set_itunes_path_to_default
-    Config[:itunes_path] = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
+    itunes_path = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
+    if Dir.exist?(itunes_path)
+      Config[:itunes_path] = itunes_path
+    else
+      puts Paint["Don't know where your iTunes path. Set it up manually from ", 'gold'] + Paint['nehm configure', :yellow]
+    end
   end
 
   def self.tilde_to_home(path)
@@ -84,6 +97,18 @@ class PathControl
   end
 
   def self.tilde_at_top?(path)
-    path[0] == '~' ? true : false
+    path[0] == '~'
+  end
+
+  module_function
+
+  def default_dl_path
+    if Config[:dl_path]
+      Config[:dl_path]
+    else
+      puts Paint["You don't set up download path!", :red]
+      puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATH_TO_DIRECTORY]', :yellow]} option"
+      exit
+    end
   end
 end

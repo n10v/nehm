@@ -1,6 +1,7 @@
 require 'highline'
 require 'paint'
 
+require 'nehm/applescript'
 require 'nehm/artwork'
 require 'nehm/config'
 require 'nehm/configure'
@@ -9,6 +10,8 @@ require 'nehm/get'
 require 'nehm/help'
 require 'nehm/os'
 require 'nehm/path_control'
+require 'nehm/playlist'
+require 'nehm/playlist_control'
 require 'nehm/track'
 require 'nehm/user'
 require 'nehm/user_control'
@@ -31,6 +34,10 @@ module App
       puts Paint['Invalid command', :red]
       puts "Input #{Paint['nehm help', :yellow]} for all avalaible commands"
     end
+
+    # SIGINT
+    rescue Interrupt
+      puts "\nGoodbye!"
   end
 
   module_function
@@ -43,7 +50,13 @@ module App
     PathControl.set_dl_path
     puts "\n"
 
-    PathControl.set_itunes_path_to_default
+    unless OS.linux?
+      PathControl.set_itunes_path_to_default
+      puts "\n"
+
+      PlaylistControl.set_playlist
+      puts "\n"
+    end
 
     UserControl.log_in
 

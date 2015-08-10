@@ -66,11 +66,15 @@ Go to usage for further instructions
 
   `nehm get post from nasa` or `nehm dl like from bogem`
 
-* To get tracks to custom directory
+* To get tracks to another directory
 
   `nehm get post from nasa to ~/Downloads` or `nehm dl like from bogem to current`
 
   *(if you type `to current`, nehm will get track to current working directory)*
+
+* To get tracks to another playlist
+
+  `nehm get post playlist MyPlaylist`
 
 * And of course you can get or download track from url
 
