@@ -11,6 +11,6 @@ module AppleScript
   module_function
 
   def applescripts_path
-    File.join(Gem::Specification.find_by_name('nehm').gem_dir, '/lib/nehm/applescripts/')
+    File.expand_path('applescripts', __dir__)
   end
 end
