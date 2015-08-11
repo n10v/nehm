@@ -79,7 +79,7 @@ module Get
     path = arg.file_path
     url = arg.url
     command = "curl -# -o '" + path + "' -L " + url
-    system(command)
+    `#{command}`
   end
 
   def tag(track)
