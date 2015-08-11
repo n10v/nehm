@@ -1,16 +1,17 @@
 module AppleScript
   def self.add_track_to_playlist(track_path, playlist_name)
-    system("osascript #{File.join(applescripts_path, 'add_track_to_playlist.applescript')} #{track_path} #{playlist_name} > /dev/null")
+    `osascript #{script_path(:add_track_to_playlist)} #{track_path} #{playlist_name} > /dev/null`
   end
 
   def self.list_of_playlists
-    output = `osascript #{File.join(applescripts_path, 'list_of_playlists.applescript')}`
+    output = `osascript #{script_path(:list_of_playlists)}`
     output.chomp.split(', ')
   end
 
   module_function
 
-  def applescripts_path
-    File.expand_path('applescripts', __dir__)
+  def script_path(script_name)
+    applescripts_path = File.expand_path('applescripts', __dir__)
+    File.join(applescripts_path, "#{script_name.to_s}.applescript")
   end
 end
