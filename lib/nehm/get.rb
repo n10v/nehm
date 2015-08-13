@@ -57,7 +57,7 @@ module Get
 
     # Check if iTunes playlist set up
     playlist = PlaylistControl.playlist
-    if !playlist && !playlist.to_s.empty? && get_or_dl == :get && !OS.linux?
+    if !playlist && get_or_dl == :get && !OS.linux?
       puts Paint["You don't set up iTunes playlist!", :yellow]
       puts "Your track won't add to iTunes playlist"
     end
