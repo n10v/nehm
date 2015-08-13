@@ -13,8 +13,4 @@ class Playlist
   def to_s
     @name
   end
-
-  def empty?
-    @name == ''
-  end
 end

@@ -14,7 +14,7 @@ module Configure
         # option[2] - color
         output << option[0] + ': '
         output <<
-          if option[1] && !option[1].to_s.empty?
+          unless option[1].nil? && option[1].to_s.empty?
             Paint[option[1], option[2]]
           else
             Paint["doesn't set up", 'gold']
