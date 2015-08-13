@@ -3,6 +3,7 @@
 ## 1.4.2
 
 * Fix: app fails if you didn't set up playlist (again)
+* Reduce gem size
 
 ## 1.4.1
 
