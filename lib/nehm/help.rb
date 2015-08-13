@@ -2,9 +2,9 @@
 module Help
   def self.available_commands
     puts Paint['Avalaible nehm commands:', :yellow]
-    puts '  ' + Paint['get', :green]       + ' - Downloading, setting tags and adding to your iTunes library last post or like from your profile'
-    puts '  ' + Paint['dl', :green]        + ' - Downloading and setting tags last post or like from your profile'
-    puts '  ' + Paint['configure', :green] + ' - Configuring application'
+    puts '  ' + Paint['get', :green] + '        - Downloading, setting tags and adding to your iTunes library last post or like from your profile'
+    puts '  ' + Paint['dl', :green] + '         - Downloading and setting tags last post or like from your profile'
+    puts '  ' + Paint['configure', :green] + '  - Configuring application'
     puts "See #{Paint['nehm help [command]', :yellow]} to read about a specific subcommand"
   end
 
