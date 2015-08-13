@@ -50,6 +50,7 @@ module Get
     else
       itunes_set_up = true
     end
+    
     # Check if iTunes playlist set up
     playlist = PlaylistControl.playlist
     if !playlist && get_or_dl == :get && !OS.linux?
