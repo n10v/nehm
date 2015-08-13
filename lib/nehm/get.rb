@@ -5,18 +5,22 @@ require 'fileutils'
 module Get
   def self.[](get_or_dl, args)
     # Processing arguments
-    options = [{ name: 'to', module: PathControl, setter: :temp_dl_path= },
-               { name: 'from', module: UserControl, setter: :temp_user= },
-               { name: 'playlist', module: PlaylistControl, setter: :temp_playlist= }]
+    # Using arrays instead of hashes to improve performance
+    options = [['to', PathControl, :temp_dl_path=],
+               ['from', UserControl, :temp_user=],
+               ['playlist', PlaylistControl, :temp_playlist=]]
 
     options.each do |option|
-      if args.include? option[:name]
-        index = args.index(option[:name])
+      # option[0] - option name
+      # option[1] - module
+      # option[2] - setter method
+      if args.include? option[0]
+        index = args.index(option[0])
         value = args[index + 1]
         args.delete_at(index + 1)
         args.delete_at(index)
 
-        option[:module].send(option[:setter], value)
+        option[1].send(option[2], value)
       end
     end
 
@@ -50,7 +54,7 @@ module Get
     else
       itunes_set_up = true
     end
-    
+
     # Check if iTunes playlist set up
     playlist = PlaylistControl.playlist
     if !playlist && get_or_dl == :get && !OS.linux?
