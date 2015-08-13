@@ -50,8 +50,12 @@ module Get
     else
       itunes_set_up = true
     end
-
+    # Check if iTunes playlist set up
     playlist = PlaylistControl.playlist
+    if !playlist && get_or_dl == :get && !OS.linux?
+      puts Paint["You don't set up iTunes path!", :yellow]
+      puts "Your track won't add to iTunes library"
+    end
 
     tracks.each do |track|
       dl(track)
@@ -59,8 +63,8 @@ module Get
       tag(track)
       if itunes_set_up && !OS.linux? && get_or_dl == :get
         cp(track)
-        wait_while_itunes_add_track_to_lib(track) if playlist
-        playlist.add_track(track.file_path) if playlist
+        wait_while_itunes_add_track_to_lib(track) if playlist && !playlist.empty
+        playlist.add_track(track.file_path) if playlist && !playlist.empty
       end
       track.artwork.suicide
     end
