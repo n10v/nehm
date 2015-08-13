@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.4.2
+
+* Fix: app fails if you didn't set up playlist (again)
+
 ## 1.4.1
 
 * Fix: app fails if you didn't set up playlist
