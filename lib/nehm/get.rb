@@ -66,12 +66,12 @@ module Get
       dl(track)
       dl(track.artwork)
       tag(track)
-      if itunes_set_up && !OS.linux? && get_or_dl == :get
+      track.artwork.suicide
+      if itunes_set_up && get_or_dl == :get && !OS.linux?
         cp(track)
         wait_while_itunes_add_track_to_lib(track) unless playlist.to_s.empty?
         playlist.add_track(track.file_path) unless playlist.to_s.empty?
       end
-      track.artwork.suicide
     end
     puts Paint['Done!', :green]
   end

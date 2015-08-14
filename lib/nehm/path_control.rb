@@ -17,8 +17,11 @@ module PathControl
       end
 
       path = HighLine.new.ask(path_ask + ':')
+
+      # If user press enter (set path to default)
       path = default_path if path == '' && default_path
 
+      # If tilde at top of the line of path
       path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
       if Dir.exist?(path)

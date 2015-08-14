@@ -1,10 +1,6 @@
 module PlaylistControl
   def self.playlist
-    if @temp_playlist
-      @temp_playlist
-    elsif !Config[:playlist].nil?
-      Playlist.new(Config[:playlist])
-    end
+    @temp_playlist || default_playlist
   end
 
   def self.set_playlist
@@ -33,5 +29,11 @@ module PlaylistControl
       puts Paint['Invalid playlist name. Please enter correct name', :red]
       exit
     end
+  end
+
+  module_function
+
+  def default_playlist
+    Playlist.new(Config[:playlist]) unless Config[:playlist].nil?
   end
 end
