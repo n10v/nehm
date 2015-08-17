@@ -2,27 +2,9 @@
 module Configure
   def self.menu
     loop do
-      output = ''
-      options = [['Download path', Config[:dl_path], :magenta],
-                 ['Permalink', Config[:permalink], :cyan],
-                 ['iTunes playlist', PlaylistControl.playlist, :cyan]]
-
-      options.each do |option|
-        # option[0] - name
-        # option[1] - value
-        # option[2] - color
-        output << option[0] + ': '
-        output <<
-          if option[1].to_s.empty? # nil.to_s == ''
-            Paint["doesn't set up", 'gold']
-          else
-            Paint[option[1], option[2]]
-          end
-        output << "\n"
-      end
-
-      puts output
-      puts "\n"
+      puts 'Download path: ' + Paint[Config[:dl_path], :magenta]
+      puts 'Permalink: ' + Paint[Config[:permalink], :cyan]
+      puts 'iTunes playlist: ' + Paint[PlaylistControl.playlist, :cyan] unless OS.linux?
 
       HighLine.new.choose do |menu|
         menu.prompt = Paint['Choose setting', :yellow]
