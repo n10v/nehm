@@ -1,5 +1,13 @@
 # nehm change log
 
+## 1.5
+
+* Add support for Ruby 1.9.3
+* Edit application structure
+  * Improve performance when adding tracks to iTunes library
+  * Remove useless iTunes path logic
+* Prettify `nehm help`
+
 ## 1.4.2
 
 * Fix: app fails if you didn't set up playlist (again)
