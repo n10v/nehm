@@ -68,8 +68,6 @@ module Get
       tag(track)
       track.artwork.suicide
       if itunes_set_up && get_or_dl == :get && !OS.linux?
-        cp(track)
-        wait_while_itunes_add_track_to_lib(track) unless playlist.to_s.empty?
         playlist.add_track(track.file_path) unless playlist.to_s.empty?
       end
     end
@@ -109,18 +107,6 @@ module Get
       tag.add_frame(apic)
 
       file.save
-    end
-  end
-
-  def cp(track)
-    puts 'Adding to iTunes library'
-    FileUtils.cp(track.file_path, PathControl.itunes_path)
-  end
-
-  # Check when iTunes will add track to its library from 'Auto' directory
-  def wait_while_itunes_add_track_to_lib(track)
-    loop do
-      break unless File.exist?(File.join(PathControl.itunes_path, track.file_name))
     end
   end
 end
