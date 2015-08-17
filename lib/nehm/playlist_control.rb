@@ -1,6 +1,6 @@
 module PlaylistControl
   def self.playlist
-    @temp_playlist || default_playlist
+    @temp_playlist || default_user_playlist || music_master_library
   end
 
   def self.set_playlist
@@ -33,7 +33,11 @@ module PlaylistControl
 
   module_function
 
-  def default_playlist
+  def default_user_playlist
     Playlist.new(Config[:playlist]) unless Config[:playlist].nil?
+  end
+
+  def music_master_library
+    Playlist.new(AppleScript.music_master_library)
   end
 end
