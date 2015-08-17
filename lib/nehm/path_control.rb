@@ -48,6 +48,14 @@ module PathControl
       exit
     end
   end
+  
+  def self.tilde_to_home(path)
+    File.join(ENV['HOME'], path[1..-1])
+  end
+
+  def self.tilde_at_top?(path)
+    path[0] == '~'
+  end
 
   module_function
 
