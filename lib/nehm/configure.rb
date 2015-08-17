@@ -5,7 +5,8 @@ module Configure
       puts 'Download path: ' + Paint[Config[:dl_path], :magenta]
       puts 'Permalink: ' + Paint[Config[:permalink], :cyan]
       puts 'iTunes playlist: ' + Paint[PlaylistControl.playlist, :cyan] unless OS.linux?
-
+      puts "\n"
+      
       HighLine.new.choose do |menu|
         menu.prompt = Paint['Choose setting', :yellow]
 
