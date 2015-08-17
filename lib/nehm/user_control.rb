@@ -1,7 +1,7 @@
 module UserControl
 
   def self.logged_in?
-    Config.key?(:default_id)
+    Cfg.key?(:default_id)
   end
 
   def self.log_in
