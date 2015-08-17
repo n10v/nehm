@@ -6,7 +6,7 @@ class Playlist
   end
 
   def add_track(track_path)
-    puts 'Adding to playlist'
+    puts 'Adding to iTunes'
     AppleScript.add_track_to_playlist(track_path, @name)
   end
 
