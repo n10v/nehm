@@ -46,30 +46,13 @@ module Get
         exit
       end
 
-    # Check if iTunes path set up
-    if !PathControl.itunes_path && get_or_dl == :get && !OS.linux?
-      puts Paint["You don't set up iTunes path!", :yellow]
-      puts "Your track won't add to iTunes library"
-      itunes_set_up = false
-    else
-      itunes_set_up = true
-    end
-
-    # Check if iTunes playlist set up
     playlist = PlaylistControl.playlist
-    if !playlist && get_or_dl == :get && !OS.linux?
-      puts Paint["You don't set up iTunes playlist!", :yellow]
-      puts "Your track won't add to iTunes playlist"
-    end
-
     tracks.each do |track|
       dl(track)
       dl(track.artwork)
       tag(track)
       track.artwork.suicide
-      if itunes_set_up && get_or_dl == :get && !OS.linux?
-        playlist.add_track(track.file_path) unless playlist.to_s.empty?
-      end
+      playlist.add_track(track.file_path) if !playlist.to_s.empty? && get_or_dl == :get && !OS.linux?
     end
     puts Paint['Done!', :green]
   end

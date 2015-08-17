@@ -49,60 +49,6 @@ module PathControl
     end
   end
 
-  def self.itunes_path
-    Config[:itunes_path]
-  end
-
-  # Use in Configure.menu
-  def self.itunes_root_path
-    PathControl.itunes_path.sub("/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized", '')
-  end
-
-  def self.set_itunes_path
-    loop do
-      default_path = File.join(ENV['HOME'], '/Music/iTunes')
-      path_ask = 'Enter path to iTunes directory'
-
-      if Dir.exist?(default_path)
-        path_ask << " (press enter to set it to #{Paint[default_path, :magenta]})"
-      else
-        default_path = nil
-      end
-
-      path = HighLine.new.ask(path_ask + ':')
-      path = default_path if path == '' && default_path
-
-      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
-
-      path = File.join(path, "iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
-
-      if Dir.exist?(path)
-        Config[:itunes_path] = path
-        puts Paint["iTunes directory set up to #{Paint[PathControl.itunes_root_path, :magenta]}", :green]
-        break
-      else
-        puts Paint["This directory doesn't exist. Please enter correct path", :red]
-      end
-    end
-  end
-
-  def self.set_itunes_path_to_default
-    itunes_path = File.join(ENV['HOME'], "/Music/iTunes/iTunes\ Media/Automatically\ Add\ to\ iTunes.localized")
-    if Dir.exist?(itunes_path)
-      Config[:itunes_path] = itunes_path
-    else
-      puts Paint["Don't know where your iTunes path. Set it up manually from ", 'gold'] + Paint['nehm configure', :yellow]
-    end
-  end
-
-  def self.tilde_to_home(path)
-    File.join(ENV['HOME'], path[1..-1])
-  end
-
-  def self.tilde_at_top?(path)
-    path[0] == '~'
-  end
-
   module_function
 
   def default_dl_path

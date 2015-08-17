@@ -51,9 +51,6 @@ module App
     puts "\n"
 
     unless OS.linux?
-      PathControl.set_itunes_path_to_default
-      puts "\n"
-
       PlaylistControl.set_playlist
       puts "\n"
     end
