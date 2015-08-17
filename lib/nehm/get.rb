@@ -52,7 +52,7 @@ module Get
       dl(track.artwork)
       tag(track)
       track.artwork.suicide
-      playlist.add_track(track.file_path) if !playlist.to_s.empty? && get_or_dl == :get && !OS.linux?
+      playlist.add_track(track.file_path) if playlist && get_or_dl == :get && !OS.linux?
     end
     puts Paint['Done!', :green]
   end
