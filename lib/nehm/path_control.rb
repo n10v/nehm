@@ -25,7 +25,7 @@ module PathControl
       path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
 
       if Dir.exist?(path)
-        Config[:dl_path] = path
+        Cfg[:dl_path] = path
         puts Paint["Download directory set up to #{Paint[path, :magenta]}", :green]
         break
       else
@@ -52,8 +52,8 @@ module PathControl
   module_function
 
   def default_dl_path
-    if Config[:dl_path]
-      Config[:dl_path]
+    if Cfg[:dl_path]
+      Cfg[:dl_path]
     else
       puts Paint["You don't set up download path!", :red]
       puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATH_TO_DIRECTORY]', :yellow]} option"

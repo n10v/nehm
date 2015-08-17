@@ -45,7 +45,7 @@ module App
   def init
     puts Paint['Hello!', :green]
     puts 'Before using the nehm, you should set it up:'
-    Config.create unless Config.exist?
+    Cfg.create unless Cfg.exist?
 
     PathControl.set_dl_path
     puts "\n"

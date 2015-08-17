@@ -7,13 +7,13 @@ module PlaylistControl
     loop do
       playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks (press Enter to unset default playlist)')
       if playlist == ''
-        Config[:playlist] = ''
+        Cfg[:playlist] = nil
         puts Paint['Default iTunes playlist unset', :green]
         break
       end
 
       if AppleScript.list_of_playlists.include? playlist
-        Config[:playlist] = playlist
+        Cfg[:playlist] = playlist
         puts Paint["Default iTunes playlist set up to #{playlist}", :green]
         break
       else
@@ -34,7 +34,7 @@ module PlaylistControl
   module_function
 
   def default_user_playlist
-    Playlist.new(Config[:playlist]) unless Config[:playlist].nil?
+    Playlist.new(Cfg[:playlist]) unless Cfg[:playlist].nil?
   end
 
   def music_master_library

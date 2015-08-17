@@ -10,8 +10,8 @@ module UserControl
       url = "https://soundcloud.com/#{permalink}"
       if user_exist?(permalink)
         user = Client.get('/resolve', url: url)
-        Config[:default_id] = user.id
-        Config[:permalink] = permalink
+        Cfg[:default_id] = user.id
+        Cfg[:permalink] = permalink
         puts Paint['Successfully logged in!', :green]
         break
       else
@@ -38,7 +38,7 @@ module UserControl
 
   def default_user
     if UserControl.logged_in?
-      User.new(Config[:default_id])
+      User.new(Cfg[:default_id])
     else
       puts Paint["You didn't logged in", :red]
       puts "Login from #{Paint['nehm configure', :yellow]} or use #{Paint['[from PERMALINK]', :yellow]} option"
