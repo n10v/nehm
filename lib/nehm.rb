@@ -3,7 +3,7 @@ require 'paint'
 
 require 'nehm/applescript'
 require 'nehm/artwork'
-require 'nehm/config'
+require 'nehm/cfg'
 require 'nehm/configure'
 require 'nehm/client'
 require 'nehm/get'
