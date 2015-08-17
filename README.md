@@ -72,7 +72,7 @@ Go to usage for further instructions
 
   *(if you type `to current`, nehm will get track to current working directory)*
 
-* To get tracks to another playlist
+* To get tracks to another iTunes playlist
 
   `nehm get post playlist MyPlaylist`
 
