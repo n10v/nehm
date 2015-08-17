@@ -46,7 +46,7 @@ Go to usage for further instructions
 
 **!!nehm doesn't add tracks to iTunes library, if you use Linux!!**
 
-* To get (download to download directory, set tags and add to Itunes library) your last like
+* To get (download to download directory, set tags and add to iTunes library) your last like
 
   `nehm get like`
 
@@ -84,7 +84,7 @@ Go to usage for further instructions
 
   `nehm dl https://soundcloud.com/nasa/delta-iv-launch`
 
-* Also, you can configure nehm (change download directory, iTunes directory, permalink)
+* Also, you can configure nehm (change download directory, permalink)
 
   `nehm configure`
 
