@@ -8,6 +8,10 @@ module AppleScript
     output.chomp.split(', ')
   end
 
+  def self.music_master_library
+    `osascript #{script_path(:music_master_library)}`
+  end
+
   module_function
 
   def script_path(script_name)
