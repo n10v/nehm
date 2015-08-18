@@ -1,5 +1,10 @@
 # nehm change log
 
+## 1.5.1
+* Update `nehm help`
+  * Fix some descriptions
+  * Add `url` option to `dl` and `get`
+
 ## 1.5
 
 * Add support for Ruby 1.9.3
