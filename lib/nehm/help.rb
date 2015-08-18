@@ -41,7 +41,7 @@ module Help
     puts '  ' + Paint['<number> posts', :green] + '             Do same with last <number> posts from your profile'
     puts '  ' + Paint['like', :green] + '                       Do same with your last like'
     puts '  ' + Paint['<number> likes', :green] + '             Do same with your last <number> likes'
-    puts '  ' + Paint['url', :magenta] + '                      Do same with track from entered url'
+    puts '  ' + Paint['url', :magenta] + '                        Do same with track from entered url'
     puts "\n"
     puts Paint['Extra options:', :yellow]
     puts '  ' + Paint['from PERMALINK', :green] + '             Do aforecited operations from custom user profile'
@@ -61,7 +61,7 @@ module Help
     puts '  ' + Paint['<number> posts', :green] + '             Do same with last <number> posts from your profile'
     puts '  ' + Paint['like', :green] + '                       Do same with your last like'
     puts '  ' + Paint['<number> likes', :green] + '             Do same with your last <number> likes'
-    puts '  ' + Paint['url', :magenta] + '                      Do same with track from entered url'
+    puts '  ' + Paint['url', :magenta] + '                        Do same with track from entered url'
     puts "\n"
     puts Paint['Extra options:', :yellow]
     puts '  ' + Paint['from PERMALINK', :green] + '             Do aforecited operations from profile with PERMALINK'
