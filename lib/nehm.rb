@@ -61,6 +61,6 @@ module App
   end
 
   def initialized?
-    File.exist?(File.join(ENV['HOME'], '.nehmconfig'))
+    File.exist?(Cfg::FILE_PATH)
   end
 end

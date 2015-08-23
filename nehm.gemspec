@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'highline',    '>= 1.7.2'
   spec.add_dependency 'certifi'
   spec.add_dependency 'paint'
+  spec.add_dependency 'bogy'
 end
