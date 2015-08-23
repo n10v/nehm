@@ -21,10 +21,6 @@ module Cfg
     File.exist?(FILE_PATH)
   end
 
-  def self.FILE_PATH
-    File.join(ENV['HOME'], '.nehmconfig')
-  end
-
   def self.key?(key)
     CONFIG_FILE.to_h.key?(key.to_s)
   end
