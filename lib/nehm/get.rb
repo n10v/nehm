@@ -1,5 +1,4 @@
 require 'taglib'
-require 'fileutils'
 
 # TrackUtils module responds to 'nehm get/dl ...' commands
 module Get
