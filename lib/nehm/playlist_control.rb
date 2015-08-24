@@ -5,7 +5,7 @@ module PlaylistControl
 
   def self.set_playlist
     loop do
-      playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks (press Enter to unset default playlist)')
+      playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks (press Enter to set it to default Music library)')
       if playlist == ''
         Cfg[:playlist] = nil
         puts Paint['Default iTunes playlist unset', :green]
