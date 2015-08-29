@@ -39,44 +39,41 @@ Before using the nehm, you should set it up:
 Enter path to desirable download directory (press enter to set it to ...
 ```
 
-**Now you can use nehm!**
-Go to usage for further instructions
-
 ## Usage
 
 **!!nehm doesn't add tracks to iTunes library, if you use Linux!!**
 
-* To get (download to download directory, set tags and add to iTunes library) your last like
+* Get (download to download directory, set tags and add to iTunes library) your last like
 
   `nehm get like`
 
-* To get your last post (last track or repost from your profile)
+* Get your last post (last track or repost from your profile)
 
   `nehm get post`
 
-* To get multiple last posts or likes
+* Get multiple last posts or likes
 
   `nehm get 3 posts` or `nehm get 3 likes`
 
-* To just download and set tags any track, you can input
+* Just download and set tags any track, you can input
 
   `nehm dl post` or `nehm dl like` or `nehm dl 3 likes`
 
-* To get tracks from another user
+* Get tracks from another user
 
   `nehm get post from nasa` or `nehm dl like from bogem`
 
-* To get tracks to another directory
+* Get tracks to another directory
 
   `nehm get post from nasa to ~/Downloads` or `nehm dl like from bogem to current`
 
   *(if you type `to current`, nehm will get track to current working directory)*
 
-* To get tracks to another iTunes playlist
+* Get tracks to another iTunes playlist
 
   `nehm get post playlist MyPlaylist`
 
-* And of course you can get or download track from url
+* Get or download track from url
 
   `nehm get https://soundcloud.com/nasa/delta-iv-launch`
 
@@ -84,11 +81,11 @@ Go to usage for further instructions
 
   `nehm dl https://soundcloud.com/nasa/delta-iv-launch`
 
-* Also, you can configure nehm (change download directory, permalink)
+* Configure `nehm` (change download directory, permalink, playlist)
 
   `nehm configure`
 
-* For help, just input
+* Help
 
   `nehm help`
 
@@ -100,7 +97,7 @@ A: Permalink is the last word in your profile url. **Example:** for profile url 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bogem/nehm.
+Bug reports and pull requests are welcome.
 
 ## License
 
