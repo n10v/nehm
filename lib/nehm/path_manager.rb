@@ -36,7 +36,7 @@ module PathManager
 
   def self.temp_dl_path=(path)
     # If 'to ~/../..' entered
-    path = PathManager.tilde_to_home(path) if PathManager.tilde_at_top?(path)
+    path = tilde_to_home(path) if tilde_at_top?(path)
 
     # If 'to current' entered
     path = Dir.pwd if path == 'current'
@@ -49,14 +49,6 @@ module PathManager
     end
   end
 
-  def self.tilde_to_home(path)
-    File.join(ENV['HOME'], path[1..-1])
-  end
-
-  def self.tilde_at_top?(path)
-    path[0] == '~'
-  end
-
   module_function
 
   def default_dl_path
@@ -67,5 +59,13 @@ module PathManager
       puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATH_TO_DIRECTORY]', :yellow]} option"
       exit
     end
+  end
+
+  def tilde_at_top?(path)
+    path[0] == '~'
+  end
+
+  def tilde_to_home(path)
+    File.join(ENV['HOME'], path[1..-1])
   end
 end
