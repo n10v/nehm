@@ -24,8 +24,6 @@ Fedora/RHEL: `sudo yum install taglib-devel`
 
 `gem install nehm`
 
-**That's all!**
-
 ## First usage
 
 If you just installed nehm, write any command for its setup
