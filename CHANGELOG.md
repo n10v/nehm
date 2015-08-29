@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.5.3
+* Fix bugs, associated with special characters in track's name
+* Minor improvements
+
 ## 1.5.2
 * Binary now works if you use nehm from source
 * Minor improvements
