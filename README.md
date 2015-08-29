@@ -4,7 +4,7 @@
 
 ## Installation
 
-**1. First, you should install `taglib` library**
+**1. Install `taglib` library**
 
 **Mac OS X:**
 
@@ -20,7 +20,7 @@ Debian/Ubuntu: `sudo apt-get install libtag1-dev`
 
 Fedora/RHEL: `sudo yum install taglib-devel`
 
-**2. Then you can install `nehm` gem:**
+**2. Install `nehm` gem:**
 
 `gem install nehm`
 
