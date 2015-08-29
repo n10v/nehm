@@ -81,7 +81,7 @@ Enter path to desirable download directory (press enter to set it to ...
 
   `nehm dl https://soundcloud.com/nasa/delta-iv-launch`
 
-* Configure `nehm` (change download directory, permalink, playlist)
+* Configure (change download directory, permalink, playlist)
 
   `nehm configure`
 
