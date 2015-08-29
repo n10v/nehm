@@ -9,12 +9,12 @@ require 'nehm/client'
 require 'nehm/get'
 require 'nehm/help'
 require 'nehm/os'
-require 'nehm/path_control'
+require 'nehm/path_manager'
 require 'nehm/playlist'
-require 'nehm/playlist_control'
+require 'nehm/playlist_manager'
 require 'nehm/track'
 require 'nehm/user'
-require 'nehm/user_control'
+require 'nehm/user_manager'
 
 module App
   def self.do(args)
