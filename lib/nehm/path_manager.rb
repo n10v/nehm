@@ -1,6 +1,4 @@
 module PathManager
-  attr_reader :temp_dl_path
-
   def self.dl_path
     @temp_dl_path || default_dl_path
   end
