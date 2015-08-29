@@ -4,15 +4,15 @@ module Configure
     loop do
       puts 'Download path: ' + Paint[Cfg[:dl_path], :magenta]
       puts 'Permalink: ' + Paint[Cfg[:permalink], :cyan]
-      puts 'iTunes playlist: ' + Paint[PlaylistControl.playlist, :cyan] unless OS.linux?
+      puts 'iTunes playlist: ' + Paint[PlaylistManager.playlist, :cyan] unless OS.linux?
       puts "\n"
 
       HighLine.new.choose do |menu|
         menu.prompt = Paint['Choose setting', :yellow]
 
-        menu.choice('Edit download path'.freeze) { PathControl.set_dl_path }
-        menu.choice('Edit permalink'.freeze) { UserControl.log_in }
-        menu.choice('Edit iTunes playlist'.freeze) { PlaylistControl.set_playlist } unless OS.linux?
+        menu.choice('Edit download path'.freeze) { PathManager.set_dl_path }
+        menu.choice('Edit permalink'.freeze) { UserManager.log_in }
+        menu.choice('Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
         menu.choice('Exit'.freeze) { puts 'Goodbye!'; exit }
       end
       puts "\n"

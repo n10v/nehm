@@ -1,4 +1,4 @@
-module UserControl
+module UserManager
   def self.user
     @temp_user || default_user
   end
@@ -35,7 +35,7 @@ module UserControl
   module_function
 
   def default_user
-    if UserControl.logged_in?
+    if UserManager.logged_in?
       User.new(Cfg[:default_id])
     else
       puts Paint["You didn't logged in", :red]

@@ -23,7 +23,7 @@ class Track
   end
 
   def file_path
-    File.join(PathControl.dl_path, file_name)
+    File.join(PathManager.dl_path, file_name)
   end
 
   def id

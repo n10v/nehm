@@ -5,9 +5,9 @@ module Get
   def self.[](get_or_dl, args)
     # Processing arguments
     # Using arrays instead of hashes to improve performance
-    options = [['to', PathControl, :temp_dl_path=],
-               ['from', UserControl, :temp_user=],
-               ['playlist', PlaylistControl, :temp_playlist=]]
+    options = [['to', PathManager, :temp_dl_path=],
+               ['from', UserManager, :temp_user=],
+               ['playlist', PlaylistManager, :temp_playlist=]]
 
     options.each do |option|
       # option[0] - option name
@@ -23,7 +23,7 @@ module Get
       end
     end
 
-    user = UserControl.user
+    user = UserManager.user
     tracks = []
     tracks +=
       case args.last
@@ -45,7 +45,7 @@ module Get
         exit
       end
 
-    playlist = PlaylistControl.playlist
+    playlist = PlaylistManager.playlist
     tracks.each do |track|
       dl(track)
       dl(track.artwork)

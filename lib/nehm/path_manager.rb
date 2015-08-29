@@ -1,4 +1,4 @@
-module PathControl
+module PathManager
   attr_reader :temp_dl_path
 
   def self.dl_path
@@ -22,7 +22,7 @@ module PathControl
       path = default_path if path == '' && default_path
 
       # If tilde at top of the line of path
-      path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+      path = PathManager.tilde_to_home(path) if PathManager.tilde_at_top?(path)
 
       if Dir.exist?(path)
         Cfg[:dl_path] = path
@@ -36,7 +36,7 @@ module PathControl
 
   def self.temp_dl_path=(path)
     # If 'to ~/../..' entered
-    path = PathControl.tilde_to_home(path) if PathControl.tilde_at_top?(path)
+    path = PathManager.tilde_to_home(path) if PathManager.tilde_at_top?(path)
 
     # If 'to current' entered
     path = Dir.pwd if path == 'current'

@@ -47,15 +47,15 @@ module App
     puts 'Before using the nehm, you should set it up:'
     Cfg.create unless Cfg.exist?
 
-    PathControl.set_dl_path
+    PathManager.set_dl_path
     puts "\n"
 
     unless OS.linux?
-      PlaylistControl.set_playlist
+      PlaylistManager.set_playlist
       puts "\n"
     end
 
-    UserControl.log_in
+    UserManager.log_in
 
     puts Paint['Now you can use nehm :)', :green]
   end

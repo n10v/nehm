@@ -1,4 +1,4 @@
-module PlaylistControl
+module PlaylistManager
   def self.playlist
     @temp_playlist || default_user_playlist || music_master_library
   end
