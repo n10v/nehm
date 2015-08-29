@@ -4,22 +4,18 @@ require 'taglib'
 module Get
   def self.[](get_or_dl, args)
     # Processing arguments
-    # Using arrays instead of hashes to improve performance
-    options = [['to', PathManager, :temp_dl_path=],
-               ['from', UserManager, :temp_user=],
-               ['playlist', PlaylistManager, :temp_playlist=]]
+    options = [{ name: 'to', module: PathManager, setter: :temp_dl_path= },
+               { name: 'from', module: UserManager, setter: :temp_user= },
+               { name: 'playlist', module: PlaylistManager, setter: :temp_playlist= }]
 
     options.each do |option|
-      # option[0] - option name
-      # option[1] - module
-      # option[2] - setter method
-      if args.include? option[0]
-        index = args.index(option[0])
+      if args.include? option[:name]
+        index = args.index(option[:name])
         value = args[index + 1]
         args.delete_at(index + 1)
         args.delete_at(index)
 
-        option[1].send(option[2], value)
+        option[:module].send(option[:setter], value)
       end
     end
 
