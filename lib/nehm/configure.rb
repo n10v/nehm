@@ -15,6 +15,7 @@ module Configure
         menu.choice('Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
         menu.choice('Exit'.freeze) { puts 'Goodbye!'; exit }
       end
+      sleep(1)
       puts "\n"
     end
   end
