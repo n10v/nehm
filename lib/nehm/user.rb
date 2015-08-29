@@ -33,6 +33,7 @@ class User
 
     # Official SC API wrapper doesn't support for posts
     # So I should get posts by HTTP requests
+    #TODO: Get more than 300 posts (max limit = 300)
     conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
     response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{count}&offset=0")
 
