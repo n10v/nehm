@@ -2,9 +2,9 @@
 module Configure
   def self.menu
     loop do
-      puts 'Download path: ' + Paint[Cfg[:dl_path], :magenta]
-      puts 'Permalink: ' + Paint[Cfg[:permalink], :cyan]
-      puts 'iTunes playlist: ' + Paint[PlaylistManager.playlist, :cyan] unless OS.linux?
+      puts "Download path: #{Paint[Cfg[:dl_path], :magenta]}"
+      puts "Permalink: #{Paint[Cfg[:permalink], :cyan]}"
+      puts "iTunes playlist: #{Paint[PlaylistManager.playlist, :cyan]}" unless OS.linux?
       puts "\n"
 
       HighLine.new.choose do |menu|
