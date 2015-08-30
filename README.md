@@ -6,6 +6,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/nehm.svg)](http://badge.fury.io/rb/nehm)
 [![Dependency Status](https://gemnasium.com/bogem/nehm.svg)](https://gemnasium.com/bogem/nehm)
+[![Code Climate](https://codeclimate.com/github/bogem/nehm/badges/gpa.svg)](https://codeclimate.com/github/bogem/nehm)
 
 ## Installation
 
