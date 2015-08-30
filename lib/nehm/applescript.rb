@@ -15,7 +15,7 @@ module AppleScript
   module_function
 
   def script_path(script_name)
-    applescripts_path = File.expand_path(File.join(File.dirname(__FILE__), "applescripts"))
+    applescripts_path = File.expand_path(File.join(File.dirname(__FILE__), 'applescripts'))
     File.join(applescripts_path, "#{script_name.to_s}.applescript")
   end
 end
