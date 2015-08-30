@@ -63,7 +63,7 @@ module Get
     puts 'Downloading ' + arg.name
     path = arg.file_path
     url = arg.url
-    command = "curl -# -o \"" + path + "\" -L " + url
+    command = "curl -# -o \"#{path}\" -L #{url}"
     `#{command}`
   end
 
