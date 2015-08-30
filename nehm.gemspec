@@ -20,11 +20,11 @@ Gem::Specification.new do |spec|
   spec.require_paths         = ['lib']
   spec.required_ruby_version = '>= 1.9.3'
 
-  spec.add_dependency 'soundcloud',  '>= 0.3.2'
-  spec.add_dependency 'taglib-ruby', '>= 0.7.0'
+  spec.add_dependency 'bogy',        '>= 1.1'
+  spec.add_dependency 'certifi'
   spec.add_dependency 'faraday',     '>= 0.9.1'
   spec.add_dependency 'highline',    '>= 1.7.2'
-  spec.add_dependency 'certifi'
   spec.add_dependency 'paint'
-  spec.add_dependency 'bogy'
+  spec.add_dependency 'soundcloud',  '>= 0.3.2'
+  spec.add_dependency 'taglib-ruby', '>= 0.7.0'
 end
