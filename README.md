@@ -4,6 +4,8 @@
 
 *nehm* is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way
 
+[![Gem Version](https://badge.fury.io/rb/nehm.svg)](http://badge.fury.io/rb/nehm)
+
 ## Installation
 
 **1. Install `taglib` library**
