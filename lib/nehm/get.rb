@@ -35,8 +35,12 @@ module Get
         user.posts(count)
       when %r{https:\/\/soundcloud.com\/}
         track_from_url(args.last)
+      when nil
+        puts Paint['You must provide option', :red]
+        puts "Input #{Paint['nehm help', :yellow]} for help"
+        exit
       else
-        puts Paint['Invalid argument(s)', :red]
+        puts Paint["Invalid argument(s) '#{args.last}'", :red]
         puts "Input #{Paint['nehm help', :yellow]} for help"
         exit
       end

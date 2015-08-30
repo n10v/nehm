@@ -2,10 +2,13 @@
 module Help
   def self.available_commands
     puts <<-HELP.gsub(/^ {6}/, '')
+      #{Paint['nehm', :green]} is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way
+
       #{Paint['Avalaible nehm commands:', :yellow]}
         #{Paint['get', :green]}        Downloading, setting tags and adding to your iTunes library last post or like from your profile
         #{Paint['dl', :green]}         Downloading and setting tags last post or like from your profile
         #{Paint['configure', :green]}  Configuring application
+        
       See #{Paint['nehm help [command]', :yellow]} to read about a specific subcommand
     HELP
   end
@@ -17,7 +20,7 @@ module Help
     when nil
       Help.available_commands
     else
-      puts Paint["Command #{command} doesn't exist", :red]
+      puts Paint["Command '#{command}' doesn't exist", :red]
       puts "\n"
       Help.available_commands
     end

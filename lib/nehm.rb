@@ -28,10 +28,10 @@ module App
       Get[:dl, args]
     when 'configure'
       Configure.menu
-    when 'help'
+    when 'help', nil
       Help.show(args.first)
     else
-      puts Paint['Invalid command', :red]
+      puts Paint["Invalid command '#{command}'", :red]
       puts "Input #{Paint['nehm help', :yellow]} for all avalaible commands"
     end
 
