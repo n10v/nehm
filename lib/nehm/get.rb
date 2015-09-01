@@ -4,9 +4,9 @@ require 'taglib'
 module Get
   def self.[](get_or_dl, args)
     # Processing arguments
-    options = [{ name: 'to', module: PathManager, setter: :temp_dl_path= },
-               { name: 'from', module: UserManager, setter: :temp_user= },
-               { name: 'playlist', module: PlaylistManager, setter: :temp_playlist= }]
+    options = [{ name: 'to', method: PathManager.method(:temp_dl_path=) },
+               { name: 'from', method: UserManager.method(:temp_user=) },
+               { name: 'playlist', method: PlaylistManager.method(:temp_playlist=) }]
 
     options.each do |option|
       if args.include? option[:name]
@@ -15,7 +15,7 @@ module Get
         args.delete_at(index + 1)
         args.delete_at(index)
 
-        option[:module].send(option[:setter], value)
+        option[:method].call(value)
       end
     end
 
