@@ -24,7 +24,6 @@ class User
       limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
       count -= SOUNDCLOUD_MAX_LIMIT
 
-      puts "/users/#{@id}/favorites?limit=#{limit}&offset=#{(i)*SOUNDCLOUD_MAX_LIMIT}"
       likes += Client.get("/users/#{@id}/favorites?limit=#{limit}&offset=#{(i)*SOUNDCLOUD_MAX_LIMIT}")
     end
 
@@ -57,7 +56,6 @@ class User
       limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
       count -= SOUNDCLOUD_MAX_LIMIT
 
-      puts "/profile/soundcloud:users:#{@id}?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}"
       response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}")
       parsed = JSON.parse(response.body)
       collection = parsed['collection']
