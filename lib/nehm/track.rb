@@ -36,7 +36,7 @@ class Track
   end
 
   def streamable?
-    @hash['streamable'] ? true : false
+    @hash['streamable']
   end
 
   def title

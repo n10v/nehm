@@ -48,11 +48,16 @@ module Get
 
     playlist = PlaylistManager.playlist
     tracks.each do |track|
-      dl(track)
-      dl(track.artwork)
-      tag(track)
-      track.artwork.suicide
-      playlist.add_track(track.file_path) if playlist && get_or_dl == :get && !OS.linux?
+      if track.streamable?
+        dl(track)
+        dl(track.artwork)
+        tag(track)
+        track.artwork.suicide
+        playlist.add_track(track.file_path) if playlist && get_or_dl == :get && !OS.linux?
+      else
+        puts "#{Paint['Track', :yellow]} #{Paint[track.name, :cyan]} #{Paint['undownloadable', :yellow]}"
+        puts 'Skip it'
+      end
       puts "\n"
     end
     puts Paint['Done!', :green]
