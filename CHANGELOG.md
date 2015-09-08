@@ -1,5 +1,11 @@
 # nehm change log
 
+## 1.5.4
+* Add availability to get/dl 300+ likes and posts
+* More convenient CLI
+* Fix: nehm fails if you have playlist in posts and you try to get/dl it
+* Some optimizations 
+
 ## 1.5.3
 * Fix bugs, associated with special characters in track's name
 * Minor improvements

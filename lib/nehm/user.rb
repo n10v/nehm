@@ -2,6 +2,8 @@ require 'json'
 require 'faraday'
 
 class User
+  SOUNDCLOUD_MAX_LIMIT = 180
+
   def initialize(id)
     @id = id
   end
@@ -13,9 +15,17 @@ class User
       exit
     end
 
+    d = count / SOUNDCLOUD_MAX_LIMIT
+    m = count % SOUNDCLOUD_MAX_LIMIT
+    d = m == 0 ? d : d + 1
+
     likes = []
-    count.times do |i|
-      likes += Client.get("/users/#{@id}/favorites?limit=1&offset=#{i}")
+    d.times do |i|
+      limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
+      count -= SOUNDCLOUD_MAX_LIMIT
+
+      puts "/users/#{@id}/favorites?limit=#{limit}&offset=#{(i)*SOUNDCLOUD_MAX_LIMIT}"
+      likes += Client.get("/users/#{@id}/favorites?limit=#{limit}&offset=#{(i)*SOUNDCLOUD_MAX_LIMIT}")
     end
 
     if likes.empty?
@@ -27,33 +37,34 @@ class User
   end
 
   # Post is last track/repost in profile
-  def posts(count_of_playlists_and_posts)
+  def posts(count)
     # Method to_i return 0, if there aren't any numbers in string
-    if count_of_playlists_and_posts == 0
+    if count == 0
       puts Paint['Invalid number of posts!', :red]
       exit
     end
+
+    d = count / SOUNDCLOUD_MAX_LIMIT
+    m = count % SOUNDCLOUD_MAX_LIMIT
+    d = m == 0 ? d : d + 1
 
     # Official SC API wrapper doesn't support posts
     # So I should get posts by HTTP requests
     conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
 
     posts = []
-    only_posts = 0
-    until only_posts == count_of_playlists_and_posts
-      response = conn.get("/profile/soundcloud:users:#{@id}?limit=1&offset=#{only_posts}")
+    d.times do |i|
+      limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
+      count -= SOUNDCLOUD_MAX_LIMIT
+
+      puts "/profile/soundcloud:users:#{@id}?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}"
+      response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}")
       parsed = JSON.parse(response.body)
-      collection = parsed['collection'].first
-      only_posts += 1
+      collection = parsed['collection']
 
       break if collection.nil?
 
-      if collection['type'] == 'playlist'
-        count_of_playlists_and_posts += 1
-        next
-      end
-
-      posts << collection
+      posts += collection
     end
 
     if posts.empty?
@@ -61,6 +72,14 @@ class User
       exit
     end
 
-    posts.map { |hash| Track.new(hash['track']) }
+    posts.map do |hash|
+      if hash['type'] == 'playlist'
+        puts Paint['Found playlist']
+        puts 'Skip it'
+        posts.delete(hash)
+      else
+        Track.new(hash['track'])
+      end
+    end
   end
 end
