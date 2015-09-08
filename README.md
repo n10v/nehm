@@ -105,10 +105,6 @@ Enter path to desirable download directory (press enter to set it to ...
 
 A: Permalink is the last word in your profile url. **Example:** for profile url ***soundcloud.com/qwerty*** permalink is ***qwerty***
 
-## Contributing
-
-Bug reports and pull requests are welcome.
-
 ## License
 
 MIT License
