@@ -46,6 +46,8 @@ class User
       collection = parsed['collection'].first
       only_posts += 1
 
+      break if collection.nil?
+
       if collection['type'] == 'playlist'
         count_of_playlists_and_posts += 1
         next
