@@ -55,6 +55,8 @@ Enter path to desirable download directory (press enter to set it to ...
 
   `nehm get post`
 
+   ***(nehm doesn't get and download playlist. It just skips them)***
+
 * Get multiple last posts or likes
 
   `nehm get 3 posts` or `nehm get 3 likes`
@@ -92,6 +94,10 @@ Enter path to desirable download directory (press enter to set it to ...
 * Help
 
   `nehm help`
+
+## TODO
+
+* Getting/downloading playlists from posts
 
 ##FAQ
 
