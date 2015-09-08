@@ -19,6 +19,7 @@ module Get
       end
     end
 
+    puts 'Getting information about tracks'
     user = UserManager.user
     tracks = []
     tracks +=
@@ -52,6 +53,7 @@ module Get
       tag(track)
       track.artwork.suicide
       playlist.add_track(track.file_path) if playlist && get_or_dl == :get && !OS.linux?
+      puts "\n"
     end
     puts Paint['Done!', :green]
   end
