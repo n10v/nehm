@@ -55,7 +55,7 @@ Enter path to desirable download directory (press enter to set it to ...
 
   `nehm get post`
 
-   ***(nehm doesn't get and download playlist. It just skips them)***
+   ***(nehm doesn't get and download playlists. It just skips them)***
 
 * Get multiple last posts or likes
 
