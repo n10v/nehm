@@ -70,14 +70,9 @@ class User
       exit
     end
 
-    posts.map do |hash|
-      if hash['type'] == 'playlist'
-        puts Paint['Found playlist']
-        puts 'Skip it'
-        posts.delete(hash)
-      else
-        Track.new(hash['track'])
-      end
-    end
+    rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
+    puts Paint["Was skipped #{rejected.count} playlist(s) (nehm doesn't download playlists)", :yellow]
+
+    posts.map { |hash| Track.new(hash['track']) }
   end
 end
