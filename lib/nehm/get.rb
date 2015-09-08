@@ -19,7 +19,7 @@ module Get
       end
     end
 
-    puts 'Getting information about tracks'
+    puts 'Getting information about track(s)'
     user = UserManager.user
     tracks = []
     tracks +=
