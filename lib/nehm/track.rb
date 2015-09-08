@@ -35,6 +35,10 @@ class Track
     artist + ' - ' + title
   end
 
+  def streamable?
+    @hash['streamable'] ? true : false
+  end
+
   def title
     if @hash['title'].include?('-')
       title = @hash['title'].split('-')
