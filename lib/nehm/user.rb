@@ -71,7 +71,7 @@ class User
     end
 
     rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
-    puts Paint["Was skipped #{rejected.count} playlist(s) (nehm doesn't download playlists)", :yellow]
+    puts Paint["Was skipped #{rejected.count} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
 
     posts.map { |hash| Track.new(hash['track']) }
   end
