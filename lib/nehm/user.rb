@@ -13,7 +13,10 @@ class User
       exit
     end
 
-    likes = Client.get("/users/#{@id}/favorites?limit=#{count}")
+    likes = []
+    count.times do |i|
+      likes += Client.get("/users/#{@id}/favorites?limit=1&offset=#{i}")
+    end
 
     if likes.empty?
       puts Paint["There are no likes yet :(", :red]
@@ -24,21 +27,32 @@ class User
   end
 
   # Post is last track/repost in profile
-  def posts(count)
+  def posts(count_of_playlists_and_posts)
     # Method to_i return 0, if there aren't any numbers in string
-    if count == 0
+    if count_of_playlists_and_posts == 0
       puts Paint['Invalid number of posts!', :red]
       exit
     end
 
-    # Official SC API wrapper doesn't support for posts
+    # Official SC API wrapper doesn't support posts
     # So I should get posts by HTTP requests
-    #TODO: Get more than 300 posts (max limit = 300)
     conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
-    response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{count}&offset=0")
 
-    parsed = JSON.parse(response.body)
-    posts = parsed['collection']
+    posts = []
+    only_posts = 0
+    until only_posts == count_of_playlists_and_posts do
+      response = conn.get("/profile/soundcloud:users:#{@id}?limit=1&offset=#{only_posts}")
+      parsed = JSON.parse(response.body)
+      collection = parsed['collection'].first
+      only_posts += 1
+
+      if collection['type'] == 'playlist'
+        count_of_playlists_and_posts += 1
+        next
+      end
+
+      posts << collection
+    end
 
     if posts.empty?
       puts Paint["There are no posts yet :(", :red]
