@@ -19,7 +19,7 @@ class User
     end
 
     if likes.empty?
-      puts Paint["There are no likes yet :(", :red]
+      puts Paint['There are no likes yet :(', :red]
       exit
     end
 
@@ -40,7 +40,7 @@ class User
 
     posts = []
     only_posts = 0
-    until only_posts == count_of_playlists_and_posts do
+    until only_posts == count_of_playlists_and_posts
       response = conn.get("/profile/soundcloud:users:#{@id}?limit=1&offset=#{only_posts}")
       parsed = JSON.parse(response.body)
       collection = parsed['collection'].first
@@ -55,7 +55,7 @@ class User
     end
 
     if posts.empty?
-      puts Paint["There are no posts yet :(", :red]
+      puts Paint['There are no posts yet :(', :red]
       exit
     end
 
