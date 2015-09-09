@@ -6,9 +6,9 @@ module Nehm
         #{Paint['nehm', :green]} is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way
 
         #{Paint['Avalaible nehm commands:', :yellow]}
-          #{Paint['get', :green]}        Downloading, setting tags and adding to your iTunes library last post or like from your profile
-          #{Paint['dl', :green]}         Downloading and setting tags last post or like from your profile
-          #{Paint['configure', :green]}  Configuring application
+          #{Paint['get', :green]}        Download, set tags and add to your iTunes library last post or like from your profile
+          #{Paint['dl', :green]}         Download and set tags last post or like from your profile
+          #{Paint['configure', :green]}  Configure application
           #{Paint['version', :green]}    Show version of installed nehm
 
         See #{Paint['nehm help [command]', :yellow]} to read about a specific subcommand
