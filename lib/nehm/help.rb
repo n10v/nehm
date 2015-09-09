@@ -44,7 +44,7 @@ module Nehm
         #{Paint['Input:', :yellow]} nehm dl OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]
 
         #{Paint['Summary:', :yellow]}
-          Downloading tracks from SoundCloud and setting tags
+          Download tracks from SoundCloud and setting tags
 
         #{Paint['OPTIONS:', :yellow]}
           #{Paint['post', :green]}                       Do same with last post (track or repost) from your profile
@@ -66,7 +66,7 @@ module Nehm
         #{Paint['Input:', :yellow]} nehm get OPTIONS [from PERMALINK] [to PATH_TO_DIRECTORY] [playlist ITUNES_PLAYLIST]
 
         #{Paint['Summary:', :yellow]}
-          Downloading tracks, setting tags and adding to your iTunes library tracks from Soundcloud
+          Download tracks, set tags and add to your iTunes library tracks from Soundcloud
 
         #{Paint['OPTIONS:', :yellow]}
           #{Paint['post', :green]}                       Do same with last post (track or repost) from your profile
