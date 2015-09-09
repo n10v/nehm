@@ -15,6 +15,7 @@ require 'nehm/playlist_manager'
 require 'nehm/track'
 require 'nehm/user'
 require 'nehm/user_manager'
+require 'nehm/version'
 
 module Nehm
   module App
@@ -29,6 +30,8 @@ module Nehm
         Get[:dl, args]
       when 'configure'
         Configure.menu
+      when 'version'
+        puts Nehm::VERSION
       when 'help', nil
         Help.show(args.first)
       else
