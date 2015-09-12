@@ -61,7 +61,7 @@ module Nehm
 
       UserManager.log_in
 
-      puts Paint['Now you can use nehm :)', :green]
+      puts Paint["Now you can use nehm!\n", :green]
     end
 
     def initialized?
