@@ -56,7 +56,6 @@ module Nehm
           PlaylistManager.playlist.add_track(track.file_path) if PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
         else
           puts "#{Paint['Track', :yellow]} #{Paint[track.name, :cyan]} #{Paint['undownloadable', :yellow]}"
-          puts 'Skip it'
         end
       end
       puts Paint['Done!', :green]
