@@ -72,8 +72,8 @@ module Nehm
         exit
       end
 
-      rejected = posts.reject! { |hash| hash['type'] == 'playlist' }.length
-      puts Paint["Was skipped #{rejected} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
+      rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
+      puts Paint["Was skipped #{rejected.length} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
 
       posts.map! { |hash| Track.new(hash['track']) }
     end
