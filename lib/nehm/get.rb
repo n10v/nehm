@@ -58,7 +58,6 @@ module Nehm
           puts "#{Paint['Track', :yellow]} #{Paint[track.name, :cyan]} #{Paint['undownloadable', :yellow]}"
           puts 'Skip it'
         end
-        puts "\n"
       end
       puts Paint['Done!', :green]
     end
