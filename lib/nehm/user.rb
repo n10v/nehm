@@ -34,7 +34,7 @@ module Nehm
         exit
       end
 
-      likes.map { |hash| Track.new(hash) }
+      likes.map! { |hash| Track.new(hash) }
     end
 
     # Post is last track/repost in profile
@@ -72,10 +72,10 @@ module Nehm
         exit
       end
 
-      rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
-      puts Paint["Was skipped #{rejected.count} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
+      rejected = posts.reject! { |hash| hash['type'] == 'playlist' }.length
+      puts Paint["Was skipped #{rejected} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
 
-      posts.map { |hash| Track.new(hash['track']) }
+      posts.map! { |hash| Track.new(hash['track']) }
     end
   end
 end
