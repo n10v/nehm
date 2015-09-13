@@ -1,5 +1,8 @@
 # nehm change log
 
+## 1.5.5.1
+* Fix bug with `nil` in user class
+
 ## 1.5.5
 * Add `version` command
 * Some bug fixes for Linux users
