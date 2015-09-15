@@ -7,7 +7,7 @@ module Nehm
     end
 
     def artist
-      if @hash['title'].index(' - ')
+      if @hash['title'].include? ' - '
         @hash['title'].split(' - ')[0]
       else
         @hash['user']['username']
@@ -40,7 +40,7 @@ module Nehm
     end
 
     def title
-      if @hash['title'].index(' - ')
+      if @hash['title'].include? ' - '
         @hash['title'].split(' - ')[1]
       else
         @hash['title']
