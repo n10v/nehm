@@ -1,5 +1,8 @@
 # nehm change log
 
+## 1.5.5.2
+* Fix wrong detection of artist in title name of song
+
 ## 1.5.5.1
 * Fix bug with `nil` in user class
 
