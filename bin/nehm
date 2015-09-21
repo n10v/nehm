@@ -3,4 +3,8 @@ nehm_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(nehm_dir) unless $LOAD_PATH.include?(nehm_dir)
 require 'nehm'
 
-Nehm::App.do(ARGV)
+begin
+  Nehm::App.do(ARGV)
+rescue Interrupt # SIGINT
+  puts "\nGoodbye!"
+end
