@@ -21,7 +21,7 @@ module Nehm
     end
 
     def file_name
-      "#{name}.mp3".tr("/'\"", '')
+      "#{name}.mp3".tr("/$'\"", '')
     end
 
     def file_path
