@@ -61,7 +61,7 @@ Enter path to desirable download directory (press enter to set it to ...
 
   `nehm get 3 posts` or `nehm get 3 likes`
 
-* Just download and set tags any track, you can input
+* Just download and set tags any track
 
   `nehm dl post` or `nehm dl like` or `nehm dl 3 likes`
 
