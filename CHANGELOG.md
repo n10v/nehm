@@ -1,5 +1,9 @@
 # nehm change log
 
+## 1.5.6.1
+* Fix: "execution error: iTunes got an error: file "..." doesn’t understand the “add” message. (-1708)" (thanks to https://github.com/galaris for reporting)
+* Fix: nehm fails if track's title has some special characters (thanks to https://github.com/galaris for reporting)
+
 ## 1.5.5.2
 * Fix wrong detection of artist in title name of song
 
