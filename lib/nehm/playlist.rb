@@ -3,7 +3,7 @@ module Nehm
     attr_reader :name
 
     def initialize(name)
-      @name = name
+      @name = name.chomp
     end
 
     def add_track(track_path)

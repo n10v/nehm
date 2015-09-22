@@ -1,3 +1,4 @@
+#!/usr/bin/osascript
 on run argv
 	set posixFile to first item of argv
 	set playlistName to second item of argv
