@@ -1,5 +1,8 @@
 # nehm change log
 
+## 1.5.6.2
+* Excluding space and dash from removing in track's file name
+
 ## 1.5.6.1
 * Fix: "execution error: iTunes got an error: file "..." doesn’t understand the “add” message. (-1708)" (thanks to [galaris](https://github.com/galaris) for reporting)
 * Fix: nehm fails if track's title has some special characters (thanks to [galaris](https://github.com/galaris) for reporting)
