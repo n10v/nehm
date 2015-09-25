@@ -47,6 +47,7 @@ module Nehm
           exit
         end
 
+      itunes_playlist_ready = PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
       tracks.each do |track|
         if track.streamable?
           puts "\n"
@@ -54,7 +55,7 @@ module Nehm
           dl(track.artwork)
           tag(track)
           track.artwork.suicide
-          PlaylistManager.playlist.add_track(track.file_path) if PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
+          PlaylistManager.playlist.add_track(track.file_path) if itunes_playlist_ready
           puts "\n"
         else
           puts "#{'Track'.yellow} #{track.name.cyan} #{'undownloadable'.yellow}"
