@@ -49,11 +49,13 @@ module Nehm
 
       tracks.each do |track|
         if track.streamable?
+          puts "\n"
           dl(track)
           dl(track.artwork)
           tag(track)
           track.artwork.suicide
           PlaylistManager.playlist.add_track(track.file_path) if PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
+          puts "\n"
         else
           puts "#{Paint['Track', :yellow]} #{Paint[track.name, :cyan]} #{Paint['undownloadable', :yellow]}"
         end
