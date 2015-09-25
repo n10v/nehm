@@ -82,6 +82,8 @@ module Nehm
           #{'playlist ITUNES_PLAYLIST'.green}   Do aforecited operations to custom iTunes playlist
       GET
     end
+    
+    # TODO: Add version help
 
     def permalink
       puts <<-PERM.gsub(/^ {8}/, '')
