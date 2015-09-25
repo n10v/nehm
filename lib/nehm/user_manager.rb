@@ -19,6 +19,7 @@ module Nehm
           break
         else
           puts 'Invalid permalink. Please enter correct permalink'.red
+          puts "\n"
         end
       end
     end

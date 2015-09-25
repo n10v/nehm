@@ -56,8 +56,10 @@ module Nehm
       end
 
       UserManager.log_in
+      puts "\n"
 
       puts "Now you can use nehm!\n".green
+      sleep(1)
     end
 
     def initialized?

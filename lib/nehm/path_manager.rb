@@ -29,6 +29,7 @@ module Nehm
           break
         else
           puts "This directory doesn't exist. Please enter correct path".red
+          puts "\n"
         end
       end
     end

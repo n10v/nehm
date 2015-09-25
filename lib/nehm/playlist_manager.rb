@@ -21,6 +21,7 @@ module Nehm
           break
         else
           puts 'Invalid playlist name. Please enter correct name'.red
+          puts "\n"
         end
       end
     end
