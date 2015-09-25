@@ -11,16 +11,16 @@ module Nehm
         # If entered nothing, unset iTunes playlist
         if playlist == ''
           Cfg[:playlist] = nil
-          puts Paint['Default iTunes playlist unset', :green]
+          puts 'Default iTunes playlist unset'.green
           break
         end
 
         if AppleScript.list_of_playlists.include? playlist
           Cfg[:playlist] = playlist
-          puts Paint["Default iTunes playlist set up to #{playlist}", :green]
+          puts "#{'Default iTunes playlist set up to'.green} #{playlist.magenta}"
           break
         else
-          puts Paint['Invalid playlist name. Please enter correct name', :red]
+          puts 'Invalid playlist name. Please enter correct name'.red
         end
       end
     end
@@ -29,7 +29,7 @@ module Nehm
       if AppleScript.list_of_playlists.include? playlist
         @temp_playlist = Playlist.new(playlist)
       else
-        puts Paint['Invalid playlist name. Please enter correct name', :red]
+        puts 'Invalid playlist name. Please enter correct name'.red
         exit
       end
     end

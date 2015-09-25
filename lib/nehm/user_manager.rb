@@ -15,10 +15,10 @@ module Nehm
         if user
           Cfg[:default_id] = user.id
           Cfg[:permalink] = permalink
-          puts Paint['Successfully logged in!', :green]
+          puts 'Successfully logged in!'.green
           break
         else
-          puts Paint['Invalid permalink. Please enter correct permalink', :red]
+          puts 'Invalid permalink. Please enter correct permalink'.red
         end
       end
     end
@@ -28,7 +28,7 @@ module Nehm
       if user
         @temp_user = User.new(user.id)
       else
-        puts Paint['Invalid permalink. Please enter correct permalink', :red]
+        puts 'Invalid permalink. Please enter correct permalink'.red
         exit
       end
     end
@@ -39,8 +39,8 @@ module Nehm
       if UserManager.logged_in?
         User.new(Cfg[:default_id])
       else
-        puts Paint["You didn't logged in", :red]
-        puts "Login from #{Paint['nehm configure', :yellow]} or use #{Paint['[from PERMALINK]', :yellow]} option"
+        puts "You didn't logged in".red
+        puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
         exit
       end
     end

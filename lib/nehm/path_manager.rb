@@ -10,7 +10,7 @@ module Nehm
         ask_sentence = 'Enter path to desirable download directory'
 
         if Dir.exist?(default_path)
-          ask_sentence << " (press enter to set it to #{Paint[default_path, :magenta]})"
+          ask_sentence << " (press enter to set it to #{default_path.magenta})"
         else
           default_path = nil
         end
@@ -25,10 +25,10 @@ module Nehm
 
         if Dir.exist?(path)
           Cfg[:dl_path] = path
-          puts Paint["Download directory set up to #{Paint[path, :magenta]}", :green]
+          puts "#{'Download directory set up to'.green} #{path.magenta}"
           break
         else
-          puts Paint["This directory doesn't exist. Please enter correct path", :red]
+          puts "This directory doesn't exist. Please enter correct path".red
         end
       end
     end
@@ -43,7 +43,7 @@ module Nehm
       if Dir.exist?(path)
         @temp_dl_path = path
       else
-        puts Paint['Invalid download path! Please enter correct path', :red]
+        puts 'Invalid download path! Please enter correct path'.red
         exit
       end
     end
@@ -54,8 +54,8 @@ module Nehm
       if Cfg[:dl_path]
         Cfg[:dl_path]
       else
-        puts Paint["You don't set up download path!", :red]
-        puts "Set it up from #{Paint['nehm configure', :yellow]} or use #{Paint['[to PATH_TO_DIRECTORY]', :yellow]} option"
+        puts "You don't set up download path!".red
+        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
         exit
       end
     end

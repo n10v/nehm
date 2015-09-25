@@ -13,7 +13,7 @@ module Nehm
     def likes(count)
       # Method to_i return 0, if there aren't any numbers in string
       if count == 0
-        puts Paint['Invalid number of likes!', :red]
+        puts 'Invalid number of likes!'.red
         exit
       end
 
@@ -30,7 +30,7 @@ module Nehm
       end
 
       if likes.empty?
-        puts Paint['There are no likes yet :(', :red]
+        puts 'There are no likes yet :('.red
         exit
       end
 
@@ -41,7 +41,7 @@ module Nehm
     def posts(count)
       # Method to_i return 0, if there aren't any numbers in string
       if count == 0
-        puts Paint['Invalid number of posts!', :red]
+        puts 'Invalid number of posts!'.red
         exit
       end
 
@@ -68,12 +68,12 @@ module Nehm
       end
 
       if posts.empty?
-        puts Paint['There are no posts yet :(', :red]
+        puts 'There are no posts yet :('.red
         exit
       end
 
       rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
-      puts Paint["Was skipped #{rejected.length} playlist(s) (nehm doesn't download playlists)", :yellow] if rejected
+      puts "Was skipped #{rejected.length} playlist(s) (nehm doesn't download playlists)".yellow if rejected
 
       posts.map! { |hash| Track.new(hash['track']) }
     end

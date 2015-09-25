@@ -38,12 +38,12 @@ module Nehm
         when %r{https:\/\/soundcloud.com\/}
           track_from_url(args.last)
         when nil
-          puts Paint['You must provide option', :red]
-          puts "Input #{Paint['nehm help', :yellow]} for help"
+          puts 'You must provide option'.red
+          puts "Input #{'nehm help'.yellow} for help"
           exit
         else
-          puts Paint["Invalid argument(s) '#{args.last}'", :red]
-          puts "Input #{Paint['nehm help', :yellow]} for help"
+          puts "Invalid argument(s) '#{args.last}'".red
+          puts "Input #{'nehm help'.yellow} for help"
           exit
         end
 
@@ -57,10 +57,10 @@ module Nehm
           PlaylistManager.playlist.add_track(track.file_path) if PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
           puts "\n"
         else
-          puts "#{Paint['Track', :yellow]} #{Paint[track.name, :cyan]} #{Paint['undownloadable', :yellow]}"
+          puts "#{'Track'.yellow} #{track.name.cyan} #{'undownloadable'.yellow}"
         end
       end
-      puts Paint['Done!', :green]
+      puts 'Done!'.green
     end
 
     module_function
