@@ -11,26 +11,24 @@ module Nehm
     end
 
     def likes(count)
-      # Method to_i return 0, if there aren't any numbers in string
       if count == 0
         puts 'Invalid number of likes!'.red
         exit
       end
 
-      d = count / SOUNDCLOUD_MAX_LIMIT
-      m = count % SOUNDCLOUD_MAX_LIMIT
-      d = m == 0 ? d : d + 1
+      iterations = count.to_f / SOUNDCLOUD_MAX_LIMIT
+      iterations = iterations.ceil
 
       likes = []
-      d.times do |i|
-        limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
+      iterations.times do |i|
+        limit = count < SOUNDCLOUD_MAX_LIMIT ? count : SOUNDCLOUD_MAX_LIMIT
         count -= SOUNDCLOUD_MAX_LIMIT
 
-        likes += Client.get("/users/#{@id}/favorites?limit=#{limit}&offset=#{(i)*SOUNDCLOUD_MAX_LIMIT}")
+        likes += Client.get("/users/#{@id}/favorites?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}")
       end
 
       if likes.empty?
-        puts 'There are no likes yet :('.red
+        puts 'There are no likes yet'.red
         exit
       end
 
@@ -39,23 +37,21 @@ module Nehm
 
     # Post is last track/repost in profile
     def posts(count)
-      # Method to_i return 0, if there aren't any numbers in string
       if count == 0
         puts 'Invalid number of posts!'.red
         exit
       end
 
-      d = count / SOUNDCLOUD_MAX_LIMIT
-      m = count % SOUNDCLOUD_MAX_LIMIT
-      d = m == 0 ? d : d + 1
+      iterations = count.to_f / SOUNDCLOUD_MAX_LIMIT
+      iterations = iterations.ceil
 
       # Official SC API wrapper doesn't support posts
-      # So I should get posts by HTTP requests
+      # So I should get posts by HTTP requests via undocumented V2 API
       conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
 
       posts = []
-      d.times do |i|
-        limit = count > SOUNDCLOUD_MAX_LIMIT ? SOUNDCLOUD_MAX_LIMIT : count
+      iterations.times do |i|
+        limit = count < SOUNDCLOUD_MAX_LIMIT ? count : SOUNDCLOUD_MAX_LIMIT
         count -= SOUNDCLOUD_MAX_LIMIT
 
         response = conn.get("/profile/soundcloud:users:#{@id}?limit=#{limit}&offset=#{i*SOUNDCLOUD_MAX_LIMIT}")
@@ -68,7 +64,7 @@ module Nehm
       end
 
       if posts.empty?
-        puts 'There are no posts yet :('.red
+        puts 'There are no posts yet'.red
         exit
       end
 
