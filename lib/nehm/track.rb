@@ -21,7 +21,7 @@ module Nehm
     end
 
     def file_name
-      "#{name.gsub(/[^0-9A-Za-z -]/, '')}.mp3"
+      "#{name.tr(',./\\\'$%"', '')}.mp3"
     end
 
     def file_path
