@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(nehm_dir) unless $LOAD_PATH.include?(nehm_dir)
 require 'nehm'
 
 begin
-  Nehm::App.do(ARGV)
+  Nehm.do(ARGV)
 rescue Interrupt # SIGINT
   puts "\nGoodbye!"
 end
