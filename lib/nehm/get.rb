@@ -26,15 +26,15 @@ module Nehm
       tracks +=
         case args.last
         when 'like'
-          user.likes(1)
+          Client.tracks(1, 'likes', user.id)
         when 'post'
-          user.posts(1)
+          Client.tracks(1, 'posts', user.id)
         when 'likes'
           count = args[-2].to_i
-          user.likes(count)
+          Client.tracks(count, 'likes', user.id)
         when 'posts'
           count = args[-2].to_i
-          user.posts(count)
+          Client.tracks(count, 'posts', user.id)
         when %r{https:\/\/soundcloud.com\/}
           track_from_url(args.last)
         when nil
@@ -49,7 +49,7 @@ module Nehm
 
       itunes_playlist_ready = PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
       tracks.each do |track|
-        if track.streamable?
+        if track.streamable? && !track.nil?
           puts "\n"
           dl(track)
           dl(track.artwork)

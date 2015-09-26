@@ -11,15 +11,14 @@ module Nehm
     def self.log_in
       loop do
         permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
-        user = get_user(permalink)
+        user = Client.user(permalink)
         if user
           Cfg[:default_id] = user.id
           Cfg[:permalink] = permalink
           puts 'Successfully logged in!'.green
           break
         else
-          puts 'Invalid permalink. Please enter correct permalink'.red
-          puts "\n"
+          puts "Invalid permalink. Please enter correct permalink\n".red
         end
       end
     end
@@ -44,19 +43,6 @@ module Nehm
         puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
         exit
       end
-    end
-
-    def get_user(permalink)
-      begin
-        user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-      rescue SoundCloud::ResponseError => e
-        if e.message =~ /404/
-          user = nil
-        else
-          raise e
-        end
-      end
-      user
     end
   end
 end
