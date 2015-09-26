@@ -54,11 +54,7 @@ module Nehm
         user = SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
 
       rescue SoundCloud::ResponseError => e
-        if e.message =~ /404/
-          return nil
-        else
-          raise e
-        end
+        return nil if e.message =~ /404/
       end
 
       user
