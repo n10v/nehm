@@ -25,11 +25,12 @@ module Nehm
       iterations = iterations.ceil
 
       tracks = []
+      rejected = []
       iterations.times do |i|
         limit = count < TRACKS_LIMIT ? count : TRACKS_LIMIT
         count -= TRACKS_LIMIT
 
-        rejected = []
+
         tracks +=
           case type
           when 'likes'
