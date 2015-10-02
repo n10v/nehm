@@ -26,17 +26,17 @@ module Nehm
       tracks +=
         case args.last
         when 'like'
-          Client.tracks(1, 'likes', user.id)
+          Client.tracks(1, :likes, user.id)
         when 'post'
-          Client.tracks(1, 'posts', user.id)
+          Client.tracks(1, :posts, user.id)
         when 'likes'
           count = args[-2].to_i
-          Client.tracks(count, 'likes', user.id)
+          Client.tracks(count, :likes, user.id)
         when 'posts'
           count = args[-2].to_i
-          Client.tracks(count, 'posts', user.id)
+          Client.tracks(count, :posts, user.id)
         when %r{https:\/\/soundcloud.com\/}
-          track_from_url(args.last)
+          track(args.last)
         when nil
           puts 'You must provide option'.red
           puts "Input #{'nehm help'.yellow} for help"
@@ -66,11 +66,6 @@ module Nehm
 
     module_function
 
-    def track_from_url(url)
-      hash = Client.get('/resolve', url: url)
-      [*Track.new(hash)]
-    end
-
     def dl(arg)
       puts 'Downloading ' + arg.name
       path = arg.file_path
@@ -98,6 +93,11 @@ module Nehm
 
         file.save
       end
+    end
+
+    def track(url)
+      hash = Client.track(url)
+      [*Track.new(hash)]
     end
   end
 end

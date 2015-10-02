@@ -32,10 +32,10 @@ module Nehm
 
         tracks +=
           case type
-          when 'likes'
+          when :likes
             likes = likes(limit, i * TRACKS_LIMIT, user_id)
             likes.map! { |hash| Track.new(hash) }
-          when 'posts'
+          when :posts
             posts = posts(limit, i * TRACKS_LIMIT, user_id)
 
             rejected = tracks.reject! { |hash| hash['type'] == 'playlist' }
@@ -56,6 +56,10 @@ module Nehm
       SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
       rescue SoundCloud::ResponseError => e
         return nil if e.message =~ /404/
+    end
+
+    def self.track(url)
+      Client.get('/resolve', url: url)
     end
 
     module_function
