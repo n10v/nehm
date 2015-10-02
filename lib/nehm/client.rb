@@ -33,10 +33,10 @@ module Nehm
         tracks +=
           case type
           when 'likes'
-            likes = likes(user_id, limit, i * TRACKS_LIMIT)
+            likes = likes(limit, i * TRACKS_LIMIT, user_id)
             likes.map! { |hash| Track.new(hash) }
           when 'posts'
-            posts = posts(user_id, limit, i * TRACKS_LIMIT)
+            posts = posts(limit, i * TRACKS_LIMIT, user_id)
 
             rejected = tracks.reject! { |hash| hash['type'] == 'playlist' }
             rejected_count += rejected.length if rejected
@@ -60,11 +60,11 @@ module Nehm
 
     module_function
 
-    def likes(user_id, limit, offset)
+    def likes(limit, offset, user_id)
       SC_CLIENT.get("/users/#{user_id}/favorites?limit=#{limit}&offset=#{offset}")
     end
 
-    def posts(user_id, limit, offset)
+    def posts(limit, offset, user_id)
       conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
       response = conn.get("/profile/soundcloud:users:#{user_id}?limit=#{limit}&offset=#{offset}")
       parsed = JSON.parse(response.body)
