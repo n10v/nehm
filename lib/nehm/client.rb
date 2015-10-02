@@ -61,7 +61,7 @@ module Nehm
       SC_CLIENT.get("/users/#{user_id}/favorites?limit=#{limit}&offset=#{offset}")
     end
 
-    def posts
+    def posts(user_id, limit, offset)
       conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
       response = conn.get("/profile/soundcloud:users:#{user_id}?limit=#{limit}&offset=#{offset}")
       parsed = JSON.parse(response.body)
