@@ -3,7 +3,7 @@ require 'taglib'
 module Nehm
   # Get module responds to 'nehm get/dl ...' commands
   module Get
-    def self.[](get_or_dl, args)
+    def self.[](type, args)
       # Processing arguments
       # options = [{ name: 'to', method: PathManager.method(:temp_dl_path=) },
       #            { name: 'from', method: UserManager.method(:temp_user=) },
@@ -47,7 +47,7 @@ module Nehm
           exit
         end
 
-      itunes_playlist_ready = PlaylistManager.playlist && get_or_dl == :get && !OS.linux?
+      itunes_playlist_ready = PlaylistManager.playlist && type == :get && !OS.linux?
       tracks.each do |track|
         if track.streamable? && !track.nil?
           puts "\n"
