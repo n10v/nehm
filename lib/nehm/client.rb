@@ -25,7 +25,6 @@ module Nehm
       iterations = iterations.ceil
 
       tracks = []
-      rejected_count = 0
       iterations.times do |i|
         limit = count < TRACKS_LIMIT ? count : TRACKS_LIMIT
         count -= TRACKS_LIMIT
@@ -33,22 +32,11 @@ module Nehm
         tracks +=
           case type
           when :likes
-            likes = likes(limit, i * TRACKS_LIMIT, user_id)
-            likes.map! { |hash| Track.new(hash) }
+            likes(limit, i * TRACKS_LIMIT, user_id)
           when :posts
-            posts = posts(limit, i * TRACKS_LIMIT, user_id)
-
-            rejected = tracks.reject! { |hash| hash['type'] == 'playlist' }
-            rejected_count += rejected.length if rejected
-
-            posts.map! { |hash| Track.new(hash['track']) }
+            posts(limit, i * TRACKS_LIMIT, user_id)
           end
       end
-
-      abort "There are no #{type} yet".red if tracks.empty?
-
-      puts "Was skipped #{rejected_count} playlist(s) (nehm doesn't download playlists)".yellow if rejected_count > 0
-
       tracks
     end
 

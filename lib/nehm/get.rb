@@ -5,36 +5,36 @@ module Nehm
   module Get
     def self.[](get_or_dl, args)
       # Processing arguments
-      options = [{ name: 'to', method: PathManager.method(:temp_dl_path=) },
-                 { name: 'from', method: UserManager.method(:temp_user=) },
-                 { name: 'playlist', method: PlaylistManager.method(:temp_playlist=) }]
-
-      options.each do |option|
-        if args.include? option[:name]
-          index = args.index(option[:name])
-          value = args[index + 1]
-          args.delete_at(index + 1)
-          args.delete_at(index)
-
-          option[:method].call(value)
-        end
-      end
+      # options = [{ name: 'to', method: PathManager.method(:temp_dl_path=) },
+      #            { name: 'from', method: UserManager.method(:temp_user=) },
+      #            { name: 'playlist', method: PlaylistManager.method(:temp_playlist=) }]
+      #
+      # options.each do |option|
+      #   if args.include? option[:name]
+      #     index = args.index(option[:name])
+      #     value = args[index + 1]
+      #     args.delete_at(index + 1)
+      #     args.delete_at(index)
+      #
+      #     option[:method].call(value)
+      #   end
+      # end
 
       puts 'Getting information about track(s)'
-      user = UserManager.user
+      uid = UserManager.default_id
       tracks = []
       tracks +=
         case args.last
         when 'like'
-          Client.tracks(1, :likes, user.id)
+          likes(1, uid)
         when 'post'
-          Client.tracks(1, :posts, user.id)
+          posts(1, uid)
         when 'likes'
           count = args[-2].to_i
-          Client.tracks(count, :likes, user.id)
+          likes(count, uid)
         when 'posts'
           count = args[-2].to_i
-          Client.tracks(count, :posts, user.id)
+          posts(count, uid)
         when %r{https:\/\/soundcloud.com\/}
           track(args.last)
         when nil
@@ -93,6 +93,26 @@ module Nehm
 
         file.save
       end
+    end
+
+    def likes(count, uid)
+      likes = Client.tracks(count, :likes, uid)
+      abort 'There are no likes yet'.red if likes.empty?
+
+      likes.map! { |hash| Track.new(hash) }
+    end
+
+    def posts(count, uid)
+      posts = Client.tracks(count, :posts, uid)
+      abort 'There are no posts yet'.red if posts.empty?
+
+      # Removing playlists
+      rejected_count = 0
+      rejected = posts.reject! { |hash| hash['type'] == 'playlist' }
+      rejected_count = rejected.length if rejected
+      puts "Was skipped #{rejected_count} playlist(s) (nehm doesn't download playlists)".yellow if rejected_count > 0
+
+      posts.map! { |hash| Track.new(hash['track']) }
     end
 
     def track(url)
