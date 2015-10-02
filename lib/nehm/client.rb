@@ -30,7 +30,6 @@ module Nehm
         limit = count < TRACKS_LIMIT ? count : TRACKS_LIMIT
         count -= TRACKS_LIMIT
 
-
         tracks +=
           case type
           when 'likes'
@@ -51,14 +50,9 @@ module Nehm
     end
 
     def self.user(permalink)
-      begin
-        user = SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-
+      SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
       rescue SoundCloud::ResponseError => e
         return nil if e.message =~ /404/
-      end
-
-      user
     end
 
     module_function
