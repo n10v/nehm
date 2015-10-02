@@ -25,7 +25,7 @@ module Nehm
     end
 
     def file_path
-      File.join(PathManager.dl_path, file_name)
+      File.join(ENV['dl_path'], file_name)
     end
 
     def id

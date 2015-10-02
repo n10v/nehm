@@ -1,7 +1,16 @@
 module Nehm
   module PlaylistManager
-    def self.playlist
-      @temp_playlist || default_user_playlist || music_master_library unless OS.linux?
+    def self.default_playlist
+      default_user_playlist || music_master_library unless OS.linux?
+    end
+
+    def self.get_playlist(playlist)
+      if AppleScript.list_of_playlists.include? playlist
+        Playlist.new(playlist)
+      else
+        puts 'Invalid playlist name. Please enter correct name'.red
+        exit
+      end
     end
 
     def self.set_playlist
@@ -26,14 +35,6 @@ module Nehm
       end
     end
 
-    def self.temp_playlist=(playlist)
-      if AppleScript.list_of_playlists.include? playlist
-        @temp_playlist = Playlist.new(playlist)
-      else
-        puts 'Invalid playlist name. Please enter correct name'.red
-        exit
-      end
-    end
 
     module_function
 

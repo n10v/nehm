@@ -1,7 +1,28 @@
 module Nehm
   module PathManager
-    def self.dl_path
-      @temp_dl_path || default_dl_path
+    def self.default_dl_path
+      if Cfg[:dl_path]
+        Cfg[:dl_path]
+      else
+        puts "You don't set up download path!".red
+        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
+        exit
+      end
+    end
+
+    def self.get_path(path)
+      # If 'to ~/../..' entered
+      path = tilde_to_home(path) if tilde_at_top?(path)
+
+      # If 'to current' entered
+      path = Dir.pwd if path == 'current'
+
+      if Dir.exist?(path)
+        path
+      else
+        puts 'Invalid download path! Please enter correct path'.red
+        exit
+      end
     end
 
     def self.set_dl_path
@@ -34,32 +55,7 @@ module Nehm
       end
     end
 
-    def self.temp_dl_path=(path)
-      # If 'to ~/../..' entered
-      path = tilde_to_home(path) if tilde_at_top?(path)
-
-      # If 'to current' entered
-      path = Dir.pwd if path == 'current'
-
-      if Dir.exist?(path)
-        @temp_dl_path = path
-      else
-        puts 'Invalid download path! Please enter correct path'.red
-        exit
-      end
-    end
-
     module_function
-
-    def default_dl_path
-      if Cfg[:dl_path]
-        Cfg[:dl_path]
-      else
-        puts "You don't set up download path!".red
-        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
-        exit
-      end
-    end
 
     def tilde_at_top?(path)
       path[0] == '~'

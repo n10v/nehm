@@ -9,11 +9,6 @@ module Nehm
       File.join('/tmp', "#{@track.id}.jpg")
     end
 
-    # Use in Get.dl
-    def name
-      'artwork'
-    end
-
     def suicide
       File.delete(file_path)
     end

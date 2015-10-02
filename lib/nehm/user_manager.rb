@@ -10,9 +10,11 @@ module Nehm
       end
     end
 
-    def self.get_user(permalink)
+    def self.get_id(permalink)
       user = Client.user(permalink)
       abort "Invalid permalink. Please enter correct permalink\n".red if user.nil?
+
+      user['id']
     end
 
     def self.logged_in?
