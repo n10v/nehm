@@ -12,7 +12,7 @@ module Nehm
           menu.prompt = 'Choose setting'.yellow
 
           menu.choice('Edit download path'.freeze) { PathManager.set_dl_path }
-          menu.choice('Edit permalink'.freeze) { UserManager.log_in }
+          menu.choice('Edit permalink'.freeze) { UserManager.set_uid }
           menu.choice('Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
           menu.choice('Exit'.freeze) { puts 'Goodbye!'; exit }
         end

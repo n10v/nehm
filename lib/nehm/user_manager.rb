@@ -11,7 +11,7 @@ module Nehm
       user['id']
     end
 
-    def self.log_in
+    def self.set_uid
       loop do
         permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
         user = Client.user(permalink)

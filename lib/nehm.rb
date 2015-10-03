@@ -2,6 +2,7 @@ require 'colored'
 require 'highline'
 
 require 'nehm/applescript'
+require 'nehm/argument_processor'
 require 'nehm/artwork'
 require 'nehm/cfg'
 require 'nehm/configure'
@@ -18,7 +19,7 @@ require 'nehm/user_manager'
 require 'nehm/version'
 
 module Nehm
-  def self.do(args)
+  def self.start(args)
     init unless initialized?
 
     command = args.shift
@@ -54,7 +55,7 @@ module Nehm
       puts "\n"
     end
 
-    UserManager.log_in
+    UserManager.set_uid
     puts "\n"
 
     puts "Now you can use nehm!\n".green
