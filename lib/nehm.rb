@@ -1,10 +1,11 @@
-require 'colored'
 require 'highline'
 
 require 'nehm/applescript'
-require 'nehm/argument_processor'
+require 'nehm/argument_parser'
 require 'nehm/artwork'
 require 'nehm/cfg'
+require 'nehm/command'
+require 'nehm/command_manager'
 require 'nehm/configure'
 require 'nehm/client'
 require 'nehm/get'
@@ -14,6 +15,7 @@ require 'nehm/path_manager'
 require 'nehm/playlist'
 require 'nehm/playlist_manager'
 require 'nehm/track'
+require 'nehm/ui'
 require 'nehm/user'
 require 'nehm/user_manager'
 require 'nehm/version'
@@ -22,22 +24,7 @@ module Nehm
   def self.start(args)
     init unless initialized?
 
-    command = args.shift
-    case command
-    when 'get'
-      Get[:get, args]
-    when 'dl'
-      Get[:dl, args]
-    when 'configure'
-      Configure.menu
-    when 'version'
-      puts Nehm::VERSION
-    when 'help', nil
-      Help.show(args.first)
-    else
-      puts "Invalid command '#{command}'".red
-      puts "Input #{'nehm help'.yellow} for all avalaible commands"
-    end
+    CommandManager.run(args)
   end
 
   module_function
