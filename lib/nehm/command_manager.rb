@@ -1,0 +1,48 @@
+module Nehm
+  module CommandManager
+    COMMANDS = [
+      :configure,
+      :dl,
+      :get,
+      :help,
+      :version
+    ]
+
+    def self.run(args)
+      if args.empty?
+        UI.say Gem::Command::HELP
+        UI.terminate_interaction
+      end
+
+      cmd_name = args.shift.downcase
+      cmd = find_command(cmd_name)
+      cmd.invoke(args)
+    end
+
+    def self.find_command(cmd_name)
+      possibilities = find_command_possibilities(cmd_name)
+
+      if possibilities.size > 1
+        UI.error "Ambiguous command #{cmd_name} matches [#{possibilities.join(', ')}]"
+      elsif possibilities.empty?
+        UI.error "Unknown command #{cmd_name}"
+      end
+
+      command_instance(possibilities.first)
+    end
+
+    module_function
+
+    def find_command_possibilities(cmd_name)
+      len = cmd_name.length
+      COMMANDS.select { |command| command[0, len] == cmd_name }
+    end
+
+    def command_instance(command_name)
+      command_name = command_name.to_s
+      const_name = command_name.capitalize << 'Command'
+
+      Nehm::Commands.const_get(const_name).new
+    end
+  end
+end
