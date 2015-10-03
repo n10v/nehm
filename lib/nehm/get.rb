@@ -35,7 +35,6 @@ module Nehm
         puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
         exit
       end
-    end
 
       puts 'Getting information about track(s)'
       tracks = []
