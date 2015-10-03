@@ -10,6 +10,8 @@ module Nehm
 
       # Check path for existence
       abort 'Invalid download path! Please enter correct path'.red unless Dir.exist?(path)
+
+      path
     end
 
     def self.set_dl_path
