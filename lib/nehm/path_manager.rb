@@ -5,11 +5,8 @@ module Nehm
     end
 
     def self.get_path(path)
-      # If 'to ~/../..' entered
+      # If path begins with ~
       path = tilde_to_home(path) if tilde_at_top?(path)
-
-      # If 'to current' entered
-      path = Dir.pwd if path == 'current'
 
       if Dir.exist?(path)
         path
@@ -21,8 +18,8 @@ module Nehm
 
     def self.set_dl_path
       loop do
-        default_path = File.join(ENV['HOME'], '/Music')
         ask_sentence = 'Enter path to desirable download directory'
+        default_path = File.join(ENV['HOME'], '/Music')
 
         if Dir.exist?(default_path)
           ask_sentence << " (press enter to set it to #{default_path.magenta})"
