@@ -7,13 +7,7 @@ module Nehm
     end
 
     def artist
-      title = @hash['title']
-
-      if title.include? ' - '
-        title.split(' - ')[0]
-      else
-        @hash['user']['username']
-      end
+      name[0]
     end
 
     def artwork
@@ -21,34 +15,34 @@ module Nehm
     end
 
     def file_name
-      "#{name.tr(',./\\\'$%"', '')}.mp3"
+      "#{full_name.tr(',./\\\'$%"', '')}.mp3"
     end
 
     def file_path
       File.join(ENV['dl_path'], file_name)
     end
 
+    def full_name
+      "#{artist} - #{title}"
+    end
+
     def id
       @hash['id']
     end
 
-    # Used in Get#dl and in Track#file_name
+    # Returns artist and title as array
     def name
-      artist + ' - ' + title
-    end
+      title = @hash['title']
+      separators = [' - ', ' ~ ']
+      separators.each do |sep|
+        return title.split(sep) if title.include? sep
+      end
 
-    def streamable?
-      @hash['streamable']
+      [*@hash['user']['username'], title]
     end
 
     def title
-      title = @hash['title']
-
-      if title.include? ' - '
-        title.split(' - ')[1]
-      else
-        title
-      end
+      name[1]
     end
 
     def url
