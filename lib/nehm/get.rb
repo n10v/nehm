@@ -5,19 +5,7 @@ module Nehm
   module Get
     def self.[](type, args)
       # Processing arguments
-      options = {}
-      options_names = %w(from playlist to)
-
-      options_names.each do |option|
-        if args.include? option
-          index = args.index(option)
-          value = args[index + 1]
-          args.delete_at(index + 1)
-          args.delete_at(index)
-
-          options[option] = value
-        end
-      end
+      options = ArgumentProcessor.get(args)
 
       # Setting up user id
       temp_uid = options['from']
@@ -47,6 +35,7 @@ module Nehm
         puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
         exit
       end
+    end
 
       puts 'Getting information about track(s)'
       tracks = []
