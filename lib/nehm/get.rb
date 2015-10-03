@@ -8,8 +8,8 @@ module Nehm
       options = ArgumentProcessor.get(args)
 
       # Setting up user id
-      temp_uid = options['from']
-      uid = temp_uid ? UserManager.get_id(temp_uid) : UserManager.default_id
+      permalink = options['from']
+      uid = permalink ? UserManager.get_id(permalink) : UserManager.default_id
       unless uid
         puts "You didn't logged in".red
         puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
@@ -19,7 +19,7 @@ module Nehm
       # Setting up iTunes playlist
       if type == :get && !OS.linux?
         playlist_name = options['playlist']
-        playlist = temp_playlist ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
+        playlist = playlist_name ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
         itunes_playlist_ready = true if playlist
       else
         itunes_playlist_ready = false
@@ -123,11 +123,13 @@ module Nehm
       abort 'There are no posts yet'.red if posts.empty?
 
       # Removing playlists and unstreamable tracks
+      first_count = posts.length
       playlists = posts.reject! { |hash| hash['type'] == 'playlist' }
       unstreamable_tracks = posts.reject! { |hash| hash['track']['streamable'] == false }
-      puts "Was skipped #{playlists.length} playlist(s). (nehm doesn't download playlists)".yellow if playlists
-      puts "Was skipped #{unstreamable_tracks.length} undownloadable track(s)".yellow if unstreamable_tracks
-
+      if playlists || unstreamable_tracks
+        puts "\n"
+        puts "Was skipped #{first_count - posts.length} undownloadable track(s) or playlist(s).".yellow
+      end
       posts.map! { |hash| Track.new(hash['track']) }
     end
 
