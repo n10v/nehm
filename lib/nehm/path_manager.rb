@@ -36,8 +36,7 @@ module Nehm
           puts "#{'Download directory set up to'.green} #{path.magenta}"
           break
         else
-          puts "This directory doesn't exist. Please enter correct path".red
-          puts "\n"
+          puts "This directory doesn't exist. Please enter correct path\n".red
         end
       end
     end

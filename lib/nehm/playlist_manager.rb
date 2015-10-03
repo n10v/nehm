@@ -28,8 +28,7 @@ module Nehm
           puts "#{'Default iTunes playlist set up to'.green} #{playlist.magenta}"
           break
         else
-          puts 'Invalid playlist name. Please enter correct name'.red
-          puts "\n"
+          puts "Invalid playlist name. Please enter correct name\n".red
         end
       end
     end
