@@ -3,8 +3,13 @@ nehm_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(nehm_dir) unless $LOAD_PATH.include?(nehm_dir)
 require 'nehm'
 
+$stderr = STDOUT
+
 begin
   Nehm.start(ARGV)
 rescue Interrupt # SIGINT
   puts "\nGoodbye!"
+  Nehm::UI.terminate_interaction
+rescue StandardError, Timeout::Error => ex
+  Nehm::UI.error "While executing nehm ... (#{ex.class})\n    #{ex}"
 end
