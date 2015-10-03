@@ -5,6 +5,10 @@ module Nehm::UI
     abort expression.red
   end
 
+  def self.newline
+    puts "\n"
+  end
+
   def self.say(expression)
     puts expression
   end
