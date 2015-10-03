@@ -1,13 +1,7 @@
 module Nehm
   module PathManager
     def self.default_dl_path
-      if Cfg[:dl_path]
-        Cfg[:dl_path]
-      else
-        puts "You don't set up download path!".red
-        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
-        exit
-      end
+      Cfg[:dl_path]
     end
 
     def self.get_path(path)

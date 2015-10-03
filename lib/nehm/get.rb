@@ -22,6 +22,11 @@ module Nehm
       # Setting up user id
       temp_uid = options['from']
       uid = temp_uid ? UserManager.get_id(temp_uid) : UserManager.default_id
+      unless uid
+        puts "You didn't logged in".red
+        puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
+        exit
+      end
 
       # Setting up iTunes playlist
       if type == :get && !OS.linux?
@@ -34,7 +39,14 @@ module Nehm
 
       # Setting up download path
       temp_path = options['to']
-      ENV['dl_path'] = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path
+      dl_path = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path
+      if dl_path
+        ENV['dl_path'] = dl_path
+      else
+        puts "You don't set up download path!".red
+        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
+        exit
+      end
 
       puts 'Getting information about track(s)'
       tracks = []

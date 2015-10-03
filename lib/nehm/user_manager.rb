@@ -1,13 +1,7 @@
 module Nehm
   module UserManager
     def self.default_id
-      if UserManager.logged_in?
-        Cfg[:default_id]
-      else
-        puts "You didn't logged in".red
-        puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
-        exit
-      end
+      Cfg[:default_id]
     end
 
     def self.get_id(permalink)
@@ -15,10 +9,6 @@ module Nehm
       abort "Invalid permalink. Please enter correct permalink\n".red if user.nil?
 
       user['id']
-    end
-
-    def self.logged_in?
-      Cfg.key?(:default_id)
     end
 
     def self.log_in
