@@ -4,12 +4,11 @@ module Nehm
       default_user_playlist || music_master_library unless OS.linux?
     end
 
-    def self.get_playlist(playlist)
-      if AppleScript.list_of_playlists.include? playlist
-        Playlist.new(playlist)
+    def self.get_playlist(playlist_name)
+      if AppleScript.list_of_playlists.include? playlist_name
+        Playlist.new(playlist_name)
       else
-        puts 'Invalid playlist name. Please enter correct name'.red
-        exit
+        abort 'Invalid playlist name. Please enter correct name'.red
       end
     end
 

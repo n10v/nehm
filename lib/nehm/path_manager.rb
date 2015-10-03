@@ -8,12 +8,8 @@ module Nehm
       # If path begins with ~
       path = tilde_to_home(path) if tilde_at_top?(path)
 
-      if Dir.exist?(path)
-        path
-      else
-        puts 'Invalid download path! Please enter correct path'.red
-        exit
-      end
+      # Check path for existence
+      abort 'Invalid download path! Please enter correct path'.red unless Dir.exist?(path)
     end
 
     def self.set_dl_path
