@@ -23,10 +23,6 @@ module Nehm
       temp_uid = options['from']
       uid = temp_uid ? UserManager.get_id(temp_uid) : UserManager.default_id
 
-      # Setting up download path
-      temp_path = options['to']
-      ENV['dl_path'] = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path
-
       # Setting up iTunes playlist
       if type == :get && !OS.linux?
         playlist_name = options['playlist']
@@ -35,6 +31,10 @@ module Nehm
       else
         itunes_playlist_ready = false
       end
+
+      # Setting up download path
+      temp_path = options['to']
+      ENV['dl_path'] = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path
 
       puts 'Getting information about track(s)'
       tracks = []
@@ -77,7 +77,7 @@ module Nehm
 
     def dl(track)
       # Downloading track
-      puts 'Downloading ' + track.name
+      puts 'Downloading ' + track.full_name
       `curl -# -o \"#{track.file_path}\" -L #{track.url}`
 
       # Downloading artwork
