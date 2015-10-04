@@ -2,7 +2,7 @@ require 'colored'
 
 module Nehm::UI
   def self.error(message)
-    abort "#{message}\n".red
+    puts "#{message}\n".red
   end
 
   def self.newline
