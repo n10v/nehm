@@ -2,8 +2,8 @@ module Nehm
 
   ##
   # Base class for all Nehm commands. When creating a new nehm command, define
-  # #initialize, #execute, #arguments, #description, #program_name, #summary
-  # and #usage (as appropriate).
+  # #initialize, #execute, #arguments, #program_name, #summary and #usage
+  # (as appropriate).
   # See the above mentioned methods for details.
 
   class Command
@@ -57,12 +57,6 @@ module Nehm
     #   end
 
     def arguments
-    end
-
-    ##
-    # Override to display a longer description of what this command does.
-
-    def description
     end
 
     ##
