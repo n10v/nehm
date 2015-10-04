@@ -1,5 +1,3 @@
-require 'colored'
-
 module Nehm
   module UI
     def self.error(message)

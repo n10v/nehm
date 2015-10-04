@@ -1,3 +1,4 @@
+require 'colored'
 require 'highline'
 
 require 'nehm/applescript'
