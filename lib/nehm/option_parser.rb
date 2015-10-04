@@ -8,7 +8,7 @@ module Nehm
     def initialize(args, command)
       @args = args
       @command = command
-      @option_names = command.option.keys
+      @option_names = command.options.keys
     end
 
     def parse
