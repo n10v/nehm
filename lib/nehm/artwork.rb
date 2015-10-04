@@ -1,6 +1,7 @@
 module Nehm
   # Artwork objects contains all needed information of track's artwork
   class Artwork
+
     def initialize(track)
       @track = track
     end
@@ -23,5 +24,6 @@ module Nehm
         end
       url.sub('large', 't500x500')
     end
+
   end
 end

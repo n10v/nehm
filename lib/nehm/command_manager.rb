@@ -1,5 +1,6 @@
 module Nehm
   module CommandManager
+
     COMMANDS = [
       :configure,
       :dl,
@@ -10,8 +11,8 @@ module Nehm
 
     def self.run(args)
       if args.empty?
-        UI.say Gem::Command::HELP
-        UI.terminate_interaction
+        UI.say Nehm::Command::HELP
+        UI.term
       end
 
       cmd_name = args.shift.downcase
@@ -23,9 +24,9 @@ module Nehm
       possibilities = find_command_possibilities(cmd_name)
 
       if possibilities.size > 1
-        UI.error "Ambiguous command #{cmd_name} matches [#{possibilities.join(', ')}]"
+        UI.term "Ambiguous command #{cmd_name} matches [#{possibilities.join(', ')}]"
       elsif possibilities.empty?
-        UI.error "Unknown command #{cmd_name}"
+        UI.term "Unknown command #{cmd_name}"
       end
 
       command_instance(possibilities.first)
@@ -44,5 +45,6 @@ module Nehm
 
       Nehm::Commands.const_get(const_name).new
     end
+
   end
 end

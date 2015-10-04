@@ -1,5 +1,6 @@
 module Nehm
   module PathManager
+
     def self.default_dl_path
       Cfg[:dl_path]
     end
@@ -9,7 +10,7 @@ module Nehm
       path = tilde_to_home(path) if tilde_at_top?(path)
 
       # Check path for existence
-      abort 'Invalid download path! Please enter correct path'.red unless Dir.exist?(path)
+      UI.term 'Invalid download path! Please enter correct path' unless Dir.exist?(path)
 
       path
     end
@@ -35,10 +36,10 @@ module Nehm
 
         if Dir.exist?(path)
           Cfg[:dl_path] = path
-          puts "#{'Download directory set up to'.green} #{path.magenta}"
+          UI.say "#{'Download directory set up to'.green} #{path.magenta}"
           break
         else
-          puts "This directory doesn't exist. Please enter correct path\n".red
+          UI.error "This directory doesn't exist. Please enter correct path"
         end
       end
     end
@@ -52,5 +53,6 @@ module Nehm
     def tilde_to_home(path)
       File.join(ENV['HOME'], path[1..-1])
     end
+
   end
 end

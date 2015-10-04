@@ -6,7 +6,7 @@ module Nehm
 
     def self.get_id(permalink)
       user = Client.user(permalink)
-      abort "Invalid permalink. Please enter correct permalink\n".red if user.nil?
+      UI.term 'Invalid permalink. Please enter correct permalink' if user.nil?
 
       user['id']
     end
@@ -18,12 +18,13 @@ module Nehm
         if user
           Cfg[:default_id] = user.id
           Cfg[:permalink] = permalink
-          puts 'Successfully logged in!'.green
+          UI.success 'Successfully logged in!'
           break
         else
-          puts "Invalid permalink. Please enter correct permalink\n".red
+          UI.error 'Invalid permalink. Please enter correct permalink'
         end
       end
     end
+
   end
 end

@@ -1,5 +1,6 @@
 module Nehm
   module PlaylistManager
+
     def self.default_playlist
       default_user_playlist || music_master_library unless OS.linux?
     end
@@ -8,7 +9,7 @@ module Nehm
       if AppleScript.list_of_playlists.include? playlist_name
         Playlist.new(playlist_name)
       else
-        abort 'Invalid playlist name. Please enter correct name'.red
+        UI.term 'Invalid playlist name. Please enter correct name'
       end
     end
 
@@ -19,16 +20,16 @@ module Nehm
         # If entered nothing, unset iTunes playlist
         if playlist == ''
           Cfg[:playlist] = nil
-          puts 'Default iTunes playlist unset'.green
+          UI.success 'Default iTunes playlist unset'
           break
         end
 
         if AppleScript.list_of_playlists.include? playlist
           Cfg[:playlist] = playlist
-          puts "#{'Default iTunes playlist set up to'.green} #{playlist.magenta}"
+          UI.say "#{'Default iTunes playlist set up to'.green} #{playlist.magenta}"
           break
         else
-          puts "Invalid playlist name. Please enter correct name\n".red
+          UI.error 'Invalid playlist name. Please enter correct name'
         end
       end
     end
@@ -43,5 +44,6 @@ module Nehm
     def music_master_library
       Playlist.new(AppleScript.music_master_library)
     end
+
   end
 end

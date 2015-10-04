@@ -1,5 +1,6 @@
 module Nehm
   class Command
+    
     attr_accessor :options
 
     attr_reader :post_value_options
@@ -46,5 +47,6 @@ module Nehm
       parser = ArgumentParser.new(args, self)
       parser.parse
     end
+
   end
 end

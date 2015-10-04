@@ -2,6 +2,7 @@ module Nehm
   # ArgumentParser process arguments and return hash with options
   # Name of the method corresponds to the name of the command
   class ArgumentParser
+
     def initialize(args, command)
       @args = args
       @command = command
@@ -49,5 +50,6 @@ module Nehm
         end
       end
     end
+
   end
 end

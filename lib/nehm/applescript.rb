@@ -1,6 +1,7 @@
 module Nehm
   # Module which works with AppleScript scripts
   module AppleScript
+
     def self.add_track_to_playlist(track_path, playlist_name)
       `osascript \"#{script_path(:add_track_to_playlist)}\" \"#{track_path}\" \"#{playlist_name}\" > /dev/null`
     end
@@ -20,5 +21,6 @@ module Nehm
       applescripts_path = File.expand_path(File.join(File.dirname(__FILE__), 'applescripts'))
       File.join(applescripts_path, "#{script_name.to_s}.applescript")
     end
+
   end
 end

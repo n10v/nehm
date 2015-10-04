@@ -16,7 +16,6 @@ require 'nehm/playlist'
 require 'nehm/playlist_manager'
 require 'nehm/track'
 require 'nehm/ui'
-require 'nehm/user'
 require 'nehm/user_manager'
 require 'nehm/version'
 
@@ -30,22 +29,22 @@ module Nehm
   module_function
 
   def init
-    puts 'Hello!'.green
-    puts 'Before using the nehm, you should set it up:'
+    UI.success 'Hello!'
+    UI.say 'Before using the nehm, you should set it up:'
     Cfg.create unless Cfg.exist?
 
     PathManager.set_dl_path
-    puts "\n"
+    UI.newline
 
     unless OS.linux?
       PlaylistManager.set_playlist
-      puts "\n"
+      UI.newline
     end
 
     UserManager.set_uid
-    puts "\n"
+    UI.newline
 
-    puts "Now you can use nehm!\n".green
+    UI.success "Now you can use nehm!\n"
     sleep(1)
   end
 

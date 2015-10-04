@@ -6,6 +6,7 @@ require 'soundcloud'
 module Nehm
   # Client module contains all SC API interaction
   module Client
+
     # Set a SSL certificate file path for SC API
     ENV['SSL_CERT_FILE'] = Certifi.where
 
@@ -19,7 +20,7 @@ module Nehm
     TRACKS_LIMIT = 200
 
     def self.tracks(count, type, user_id)
-      abort "Invalid number of #{type}".red if count == 0
+      UI.term "Invalid number of #{type}" if count == 0
 
       iterations = count.to_f / TRACKS_LIMIT
       iterations = iterations.ceil
@@ -62,5 +63,6 @@ module Nehm
       parsed = JSON.parse(response.body)
       parsed['collection']
     end
+
   end
 end

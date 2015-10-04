@@ -1,5 +1,6 @@
 module Nehm
   class Track
+
     attr_reader :hash
 
     def initialize(hash)
@@ -30,7 +31,7 @@ module Nehm
       @hash['id']
     end
 
-    # Returns artist and title as array
+    # Returns artist and title in array
     def name
       title = @hash['title']
       separators = [' - ', ' ~ ']
@@ -38,7 +39,7 @@ module Nehm
         return title.split(sep) if title.include? sep
       end
 
-      [*@hash['user']['username'], title]
+      [@hash['user']['username'], title]
     end
 
     def title
@@ -52,5 +53,6 @@ module Nehm
     def year
       @hash['created_at'][0..3].to_i
     end
+
   end
 end

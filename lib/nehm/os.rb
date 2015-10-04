@@ -1,4 +1,5 @@
 require 'rbconfig'
+
 module Nehm
   module OS
     def self.linux?
