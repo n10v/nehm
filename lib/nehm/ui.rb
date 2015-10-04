@@ -17,6 +17,14 @@ module Nehm::UI
     puts message.green
   end
 
+  def self.term(message)
+    if message
+      abort message.red
+    else
+      exit
+    end
+  end
+
   def self.warning
     puts "#{message}\n".yellow
   end
