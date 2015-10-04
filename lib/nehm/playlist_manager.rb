@@ -1,9 +1,19 @@
 module Nehm
+
+  ##
+  # Playlist manager works with iTunes playlists
+
   module PlaylistManager
+
+    ##
+    # Returns default iTunes playlist (contains in ~/.nehmconfig)
 
     def self.default_playlist
       default_user_playlist || music_master_library unless OS.linux?
     end
+
+    ##
+    # Checks path for existence and returns it if exists
 
     def self.get_playlist(playlist_name)
       if AppleScript.list_of_playlists.include? playlist_name
@@ -15,7 +25,7 @@ module Nehm
 
     def self.set_playlist
       loop do
-        playlist = HighLine.new.ask('Enter name of default iTunes playlist to which you want add tracks (press Enter to set it to default iTunes Music library):')
+        playlist = HighLine.new.ask('Enter name of default iTunes playlist to that you want add tracks (press Enter to set it to default iTunes Music library):')
 
         # If entered nothing, unset iTunes playlist
         if playlist == ''
@@ -40,6 +50,9 @@ module Nehm
     def default_user_playlist
       Playlist.new(Cfg[:playlist]) unless Cfg[:playlist].nil?
     end
+
+    ##
+    # Music master library is main iTunes music library
 
     def music_master_library
       Playlist.new(AppleScript.music_master_library)

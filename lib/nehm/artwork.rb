@@ -1,5 +1,8 @@
 module Nehm
-  # Artwork objects contains all needed information of track's artwork
+
+  ##
+  # Artwork objects contains all information of track's artwork
+
   class Artwork
 
     def initialize(track)

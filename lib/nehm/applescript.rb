@@ -1,5 +1,8 @@
 module Nehm
-  # Module which works with AppleScript scripts
+
+  ##
+  # AppleScript module calls all AppleScript scripts and returns results
+
   module AppleScript
 
     def self.add_track_to_playlist(track_path, playlist_name)
@@ -19,7 +22,7 @@ module Nehm
 
     def script_path(script_name)
       applescripts_path = File.expand_path(File.join(File.dirname(__FILE__), 'applescripts'))
-      File.join(applescripts_path, "#{script_name.to_s}.applescript")
+      File.join(applescripts_path, "#{script_name}.applescript")
     end
 
   end

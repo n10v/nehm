@@ -1,4 +1,8 @@
 module Nehm
+
+  ##
+  # iTunes playlist primitive
+
   class Playlist
 
     attr_reader :name

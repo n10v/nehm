@@ -1,5 +1,8 @@
 module Nehm
-  # OptionParser process options and add hash with options to command
+
+  ##
+  # OptionParser parses options and add hash with options to specified command
+
   class OptionParser
 
     def initialize(args, command)

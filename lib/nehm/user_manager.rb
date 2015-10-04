@@ -1,10 +1,18 @@
 module Nehm
+
+  ##
+  # User manager works with SoundCloud users' id
+
   module UserManager
-    def self.default_id
+
+    ##
+    # Returns default user id (contains in ~/.nehmconfig)
+
+    def self.default_uid
       Cfg[:default_id]
     end
 
-    def self.get_id(permalink)
+    def self.get_uid(permalink)
       user = Client.user(permalink)
       UI.term 'Invalid permalink. Please enter correct permalink' if user.nil?
 

@@ -1,9 +1,19 @@
 module Nehm
+
+  ##
+  # Path manager works with download pathes
+
   module PathManager
+
+    ##
+    # Returns default download path (contains in ~/.nehmconfig)
 
     def self.default_dl_path
       Cfg[:dl_path]
     end
+
+    ##
+    # Checks path for validation and returns it if valid
 
     def self.get_path(path)
       # If path begins with ~

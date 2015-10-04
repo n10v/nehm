@@ -1,4 +1,7 @@
 module Nehm
+
+  # Primitive for SoundCloud track
+
   class Track
 
     attr_reader :hash
@@ -34,6 +37,7 @@ module Nehm
     # Returns artist and title in array
     def name
       title = @hash['title']
+      
       separators = [' - ', ' ~ ']
       separators.each do |sep|
         return title.split(sep) if title.include? sep

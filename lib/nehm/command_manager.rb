@@ -1,4 +1,9 @@
 module Nehm
+
+  ##
+  # The command manager contains information about all nehm commands, find
+  # and run them
+
   module CommandManager
 
     COMMANDS = [
@@ -8,6 +13,9 @@ module Nehm
       :help,
       :version
     ]
+
+    ##
+    # Run the command specified by 'args'.
 
     def self.run(args)
       if args.empty?
