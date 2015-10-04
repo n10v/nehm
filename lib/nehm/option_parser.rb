@@ -8,11 +8,11 @@ module Nehm
     def initialize(args, command)
       @args = args
       @command = command
-      @option_names = command.options.keys
     end
 
     def parse
-      @option_names.each do |option|
+      options = @command.options.keys
+      options.each do |option|
         if @args.include? option
           index = @args.index(option)
           value = @args[index + 1]
@@ -22,8 +22,7 @@ module Nehm
           @command.options[option] = value
         end
       end
-
-      @command.option[:args] = @args
+      @command.options[:args] = @args
     end
 
   end

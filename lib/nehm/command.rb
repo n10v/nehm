@@ -13,6 +13,10 @@ module Nehm
 
     attr_accessor :options
 
+    def initialize
+      @options = {}
+    end
+
     ##
     # Invoke the command with the given list of arguments.
 
@@ -81,7 +85,6 @@ module Nehm
     # Nehm don't use options with dashes to be more user-friendly
 
     def add_option(option, desc)
-      @options ||= {}
       @options_descs ||= {}
 
       @options[option] = nil
