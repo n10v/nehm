@@ -60,6 +60,12 @@ module Nehm
     end
 
     ##
+    # The name of the command for command-line invocation.
+
+    def program_name
+    end
+
+    ##
     # Override to display a short description of what this command does.
 
     def summary
