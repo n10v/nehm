@@ -13,6 +13,11 @@ module Nehm
 
     attr_accessor :options
 
+    ##
+    # In 'initialize' should be defined all options by method 'add_option'.
+    #
+    # See get_command.rb as example.
+
     def initialize
       @options = {}
     end
@@ -39,6 +44,7 @@ module Nehm
     #
     # #options will be filled in with your parsed options, unparsed options will
     # be left in #options[:args].
+    
     def execute
     end
 
