@@ -16,7 +16,7 @@ module Nehm
       puts message.green
     end
 
-    def self.term(message)
+    def self.term(message = nil)
       if message
         abort message.red
       else
