@@ -8,6 +8,11 @@
 [![Dependency Status](https://gemnasium.com/bogem/nehm.svg)](https://gemnasium.com/bogem/nehm)
 [![Code Climate](https://codeclimate.com/github/bogem/nehm/badges/gpa.svg)](https://codeclimate.com/github/bogem/nehm)
 
+## DISCLAIMER
+***For personal use only***
+
+***Nehm developer doesn't responsible for any illegal usage of this program***
+
 ## Installation
 
 **1. Install `taglib` library**
@@ -71,9 +76,7 @@ Enter path to desirable download directory (press enter to set it to ...
 
 * Get tracks to another directory
 
-  `nehm get post from nasa to ~/Downloads` or `nehm dl like from bogem to current`
-
-  *(if you type `to current`, `nehm` will get track to current working directory)*
+  `nehm get post to ~/Downloads` or `nehm dl like from bogem to .`
 
 * Get tracks to another iTunes playlist
 
@@ -94,10 +97,6 @@ Enter path to desirable download directory (press enter to set it to ...
 * Help
 
   `nehm help`
-
-## TODO
-
-* Getting/downloading playlists from posts
 
 ##FAQ
 
