@@ -1,23 +1,23 @@
 require 'colored'
 
 module Nehm::UI
-  def self.error(expression)
-    abort expression.red
+  def self.error(message)
+    abort "#{message}\n".red
   end
 
   def self.newline
     puts "\n"
   end
 
-  def self.say(expression)
-    puts expression
+  def self.say(message)
+    puts message
   end
 
-  def self.terminate_interaction
-    exit
+  def self.success(message)
+    puts message.green
   end
 
   def self.warning
-    puts expression.yellow
+    puts "#{message}\n".yellow
   end
 end
