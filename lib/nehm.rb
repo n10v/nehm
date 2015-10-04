@@ -21,6 +21,7 @@ require 'nehm/user_manager'
 require 'nehm/version'
 
 module Nehm
+
   def self.start(args)
     init unless initialized?
 
@@ -52,4 +53,5 @@ module Nehm
   def initialized?
     File.exist?(Cfg::FILE_PATH)
   end
+
 end
