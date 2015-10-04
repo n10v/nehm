@@ -51,7 +51,13 @@ module Nehm
       command_name = command_name.to_s
       const_name = command_name.capitalize << 'Command'
 
-      Nehm::Commands.const_get(const_name).new
+      require_commands
+      Nehm.const_get(const_name).new
+    end
+
+    def require_commands
+      project_root = File.dirname(File.absolute_path(__FILE__))
+      Dir.glob(project_root + '/commands/*') { |file| require file }
     end
 
   end
