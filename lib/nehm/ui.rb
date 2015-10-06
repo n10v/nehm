@@ -25,7 +25,7 @@ module Nehm
     end
 
     def self.warning(msg)
-      puts "#{msg}\n".yellow
+      puts "#{msg}".yellow
     end
 
   end
