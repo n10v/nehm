@@ -22,7 +22,7 @@ module Nehm
         "#{'<number> posts'.green}" => 'Download last <number> posts from your profile',
         "#{'like'.green}"           => 'Download your last like',
         "#{'<number> likes'.green}" => 'Download your last <number> likes',
-        "#{'url'.magenta}"          => 'Download track from entered url' }
+        "#{'URL'.magenta}"          => 'Download track from entered URL' }
     end
 
     def program_name

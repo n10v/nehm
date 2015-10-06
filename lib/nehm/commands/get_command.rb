@@ -25,7 +25,7 @@ module Nehm
         "#{'<number> posts'.green}" => 'Get last <number> posts from your profile',
         "#{'like'.green}"           => 'Get your last like',
         "#{'<number> likes'.green}" => 'Get your last <number> likes',
-        "#{'url'.magenta}"          => 'Get track from entered url' }
+        "#{'URL'.magenta}"          => 'Get track from entered URL' }
     end
 
     def program_name
