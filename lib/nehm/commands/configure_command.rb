@@ -20,7 +20,7 @@ module Nehm
     end
 
     def summary
-      'Configuring nehm app'
+      'Configure nehm app'
     end
 
     def usage
