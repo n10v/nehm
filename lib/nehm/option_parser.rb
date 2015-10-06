@@ -19,7 +19,7 @@ module Nehm
           @args.delete_at(index + 1)
           @args.delete_at(index)
 
-          @command.options[option] = value
+          @command.options[option.to_sym] = value
         end
       end
       @command.options[:args] = @args
