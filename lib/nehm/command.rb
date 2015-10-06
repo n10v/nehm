@@ -44,7 +44,7 @@ module Nehm
     #
     # #options will be filled in with your parsed options, unparsed options will
     # be left in #options[:args].
-    
+
     def execute
     end
 
@@ -89,12 +89,14 @@ module Nehm
     # Add a command-line option
     #
     # Nehm don't use options with dashes to be more user-friendly
+    #
+    # See 'get_command.rb' as example
 
-    def add_option(option, desc)
+    def add_option(option, usage, desc)
       @options_descs ||= {}
 
       @options[option] = nil
-      @options_descs[option] = desc
+      @options_descs[option] = [usage, desc]
     end
 
     HELP = <<-EOF
