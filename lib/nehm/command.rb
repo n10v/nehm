@@ -14,6 +14,11 @@ module Nehm
     attr_accessor :options
 
     ##
+    # Hash with descriptions of each options.
+
+    attr_accessor :options_descs
+
+    ##
     # In 'initialize' should be defined all options by method 'add_option'.
     #
     # See get_command.rb as example.
@@ -49,17 +54,16 @@ module Nehm
     end
 
     ##
-    # Override to provide details of the arguments a command takes.  It should
-    # return a left-justified string, one argument per line.
+    # Override to provide details of the arguments a command takes.
     #
     # For example:
     #
     #   def usage
-    #     "nehm help COMMAND"
+    #     "#{program_name} COMMAND"
     #   end
     #
     #   def arguments
-    #     "COMMAND          name of command to show help"
+    #     ['COMMAND', 'name of command to show help']
     #   end
 
     def arguments
@@ -86,17 +90,17 @@ module Nehm
     end
 
     ##
-    # Add a command-line option
+    # Add a command-line option.
     #
-    # Nehm don't use options with dashes to be more user-friendly
+    # Nehm don't use options with dashes to be more user-friendly.
     #
-    # See 'get_command.rb' as example
+    # See 'get_command.rb' as example.
 
     def add_option(option, usage, desc)
       @options_descs ||= {}
 
       @options[option] = nil
-      @options_descs[option] = [usage, desc]
+      @options_descs[usage] = desc
     end
 
     HELP = <<-EOF
