@@ -6,10 +6,10 @@ module Nehm
     def initialize
       super
 
-      add_option(:from, 'from PERMALINK',
+      add_option(:from, 'from PERMALINK'.green,
                  'Get track(s) from user with PERMALINK')
 
-      add_option(:to, 'to PATH',
+      add_option(:to, 'to PATH'.green,
                  'Download track(s) to PATH')
     end
 
