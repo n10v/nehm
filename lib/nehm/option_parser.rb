@@ -11,7 +11,7 @@ module Nehm
     end
 
     def parse
-      options = @command.options.keys
+      options = @command.options.keys.map(&:to_s)
       options.each do |option|
         if @args.include? option
           index = @args.index(option)
