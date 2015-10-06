@@ -1,3 +1,5 @@
+require 'nehm/playlist'
+
 module Nehm
 
   ##

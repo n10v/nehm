@@ -1,3 +1,5 @@
+require 'nehm/version'
+
 module Nehm
   class VersionCommand < Command
 

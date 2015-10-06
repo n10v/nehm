@@ -1,3 +1,5 @@
+require 'nehm/artwork'
+
 module Nehm
 
   ##

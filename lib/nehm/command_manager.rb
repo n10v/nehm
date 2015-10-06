@@ -1,3 +1,5 @@
+require 'nehm/command'
+
 module Nehm
 
   ##

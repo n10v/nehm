@@ -1,3 +1,5 @@
+require 'nehm/option_parser'
+
 module Nehm
 
   ##

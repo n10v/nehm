@@ -1,22 +1,12 @@
 require 'colored'
 require 'highline'
 
-require 'nehm/applescript'
-require 'nehm/artwork'
 require 'nehm/cfg'
-require 'nehm/command'
 require 'nehm/command_manager'
-require 'nehm/client'
-require 'nehm/help'
-require 'nehm/option_parser'
-require 'nehm/os'
 require 'nehm/path_manager'
-require 'nehm/playlist'
 require 'nehm/playlist_manager'
-require 'nehm/track'
 require 'nehm/ui'
 require 'nehm/user_manager'
-require 'nehm/version'
 
 module Nehm
 
