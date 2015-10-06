@@ -52,10 +52,10 @@ module Nehm
         when 'post'
           posts(1, uid)
         when 'likes'
-          count = options[:args].pop
+          count = options[:args].pop.to_i
           likes(count, uid)
         when 'posts'
-          count = options[:args].pop
+          count = options[:args].pop.to_i
           posts(count, uid)
         when %r{https:\/\/soundcloud.com\/}
           track(options[:args].pop)
