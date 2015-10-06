@@ -21,11 +21,11 @@ module Nehm
     end
 
     def arguments
-      [['post'.green,           'Get last post (track or repost) from your profile'],
-       ['<number> posts'.green, 'Get last <number> posts from your profile'],
-       ['like'.green,           'Get your last like'],
-       ['<number> likes'.green, 'Get your last <number> likes'],
-       ['url'.magenta,          'Get track from entered url']]
+      { "#{'post'.green}"           => 'Get last post (track or repost) from your profile',
+        "#{'<number> posts'.green}" => 'Get last <number> posts from your profile',
+        "#{'like'.green}"           => 'Get your last like',
+        "#{'<number> likes'.green}" => 'Get your last <number> likes',
+        "#{'url'.magenta}"          => 'Get track from entered url' }
     end
 
     def program_name
