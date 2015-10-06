@@ -1,7 +1,6 @@
 require 'taglib'
 
 require 'nehm/applescript'
-require 'nehm/client'
 require 'nehm/os'
 require 'nehm/track'
 

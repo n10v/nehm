@@ -1,6 +1,7 @@
 require 'colored'
 require 'highline'
 
+require 'nehm/client'
 require 'nehm/cfg'
 require 'nehm/command_manager'
 require 'nehm/path_manager'

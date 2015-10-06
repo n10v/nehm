@@ -1,3 +1,5 @@
+require 'nehm/artwork'
+
 module Nehm
 
   # Primitive for SoundCloud track
@@ -37,7 +39,7 @@ module Nehm
     # Returns artist and title in array
     def name
       title = @hash['title']
-      
+
       separators = [' - ', ' ~ ']
       separators.each do |sep|
         return title.split(sep) if title.include? sep

@@ -68,7 +68,7 @@ module Nehm
     # Returns track hash from SoundCloud by specified url
 
     def self.track(url)
-      Client.get('/resolve', url: url)
+      SC_CLIENT.get('/resolve', url: url)
     end
 
     module_function
