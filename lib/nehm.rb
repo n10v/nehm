@@ -11,6 +11,10 @@ require 'nehm/user_manager'
 
 module Nehm
 
+  # TODO: add rake tests
+  # TODO: add search command
+  # TODO: add select command
+
   def self.start(args)
     init unless initialized?
 

@@ -3,6 +3,8 @@ module Nehm
   ##
   # OptionParser parses options and add hash with options to specified command
 
+  # TODO: make abbrebiated options
+
   class OptionParser
 
     def initialize(args, command)
