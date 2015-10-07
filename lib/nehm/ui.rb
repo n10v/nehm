@@ -1,5 +1,8 @@
 module Nehm
   module UI
+
+    # TODO: add Highline features to UI module
+
     def self.error(msg)
       puts "#{msg}\n".red
     end
