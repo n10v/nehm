@@ -1,13 +1,34 @@
 module Nehm
+
+  ##
+  # Path manager works with download pathes
+
   module PathManager
-    def self.dl_path
-      @temp_dl_path || default_dl_path
+
+    ##
+    # Returns default download path (contains in ~/.nehmconfig)
+
+    def self.default_dl_path
+      Cfg[:dl_path]
+    end
+
+    ##
+    # Checks path for validation and returns it if valid
+
+    def self.get_path(path)
+      # If path begins with ~
+      path = tilde_to_home(path) if tilde_at_top?(path)
+
+      # Check path for existence
+      UI.term 'Invalid download path! Please enter correct path' unless Dir.exist?(path)
+
+      path
     end
 
     def self.set_dl_path
       loop do
-        default_path = File.join(ENV['HOME'], '/Music')
         ask_sentence = 'Enter path to desirable download directory'
+        default_path = File.join(ENV['HOME'], '/Music')
 
         if Dir.exist?(default_path)
           ask_sentence << " (press enter to set it to #{default_path.magenta})"
@@ -25,41 +46,15 @@ module Nehm
 
         if Dir.exist?(path)
           Cfg[:dl_path] = path
-          puts "#{'Download directory set up to'.green} #{path.magenta}"
+          UI.say "#{'Download directory set up to'.green} #{path.magenta}"
           break
         else
-          puts "This directory doesn't exist. Please enter correct path".red
-          puts "\n"
+          UI.error "This directory doesn't exist. Please enter correct path"
         end
       end
     end
 
-    def self.temp_dl_path=(path)
-      # If 'to ~/../..' entered
-      path = tilde_to_home(path) if tilde_at_top?(path)
-
-      # If 'to current' entered
-      path = Dir.pwd if path == 'current'
-
-      if Dir.exist?(path)
-        @temp_dl_path = path
-      else
-        puts 'Invalid download path! Please enter correct path'.red
-        exit
-      end
-    end
-
     module_function
-
-    def default_dl_path
-      if Cfg[:dl_path]
-        Cfg[:dl_path]
-      else
-        puts "You don't set up download path!".red
-        puts "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
-        exit
-      end
-    end
 
     def tilde_at_top?(path)
       path[0] == '~'
@@ -68,5 +63,6 @@ module Nehm
     def tilde_to_home(path)
       File.join(ENV['HOME'], path[1..-1])
     end
+
   end
 end

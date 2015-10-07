@@ -1,67 +1,46 @@
 require 'colored'
 require 'highline'
 
-require 'nehm/applescript'
-require 'nehm/artwork'
-require 'nehm/cfg'
-require 'nehm/configure'
 require 'nehm/client'
-require 'nehm/get'
-require 'nehm/help'
-require 'nehm/os'
+require 'nehm/cfg'
+require 'nehm/command_manager'
 require 'nehm/path_manager'
-require 'nehm/playlist'
 require 'nehm/playlist_manager'
-require 'nehm/track'
-require 'nehm/user'
+require 'nehm/ui'
 require 'nehm/user_manager'
-require 'nehm/version'
 
 module Nehm
-  def self.do(args)
+
+  def self.start(args)
     init unless initialized?
 
-    command = args.shift
-    case command
-    when 'get'
-      Get[:get, args]
-    when 'dl'
-      Get[:dl, args]
-    when 'configure'
-      Configure.menu
-    when 'version'
-      puts Nehm::VERSION
-    when 'help', nil
-      Help.show(args.first)
-    else
-      puts "Invalid command '#{command}'".red
-      puts "Input #{'nehm help'.yellow} for all avalaible commands"
-    end
+    CommandManager.run(args)
   end
 
   module_function
 
   def init
-    puts 'Hello!'.green
-    puts 'Before using the nehm, you should set it up:'
+    UI.success 'Hello!'
+    UI.say 'Before using the nehm, you should set it up:'
     Cfg.create unless Cfg.exist?
 
     PathManager.set_dl_path
-    puts "\n"
+    UI.newline
 
     unless OS.linux?
       PlaylistManager.set_playlist
-      puts "\n"
+      UI.newline
     end
 
-    UserManager.log_in
-    puts "\n"
+    UserManager.set_uid
+    UI.newline
 
-    puts "Now you can use nehm!\n".green
+    UI.success "Now you can use nehm!\n"
     sleep(1)
   end
 
   def initialized?
     File.exist?(Cfg::FILE_PATH)
   end
+
 end

@@ -1,62 +1,38 @@
 module Nehm
+
+  ##
+  # User manager works with SoundCloud users' id
+
   module UserManager
-    def self.user
-      @temp_user || default_user
+
+    ##
+    # Returns default user id (contains in ~/.nehmconfig)
+
+    def self.default_uid
+      Cfg[:default_id]
     end
 
-    def self.logged_in?
-      Cfg.key?(:default_id)
+    def self.get_uid(permalink)
+      user = Client.user(permalink)
+      UI.term 'Invalid permalink. Please enter correct permalink' if user.nil?
+
+      user['id']
     end
 
-    def self.log_in
+    def self.set_uid
       loop do
         permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
-        user = get_user(permalink)
+        user = Client.user(permalink)
         if user
           Cfg[:default_id] = user.id
           Cfg[:permalink] = permalink
-          puts 'Successfully logged in!'.green
+          UI.success 'Successfully logged in!'
           break
         else
-          puts 'Invalid permalink. Please enter correct permalink'.red
-          puts "\n"
+          UI.error 'Invalid permalink. Please enter correct permalink'
         end
       end
     end
 
-    def self.temp_user=(permalink)
-      user = get_user(permalink)
-      if user
-        @temp_user = User.new(user.id)
-      else
-        puts 'Invalid permalink. Please enter correct permalink'.red
-        exit
-      end
-    end
-
-    module_function
-
-    def default_user
-      if UserManager.logged_in?
-        User.new(Cfg[:default_id])
-      else
-        puts "You didn't logged in".red
-        puts "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
-        exit
-      end
-    end
-
-    def get_user(permalink)
-      begin
-        user = Client.get('/resolve', url: "https://soundcloud.com/#{permalink}")
-      rescue SoundCloud::ResponseError => e
-        if e.message =~ /404/
-          user = nil
-        else
-          raise e
-        end
-      end
-      user
-    end
   end
 end

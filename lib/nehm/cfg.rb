@@ -1,9 +1,12 @@
 require 'bogy'
 
-
 module Nehm
+
+  ##
   # Cfg module manipulates with nehm's config file (~/.nehmconfig)
+
   module Cfg
+
     FILE_PATH = File.join(ENV['HOME'], '.nehmconfig')
     CONFIG_FILE = Bogy.new(file: FILE_PATH)
 
@@ -26,5 +29,6 @@ module Nehm
     def self.key?(key)
       CONFIG_FILE.to_h.key?(key.to_s)
     end
+
   end
 end

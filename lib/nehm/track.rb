@@ -1,5 +1,11 @@
+require 'nehm/artwork'
+
 module Nehm
+
+  # Primitive for SoundCloud track
+
   class Track
+
     attr_reader :hash
 
     def initialize(hash)
@@ -7,13 +13,7 @@ module Nehm
     end
 
     def artist
-      title = @hash['title']
-
-      if title.include? ' - '
-        title.split(' - ')[0]
-      else
-        @hash['user']['username']
-      end
+      name[0]
     end
 
     def artwork
@@ -21,34 +21,35 @@ module Nehm
     end
 
     def file_name
-      "#{name.gsub(/[^0-9A-Za-z -]/, '')}.mp3"
+      "#{full_name.tr(',./\\\'$%"', '')}.mp3"
     end
 
     def file_path
-      File.join(PathManager.dl_path, file_name)
+      File.join(ENV['dl_path'], file_name)
+    end
+
+    def full_name
+      "#{artist} - #{title}"
     end
 
     def id
       @hash['id']
     end
 
-    # Used in Get#dl and in Track#file_name
+    # Returns artist and title in array
     def name
-      artist + ' - ' + title
-    end
+      title = @hash['title']
 
-    def streamable?
-      @hash['streamable']
+      separators = [' - ', ' ~ ']
+      separators.each do |sep|
+        return title.split(sep) if title.include? sep
+      end
+
+      [@hash['user']['username'], title]
     end
 
     def title
-      title = @hash['title']
-
-      if title.include? ' - '
-        title.split(' - ')[1]
-      else
-        title
-      end
+      name[1]
     end
 
     def url
@@ -58,5 +59,6 @@ module Nehm
     def year
       @hash['created_at'][0..3].to_i
     end
+
   end
 end

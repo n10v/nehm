@@ -1,17 +1,16 @@
 module Nehm
-  # Artwork objects contains all needed information of track's artwork
+
+  ##
+  # Artwork objects contains all information of track's artwork
+
   class Artwork
+
     def initialize(track)
       @track = track
     end
 
     def file_path
       File.join('/tmp', "#{@track.id}.jpg")
-    end
-
-    # Use in Get.dl
-    def name
-      'artwork'
     end
 
     def suicide
@@ -28,5 +27,6 @@ module Nehm
         end
       url.sub('large', 't500x500')
     end
+
   end
 end
