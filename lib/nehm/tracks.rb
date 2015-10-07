@@ -62,7 +62,7 @@ module Nehm
           count = options[:args].pop.to_i
           posts(count, uid)
         when %r{https:\/\/soundcloud.com\/}
-          track(options[:args].pop)
+          track(arg)
         when nil
           UI.error 'You must provide argument'
           UI.say "Use #{'nehm help'.yellow} for help"
