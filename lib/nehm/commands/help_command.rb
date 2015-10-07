@@ -4,7 +4,13 @@ module Nehm
     SPACES_BTW_NAME_AND_DESC = 5
 
     def execute
-      @cmd = CommandManager.find_command(options[:args].pop)
+      command_name = options[:args].pop
+      if command_name.nil?
+        UI.say Nehm::Command::HELP
+        UI.term
+      end
+
+      @cmd = CommandManager.find_command(command_name)
 
       show_usage
       show_summary

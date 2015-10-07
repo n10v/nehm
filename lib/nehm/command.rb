@@ -112,6 +112,7 @@ module Nehm
   #{'get'.green}        Download, set tags and add to your iTunes library last post or like from your profile
   #{'dl'.green}         Download and set tags last post or like from your profile
   #{'configure'.green}  Configure application
+  #{'help'.green}       Show help for specified command
   #{'version'.green}    Show version of installed nehm
 
 See #{'nehm help [command]'.yellow} to read about a specific subcommand
