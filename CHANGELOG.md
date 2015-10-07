@@ -3,7 +3,7 @@
 ## 1.6
 * Rewritten about 90% of code to make it more comfortable to read (improve code climate from 2.9 to 3.6)
 * Add newlines before and after downloading track
-* More clear 'help' command 
+* Clearer 'help' command 
 
 ## 1.5.6.2
 * Excluding space and dash from removing in track's file name
