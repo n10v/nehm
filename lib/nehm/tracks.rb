@@ -138,7 +138,6 @@ module Nehm
       playlists = posts.reject! { |hash| hash['type'] == 'playlist' }
       unstreamable_tracks = posts.reject! { |hash| hash['track']['streamable'] == false }
       if playlists || unstreamable_tracks
-        UI.newline
         UI.warning "Was skipped #{first_count - posts.length} undownloadable track(s) or playlist(s)"
       end
 
