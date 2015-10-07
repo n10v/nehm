@@ -1,3 +1,3 @@
 module Nehm
-  VERSION = '1.5.6.2'.freeze
+  VERSION = '1.6'.freeze
 end
