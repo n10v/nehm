@@ -69,6 +69,7 @@ module Nehm
     #   end
 
     def arguments
+      {}
     end
 
     ##
