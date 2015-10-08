@@ -8,7 +8,6 @@ $stderr = STDOUT
 begin
   Nehm.start(ARGV)
 rescue Interrupt # SIGINT
-  puts "\nGoodbye!"
   Nehm::UI.term
 rescue StandardError, Timeout::Error => ex
   Nehm::UI.term "While executing nehm ... (#{ex.class})\n    #{ex}"
