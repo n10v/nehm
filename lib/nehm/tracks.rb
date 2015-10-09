@@ -73,7 +73,7 @@ module Nehm
           UI.term
         end
 
-      tracks.each do |track|
+      tracks.reverse_each do |track|
         UI.newline
         dl(track)
         tag(track)
