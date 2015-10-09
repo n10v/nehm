@@ -21,7 +21,7 @@ module Nehm
 
     def self.set_uid
       loop do
-        permalink = HighLine.new.ask('Please enter your permalink (last word in your profile url): ')
+        permalink = UI.ask('Please enter your permalink (last word in your profile url): ')
         user = Client.user(permalink)
         if user
           Cfg[:default_id] = user.id

@@ -1,10 +1,18 @@
+require 'highline'
+
 module Nehm
   module UI
 
-    # TODO: add Highline features to UI module
+    def self.ask(arg, &block)
+      HighLine.new.ask(arg, &block)
+    end
 
     def self.error(msg)
       puts "#{msg}\n".red
+    end
+
+    def self.menu(&block)
+      HighLine.new.choose(&block)
     end
 
     def self.newline

@@ -30,7 +30,7 @@ module Nehm
     private
 
     def show_menu
-      HighLine.new.choose do |menu|
+      UI.menu do |menu|
         menu.prompt = 'Choose setting'.yellow
 
         menu.choice('Edit download path'.freeze) { PathManager.set_dl_path }

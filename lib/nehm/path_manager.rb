@@ -36,7 +36,7 @@ module Nehm
           default_path = nil
         end
 
-        path = HighLine.new.ask(ask_sentence + ':')
+        path = UI.ask(ask_sentence + ':')
 
         # If user press enter, set path to default
         path = default_path if path == '' && default_path

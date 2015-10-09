@@ -27,7 +27,7 @@ module Nehm
 
     def self.set_playlist
       loop do
-        playlist = HighLine.new.ask('Enter name of default iTunes playlist to that you want add tracks (press Enter to set it to default iTunes Music library):')
+        playlist = UI.ask('Enter name of default iTunes playlist to that you want add tracks (press Enter to set it to default iTunes Music library):')
 
         # If entered nothing, unset iTunes playlist
         if playlist == ''

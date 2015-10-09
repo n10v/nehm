@@ -1,5 +1,4 @@
 require 'colored'
-require 'highline'
 
 require 'nehm/client'
 require 'nehm/cfg'
