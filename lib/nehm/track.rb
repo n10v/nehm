@@ -42,7 +42,7 @@ module Nehm
 
       separators = [' - ', ' ~ ']
       separators.each do |sep|
-        return title.split(sep) if title.include? sep
+        return title.split(sep, 2) if title.include? sep
       end
 
       [@hash['user']['username'], title]
