@@ -96,8 +96,7 @@ module Nehm
 
     def tag(track)
       UI.say 'Setting tags'
-      path = track.file_path
-      TagLib::MPEG::File.open(path) do |file|
+      TagLib::MPEG::File.open(track.file_path) do |file|
         tag = file.id3v2_tag
         tag.artist = track.artist
         tag.title = track.title
@@ -115,18 +114,18 @@ module Nehm
       end
     end
 
-    def likes(count, uid)
+    def likes(count)
       likes = Client.tracks(count, :likes, @uid)
       UI.term 'There are no likes yet' if likes.empty?
 
-      # Removing playlists and unstreamable tracks
+      # Removing unstreamable tracks
       unstreamable_tracks = likes.reject! { |hash| hash['streamable'] == false }
       UI.warning "Was skipped #{unstreamable_tracks.length} undownloadable track(s)" if unstreamable_tracks
 
       likes.map! { |hash| Track.new(hash) }
     end
 
-    def posts(count, uid)
+    def posts(count)
       posts = Client.tracks(count, :posts, @uid)
       UI.term 'There are no posts yet' if posts.empty?
 
