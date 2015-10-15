@@ -19,8 +19,8 @@ module Nehm
     def self.[](type, options)
       # Setting up user id
       permalink = options[:from]
-      uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
-      unless uid
+      @uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
+      unless @uid
         UI.error "You didn't logged in"
         UI.say "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
         UI.term
@@ -49,15 +49,15 @@ module Nehm
       tracks +=
         case arg
         when 'like'
-          likes(1, uid)
+          likes(1)
         when 'post'
-          posts(1, uid)
+          posts(1)
         when 'likes'
           count = options[:args].pop.to_i
-          likes(count, uid)
+          likes(count)
         when 'posts'
           count = options[:args].pop.to_i
-          posts(count, uid)
+          posts(count)
         when %r{https:\/\/soundcloud.com\/}
           track(arg)
         when nil
@@ -116,7 +116,7 @@ module Nehm
     end
 
     def likes(count, uid)
-      likes = Client.tracks(count, :likes, uid)
+      likes = Client.tracks(count, :likes, @uid)
       UI.term 'There are no likes yet' if likes.empty?
 
       # Removing playlists and unstreamable tracks
@@ -127,7 +127,7 @@ module Nehm
     end
 
     def posts(count, uid)
-      posts = Client.tracks(count, :posts, uid)
+      posts = Client.tracks(count, :posts, @uid)
       UI.term 'There are no posts yet' if posts.empty?
 
       # Removing playlists and unstreamable tracks
