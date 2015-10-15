@@ -59,7 +59,7 @@ module Nehm
           count = options[:args].pop.to_i
           posts(count)
         when %r{https:\/\/soundcloud.com\/}
-          track(arg)
+          track_from_url(arg)
         when nil
           UI.error 'You must provide argument'
           UI.say "Use #{'nehm help'.yellow} for help"
@@ -140,9 +140,9 @@ module Nehm
       posts.map! { |hash| Track.new(hash['track']) }
     end
 
-    def track(url)
+    def track_from_url(url)
       hash = Client.track(url)
-      [*Track.new(hash)]
+      [Track.new(hash)]
     end
 
   end
