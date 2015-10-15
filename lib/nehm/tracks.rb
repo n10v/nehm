@@ -30,9 +30,6 @@ module Nehm
       if type == :get && !OS.linux?
         playlist_name = options[:playlist]
         playlist = playlist_name ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
-        itunes_playlist_ready = true if playlist
-      else
-        itunes_playlist_ready = false
       end
 
       # Setting up download path
@@ -78,7 +75,7 @@ module Nehm
         dl(track)
         tag(track)
         track.artwork.suicide
-        playlist.add_track(track.file_path) if itunes_playlist_ready
+        playlist.add_track(track.file_path) if playlist
         UI.newline
       end
       UI.success 'Done!'
