@@ -59,9 +59,11 @@ module Nehm
     # Returns user hash from SoundCloud or nil if user doesn't exist
 
     def self.user(permalink)
-      SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
+      begin
+        SC_CLIENT.get('/resolve', url: "https://soundcloud.com/#{permalink}")
       rescue SoundCloud::ResponseError => e
         return nil if e.message =~ /404/
+      end
     end
 
     ##
