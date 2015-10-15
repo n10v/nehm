@@ -11,9 +11,9 @@ module Nehm
       @name = name.chomp
     end
 
-    def add_track(track_path)
+    def add_track(track)
       UI.say 'Adding to iTunes'
-      AppleScript.add_track_to_playlist(track_path, @name)
+      AppleScript.add_track_to_playlist(track.file_path, @name)
     end
 
     def to_s
