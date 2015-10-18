@@ -1,6 +1,6 @@
 require 'certifi'
-require 'faraday'
 require 'json'
+require 'net/http'
 require 'soundcloud'
 
 module Nehm
@@ -84,11 +84,9 @@ module Nehm
     # isn't authorized
     # But api-v2.soundcloud.com supports it
 
-    # TODO: use net/http instead of Faraday
-
     def posts(limit, offset, uid)
-      conn = Faraday.new(url: 'https://api-v2.soundcloud.com/')
-      response = conn.get("/profile/soundcloud:users:#{uid}?limit=#{limit}&offset=#{offset}")
+      uri = URI("https://api-v2.soundcloud.com/profile/soundcloud:users:#{uid}?limit=#{limit}&offset=#{offset}")
+      response = Net::HTTP.get_response(uri)
       parsed = JSON.parse(response.body)
       parsed['collection']
     end
