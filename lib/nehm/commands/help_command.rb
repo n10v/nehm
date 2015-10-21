@@ -1,7 +1,7 @@
 module Nehm
   class HelpCommand < Command
 
-    SPACES_BTWN_NAME_AND_DESC = 5
+    SPACES_BTWN_NAME_AND_DESC = 3
 
     def execute
       command_name = options[:args].pop
@@ -70,7 +70,7 @@ module Nehm
       unless @longest
         names = []
         names += @cmd.arguments.keys unless @cmd.arguments.empty?
-        names += @cmd.options.keys unless @cmd.options.empty?
+        names += @cmd.options_descs.keys unless @cmd.options_descs.empty?
         @longest ||= find_longest_name(names).length
       end
 

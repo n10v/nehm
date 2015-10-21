@@ -33,7 +33,7 @@ module Nehm
     end
 
     def summary
-      'Download tracks, set tags and add to your iTunes library tracks from Soundcloud'
+      'Download tracks, set tags and add to your iTunes library tracks from SoundCloud'
     end
 
     def usage
