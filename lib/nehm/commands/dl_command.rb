@@ -18,11 +18,11 @@ module Nehm
     end
 
     def arguments
-      { "#{'post'}"           => 'Download last post (track or repost) from your profile',
-        "#{'<number> posts'}" => 'Download last <number> posts from your profile',
-        "#{'like'}"           => 'Download your last like',
-        "#{'<number> likes'}" => 'Download your last <number> likes',
-        "#{'URL'}"            => 'Download track from entered URL' }
+      { "#{'post'}"         => 'Download last post (track or repost) from your profile',
+        "#{'NUMBER posts'}" => 'Download last NUMBER posts from your profile',
+        "#{'like'}"         => 'Download your last like',
+        "#{'NUMBER likes'}" => 'Download your last NUMBER likes',
+        "#{'URL'}"          => 'Download track from entered URL' }
     end
 
     def program_name
@@ -30,7 +30,7 @@ module Nehm
     end
 
     def summary
-      'Download and set tags any track from Soundcloud'
+      'Download and set tags any track from SoundCloud'
     end
 
     def usage
