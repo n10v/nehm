@@ -6,13 +6,13 @@ module Nehm
     def initialize
       super
 
-      add_option(:from, 'from PERMALINK'.green,
+      add_option(:from, 'from PERMALINK',
                  'Get track(s) from user with PERMALINK')
 
-      add_option(:to, 'to PATH'.green,
+      add_option(:to, 'to PATH',
                  'Download track(s) to PATH')
 
-      add_option(:playlist, 'playlist PLAYLIST'.green,
+      add_option(:playlist, 'playlist PLAYLIST',
                  'Add track(s) to iTunes playlist with PLAYLIST name')
     end
 
@@ -21,11 +21,11 @@ module Nehm
     end
 
     def arguments
-      { "#{'post'.green}"           => 'Get last post (track or repost) from your profile',
-        "#{'<number> posts'.green}" => 'Get last <number> posts from your profile',
-        "#{'like'.green}"           => 'Get your last like',
-        "#{'<number> likes'.green}" => 'Get your last <number> likes',
-        "#{'URL'.magenta}"          => 'Get track from entered URL' }
+      { "#{'post'}"           => 'Get last post (track or repost) from your profile',
+        "#{'<number> posts'}" => 'Get last <number> posts from your profile',
+        "#{'like'}"           => 'Get your last like',
+        "#{'<number> likes'}" => 'Get your last <number> likes',
+        "#{'URL'}"            => 'Get track from entered URL' }
     end
 
     def program_name

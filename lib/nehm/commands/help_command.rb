@@ -1,7 +1,7 @@
 module Nehm
   class HelpCommand < Command
 
-    SPACES_BTW_NAME_AND_DESC = 5
+    SPACES_BTWN_NAME_AND_DESC = 5
 
     def execute
       command_name = options[:args].pop
@@ -19,7 +19,7 @@ module Nehm
     end
 
     def arguments
-      { 'COMMAND'.magenta => 'name of command to show help' }
+      { 'COMMAND' => 'name of command to show help' }
     end
 
     def program_name
@@ -77,7 +77,7 @@ module Nehm
       hash.each do |name, desc|
         need_spaces = @longest - name.length
 
-        UI.say "  #{name}#{' ' * (need_spaces + SPACES_BTW_NAME_AND_DESC)}#{desc}"
+        UI.say "  #{name.green}#{' ' * (need_spaces + SPACES_BTWN_NAME_AND_DESC)}#{desc}"
       end
     end
 

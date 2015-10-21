@@ -3,7 +3,7 @@ module Nehm
   ##
   # OptionParser parses options and add hash with options to specified command
 
-  # TODO: make abbrebiated options
+  # TODO: make abbreviated options
 
   class OptionParser
 
