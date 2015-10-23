@@ -18,11 +18,11 @@ module Nehm
     end
 
     def arguments
-      { "#{'post'}"         => 'Download last post (track or repost) from your profile',
-        "#{'NUMBER posts'}" => 'Download last NUMBER posts from your profile',
-        "#{'like'}"         => 'Download your last like',
-        "#{'NUMBER likes'}" => 'Download your last NUMBER likes',
-        "#{'URL'}"          => 'Download track from entered URL' }
+      { 'post'         => 'Download last post (track or repost) from your profile',
+        'NUMBER posts' => 'Download last NUMBER posts from your profile',
+        'like'         => 'Download your last like',
+        'NUMBER likes' => 'Download your last NUMBER likes',
+        'URL'          => 'Download track from entered URL' }
     end
 
     def program_name
