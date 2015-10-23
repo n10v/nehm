@@ -80,7 +80,7 @@ module Nehm
     end
 
     ##
-    # Stantard SoundCloud Ruby wrapper doesn't support reposts if user
+    # Standard SoundCloud Ruby wrapper doesn't support reposts if user
     # isn't authorized
     # But api-v2.soundcloud.com supports it
 
