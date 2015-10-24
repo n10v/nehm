@@ -1,5 +1,3 @@
-require 'nehm/tracks'
-
 module Nehm
   class DlCommand < Command
 
@@ -14,7 +12,10 @@ module Nehm
     end
 
     def execute
-      Tracks[:dl, @options]
+      get_cmd = CommandManager.command_instance('get')
+      get_cmd.options = @options
+      get_cmd.options[:dl] = true
+      get_cmd.execute
     end
 
     def arguments

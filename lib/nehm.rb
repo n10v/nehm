@@ -6,6 +6,7 @@ require 'nehm/command_manager'
 require 'nehm/os'
 require 'nehm/path_manager'
 require 'nehm/playlist_manager'
+require 'nehm/track_manager'
 require 'nehm/ui'
 require 'nehm/user_manager'
 

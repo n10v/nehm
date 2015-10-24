@@ -42,14 +42,12 @@ module Nehm
       command_instance(possibilities.first)
     end
 
-    module_function
-
-    def find_command_possibilities(cmd_name)
+    def self.find_command_possibilities(cmd_name)
       len = cmd_name.length
       COMMANDS.select { |command| command[0, len] == cmd_name }
     end
 
-    def command_instance(command_name)
+    def self.command_instance(command_name)
       command_name = command_name.to_s
       const_name = command_name.capitalize << 'Command'
 
