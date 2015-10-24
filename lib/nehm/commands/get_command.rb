@@ -12,7 +12,7 @@ module Nehm
       add_option(:to, 'to PATH',
                  'Download track(s) to PATH')
 
-      add_option(:playlist, 'playlist PLAYLIST',
+      add_option(:pl, 'pl PLAYLIST',
                  'Add track(s) to iTunes playlist with PLAYLIST name')
     end
 

@@ -80,7 +80,7 @@ Enter path to desirable download directory (press enter to set it to ...
 
 * Get tracks to another iTunes playlist
 
-  `nehm get post playlist MyPlaylist`
+  `nehm get post pl MyPlaylist`
 
 * Get or download track from url
 
