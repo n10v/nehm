@@ -53,7 +53,7 @@ module Nehm
     end
 
     def url
-      "#{@hash['stream_url']}?client_id=#{Client::CLIENT_ID}"
+      "#{@hash['stream_url']}?client_id=#{HTTPClient::CLIENT_ID}"
     end
 
     def year

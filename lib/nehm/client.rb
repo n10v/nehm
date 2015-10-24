@@ -14,14 +14,9 @@ module Nehm
     ENV['SSL_CERT_FILE'] = Certifi.where
 
     ##
-    # SoundCloud API client ID
-
-    CLIENT_ID = '11a37feb6ccc034d5975f3f803928a32'
-
-    ##
     # HTTP client object
 
-    HTTP_CLIENT = HTTPClient.new(client_id: CLIENT_ID)
+    HTTP_CLIENT = HTTPClient.new
 
     ##
     # Max limit of tracks for correct SoundCloud requests
@@ -57,11 +52,11 @@ module Nehm
     # Returns user hash from SoundCloud or nil if user doesn't exist
 
     def self.user(permalink)
-      uri = "/resolve?uri=https://soundcloud.com/#{permalink}"
+      url = "http://soundcloud.com/#{permalink}"
       begin
-        HTTP_CLIENT.get(1, uri)
-      rescue SoundCloud::ResponseError => e
-        return nil if e.message =~ /404/
+        HTTP_CLIENT.resolve(url)
+      rescue HTTPClient::Status404
+        return nil
       end
     end
 
@@ -69,8 +64,7 @@ module Nehm
     # Returns track hash from SoundCloud by specified uri
 
     def self.track(uri)
-      uri = "/resolve?url=#{uri}"
-      HTTP_CLIENT.get(1, uri)
+      HTTP_CLIENT.resolve(uri)
     end
 
     module_function
