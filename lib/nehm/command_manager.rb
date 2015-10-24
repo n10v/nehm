@@ -13,6 +13,7 @@ module Nehm
       :dl,
       :get,
       :help,
+      :select,
       :version
     ]
 
