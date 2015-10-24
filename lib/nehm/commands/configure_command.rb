@@ -31,7 +31,7 @@ module Nehm
 
     def show_menu
       UI.menu do |menu|
-        menu.prompt = 'Choose setting'.yellow
+        menu.prompt = 'Choose setting:'.yellow
 
         menu.choice('Edit download path'.freeze) { PathManager.set_dl_path }
         menu.choice('Edit permalink'.freeze) { UserManager.set_uid }
