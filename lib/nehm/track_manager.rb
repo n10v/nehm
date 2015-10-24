@@ -7,9 +7,8 @@ module Nehm
 
   class TrackManager
 
-    def initialize(options = {})
-      @playlist = options[:playlist]
-      @uid = options[:uid]
+    def initialize(options)
+      setup_environment(options)
     end
 
     def process_tracks(tracks)
@@ -23,8 +22,8 @@ module Nehm
       end
     end
 
-    def likes(count)
-      likes = Client.tracks(count, :likes, @uid)
+    def likes(limit, offset)
+      likes = Client.tracks(limit, offset, :likes, @uid)
       UI.term 'There are no likes yet' if likes.empty?
 
       # Removing unstreamable tracks
@@ -34,8 +33,8 @@ module Nehm
       likes.map! { |hash| Track.new(hash) }
     end
 
-    def posts(count)
-      posts = Client.tracks(count, :posts, @uid)
+    def posts(limit, offset)
+      posts = Client.tracks(limit, offset, :posts, @uid)
       UI.term 'There are no posts yet' if posts.empty?
 
       # Removing playlists and unstreamable tracks
@@ -84,6 +83,37 @@ module Nehm
         tag.add_frame(apic)
 
         file.save
+      end
+    end
+
+    private
+
+    def setup_environment(options)
+      # Setting up user id
+      permalink = options[:from]
+      @uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
+      unless @uid
+        UI.error "You didn't logged in"
+        UI.say "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
+        UI.term
+      end
+
+      # Setting up download path
+      temp_path = options[:to]
+      dl_path = temp_path ? PathManager.get_path(temp_path) : PathManager.default_dl_path
+      if dl_path
+        ENV['dl_path'] = dl_path
+      else
+        UI.error "You don't set up download path!"
+        UI.say "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
+        UI.term
+      end
+
+      # Setting up iTunes playlist
+      @playlist = nil
+      if !options[:dl] && !OS.linux?
+        playlist_name = options[:playlist]
+        @playlist = playlist_name ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
       end
     end
 
