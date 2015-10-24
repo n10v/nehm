@@ -26,7 +26,7 @@ module Nehm
     ##
     # Returns raw array of likes or posts (depends on argument 'type')
 
-    def self.tracks(count, type, uid)
+    def self.tracks(count, offset, type, uid)
       UI.term "Invalid number of #{type}" if count == 0
 
       iterations = count.to_f / TRACKS_LIMIT
@@ -40,9 +40,9 @@ module Nehm
         tracks +=
           case type
           when :likes
-            likes(limit, i * TRACKS_LIMIT, uid)
+            likes(limit, i * TRACKS_LIMIT + offset, uid)
           when :posts
-            posts(limit, i * TRACKS_LIMIT, uid)
+            posts(limit, i * TRACKS_LIMIT + offset, uid)
           end
       end
       tracks
