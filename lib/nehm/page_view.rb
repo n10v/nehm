@@ -31,18 +31,7 @@ module Nehm
         @items << "\n"
       end
 
-      def next_page_proc=(block)
-        @next_page_proc = block
-      end
-
-      def prev_page_proc=(block)
-        @prev_page_proc = block
-      end
-
       def select
-
-        choice('n', 'Next Page'.magenta) { @next_page_proc.call }
-        choice('p', 'Prev Page'.magenta) { @prev_page_proc.call }
         choice('e', 'Exit'.red) { raise Interrupt }
 
         # Output items
