@@ -1,3 +1,5 @@
+require 'colored'
+require 'nehm/ui'
 require_relative 'lib/nehm/version.rb'
 task default: %w(build install delete)
 
@@ -36,9 +38,9 @@ end
 # Add command with boilerplate code
 #
 # For example, you want to add 'get' command
-# For that you should input 'rake cmd[get]'
+# For that you should input 'rake nc[get]'
 
-task :cmd, [:cmd] do |_, args|
+task :nc, [:cmd] do |_, args|
   cmd = args[:cmd]
   cmd_file = "lib/nehm/commands/#{cmd}_command.rb"
 
@@ -50,12 +52,13 @@ module Nehm
   ##
   # Write here description for command
 
-  class #{cmd.capitalize}Command
+  class #{cmd.capitalize}Command < Command
 
     ##
     # Add all command's options in 'initialize' method
 
     def initialize
+      super
     end
 
     def execute
@@ -81,6 +84,6 @@ end
   # Write to file
   File.open(cmd_file, 'w') { |f| f.write(code) }
 
-  puts "Successfully made #{cmd} command!"
-  puts "Don't forget to add the name of command to CommandManager::COMMANDS"
+  Nehm::UI.success "Successfully made #{cmd} command!"
+  Nehm::UI.warning "Don't forget to add the name of command to CommandManager::COMMANDS"
 end
