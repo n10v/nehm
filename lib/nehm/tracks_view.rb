@@ -17,10 +17,10 @@ module Nehm
 
         menu.newline
 
-        menu.choice('d', 'Download tracks from queue'.green) { download_tracks_from_queue }
-        menu.choice('v', 'View added tracks'.green) { view_queue }
-        menu.choice('n', 'Next page'.magenta) { @next_page_proc.call }
-        menu.choice('p', 'Prev page'.magenta) { @prev_page_proc.call }
+        menu.choice('d', 'Download tracks from queue'.green.freeze) { download_tracks_from_queue }
+        menu.choice('v', 'View added tracks'.green.freeze) { view_queue }
+        menu.choice('n', 'Next page'.magenta.freeze) { @next_page_proc.call }
+        menu.choice('p', 'Prev page'.magenta.freeze) { @prev_page_proc.call }
       end
     end
 

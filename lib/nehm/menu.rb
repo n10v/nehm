@@ -6,9 +6,7 @@ module Nehm
         @choices = {}
         @inc_index = 1
         @items = []
-      end
 
-      def start
         yield self
         select
       end
@@ -32,6 +30,7 @@ module Nehm
       end
 
       def select
+        newline
         choice('e', 'Exit'.red) { raise Interrupt }
 
         # Output items
@@ -41,7 +40,7 @@ module Nehm
 
         UI.newline
 
-        selected = UI.ask('Enter option'.yellow)
+        selected = UI.ask('Enter option'.yellow.freeze)
         call_selected_block(selected)
 
         UI.newline
