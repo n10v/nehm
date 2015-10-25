@@ -27,8 +27,9 @@ module Nehm
       return nil if likes.empty?
 
       # Removing unstreamable tracks
+      first_count = likes.length
       unstreamable_tracks = likes.reject! { |hash| hash['streamable'] == false }
-      UI.warning "Was skipped #{unstreamable_tracks.length} undownloadable track(s)" if unstreamable_tracks
+      UI.warning "Was skipped #{first_count - unstreamable_tracks.length} undownloadable track(s)" if unstreamable_tracks
 
       likes.map! { |hash| Track.new(hash) }
     end
