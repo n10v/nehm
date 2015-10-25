@@ -1,5 +1,7 @@
 require 'highline'
 
+require 'nehm/page_view'
+
 module Nehm
   module UI
 
@@ -16,7 +18,7 @@ module Nehm
     end
 
     def self.newline
-      puts "\n"
+      puts
     end
 
     def self.say(msg)
@@ -25,6 +27,10 @@ module Nehm
 
     def self.success(msg)
       puts msg.green
+    end
+
+    def self.page_view(&block)
+      PageView.new.start(&block)
     end
 
     def self.term(msg = nil)
