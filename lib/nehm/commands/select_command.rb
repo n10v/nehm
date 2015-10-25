@@ -87,7 +87,7 @@ module Nehm
     end
 
     def prev_page
-      @offset -= @limit if @offset > @limit
+      @offset -= @limit if @offset >= @limit
     end
 
     def add_track_to_queue(track)
