@@ -23,6 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bogy'
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'
-  spec.add_dependency 'highline',    '>= 1.7.2'
   spec.add_dependency 'taglib-ruby', '>= 0.7.0'
 end

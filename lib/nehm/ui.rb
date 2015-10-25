@@ -1,20 +1,15 @@
-require 'highline'
-
-require 'nehm/page_view'
+require 'nehm/menu'
 
 module Nehm
   module UI
 
-    def self.ask(arg, &block)
-      HighLine.new.ask(arg, &block)
+    def self.ask(arg)
+      say arg
+      gets.chomp
     end
 
     def self.error(msg)
       puts "#{msg}\n".red
-    end
-
-    def self.menu(&block)
-      HighLine.new.choose(&block)
     end
 
     def self.newline
@@ -29,8 +24,8 @@ module Nehm
       puts msg.green
     end
 
-    def self.page_view(&block)
-      PageView.new.start(&block)
+    def self.menu(&block)
+      Menu.new(&block)
     end
 
     def self.term(msg = nil)
