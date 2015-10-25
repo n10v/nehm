@@ -13,10 +13,6 @@ module Nehm
         select
       end
 
-      def newline
-        @items << "\n"
-      end
-
       def choice(index, desc, &block)
         if index == :inc
           index = @inc_index.to_s
@@ -28,12 +24,28 @@ module Nehm
       end
 
       def header=(string)
-        @header = string
+        @items << string
+      end
+
+      def newline
+        @items << "\n"
+      end
+
+      def next_page_proc=(proc)
+        @next_page_proc = proc
+      end
+
+      def prev_page_proc=(proc)
+        @prev_page_proc = proc
       end
 
       def select
-        UI.say @header
 
+        choice('n', 'Next Page'.magenta) { @next_page_proc.call }
+        choice('p', 'Prev Page'.magenta) { @prev_page_proc.call }
+        choice('e', 'Exit'.red) { raise Interrupt }
+
+        # Output items
         @items.each do |item|
           UI.say item
         end
@@ -41,10 +53,21 @@ module Nehm
         UI.newline
 
         selected = UI.ask('Enter option'.yellow)
-        block = @choices[selected]
-        block.call
+        call_selected_block(selected)
 
         UI.newline
+      end
+
+      def call_selected_block(selected)
+        loop do
+          if @choices.keys.include? selected
+            block = @choices[selected]
+            block.call
+            break
+          else
+            selected = UI.ask "You must choose one of [#{@choices.keys.join(', ')}]"
+          end
+        end
       end
 
     end
