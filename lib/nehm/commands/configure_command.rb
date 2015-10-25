@@ -31,12 +31,9 @@ module Nehm
 
     def show_menu
       UI.menu do |menu|
-        menu.prompt = 'Choose setting:'.yellow
-
-        menu.choice('Edit download path'.freeze) { PathManager.set_dl_path }
-        menu.choice('Edit permalink'.freeze) { UserManager.set_uid }
-        menu.choice('Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
-        menu.choice('Exit'.freeze) { fail Interrupt }
+        menu.choice(:inc, 'Edit download path'.freeze) { PathManager.set_dl_path }
+        menu.choice(:inc, 'Edit permalink'.freeze) { UserManager.set_uid }
+        menu.choice(:inc, 'Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
       end
     end
 
