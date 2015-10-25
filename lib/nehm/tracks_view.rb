@@ -6,21 +6,21 @@ module Nehm
     def view(tracks)
       @queue = []
 
-      UI.page_view do |page|
-        page.header = 'Select track to add it to download queue'.green
+      UI.menu do |menu|
+        menu.header = 'Select track to add it to download queue'.green
 
-        page.newline
+        menu.newline
 
         tracks.each do |track|
-          page.choice(:inc, track.full_name) { add_track_to_queue(track) }
+          menu.choice(:inc, track.full_name) { add_track_to_queue(track) }
         end
 
-        page.newline
+        menu.newline
 
-        page.choice('d', 'Download tracks from queue'.green) { download_tracks_from_queue }
-        page.choice('v', 'View added tracks'.green) { view_queue }
-        page.choice('n', 'Next Page'.magenta) { @next_page_proc.call }
-        page.choice('p', 'Prev Page'.magenta) { @prev_page_proc.call }
+        menu.choice('d', 'Download tracks from queue'.green) { download_tracks_from_queue }
+        menu.choice('v', 'View added tracks'.green) { view_queue }
+        menu.choice('n', 'Next page'.magenta) { @next_page_proc.call }
+        menu.choice('p', 'Prev page'.magenta) { @prev_page_proc.call }
       end
     end
 

@@ -24,7 +24,7 @@ module Nehm
         permalink = UI.ask('Please enter your permalink (last word in your profile url): ')
         user = Client.user(permalink)
         if user
-          Cfg[:default_id] = user.id
+          Cfg[:default_id] = user['id']
           Cfg[:permalink] = permalink
           UI.success 'Successfully logged in!'
           break
