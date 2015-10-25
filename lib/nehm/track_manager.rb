@@ -24,7 +24,7 @@ module Nehm
 
     def likes(limit, offset)
       likes = Client.tracks(limit, offset, :likes, @uid)
-      UI.term 'There are no likes yet' if likes.empty?
+      UI.term 'There are no likes yet' if likes.empty? # TODO: Change 'term' to 'error' because of 'select' command
 
       # Removing unstreamable tracks
       unstreamable_tracks = likes.reject! { |hash| hash['streamable'] == false }
@@ -35,7 +35,7 @@ module Nehm
 
     def posts(limit, offset)
       posts = Client.tracks(limit, offset, :posts, @uid)
-      UI.term 'There are no posts yet' if posts.empty?
+      UI.term 'There are no posts yet' if posts.empty? # TODO: Change 'term' to 'error' because of 'select' command
 
       # Removing playlists and unstreamable tracks
       first_count = posts.length
