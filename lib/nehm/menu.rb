@@ -1,6 +1,6 @@
 module Nehm
   module UI
-    class PageView
+    class Menu
 
       def initialize
         @choices = {}
