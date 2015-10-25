@@ -15,10 +15,10 @@ module Nehm
       super
 
       add_option(:limit, 'limit NUMBER',
-                'Show NUMBER tracks on each page')
+                 'Show NUMBER tracks on each page')
 
       add_option(:offset, 'offset NUMBER',
-                'Show from NUMBER track')
+                 'Show from NUMBER track')
     end
 
     def execute
@@ -28,8 +28,8 @@ module Nehm
       @limit = options[:limit] ? options[:limit].to_i : DEFAULT_LIMIT
       @offset = options[:offset] ? options[:offset].to_i : DEFAULT_OFFSET
 
-      tracks_view.next_page_proc = self.method(:next_page)
-      tracks_view.prev_page_proc = self.method(:prev_page)
+      tracks_view.next_page_proc = method(:next_page)
+      tracks_view.prev_page_proc = method(:prev_page)
 
       loop do
         tracks =
@@ -44,14 +44,22 @@ module Nehm
             UI.term "Invalid argument/option '#{type}'"
           end
 
+        # If tracks == nil, then there is a last page or there aren't tracks
+        if tracks.nil?
+          UI.error 'There are no more tracks'
+          prev_page
+          sleep(2)
+          next
+        end
+
         tracks_view.view(tracks)
 
       end
     end
 
     def arguments
-     { 'likes' => 'Select likes',
-       'posts' => 'Select posts' }
+      { 'likes' => 'Select likes',
+        'posts' => 'Select posts' }
     end
 
     def program_name
