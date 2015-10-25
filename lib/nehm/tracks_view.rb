@@ -1,15 +1,9 @@
 module Nehm
   class TracksView
 
-    def view(tracks)
-      # If tracks == nil, then there is a last page or there aren't tracks
-      if tracks.nil?
-        UI.error 'There are no more tracks'
-        prev_page
-        sleep(2)
-        next
-      end
+    attr_writer :next_page_proc, :prev_page_proc
 
+    def view(tracks)
       @queue = []
 
       UI.page_view do |page|
@@ -23,22 +17,14 @@ module Nehm
 
         page.newline
 
-        page.choice('d', 'Download tracks from queue'.green) { download_tracks_from_queue}
+        page.choice('d', 'Download tracks from queue'.green) { download_tracks_from_queue }
         page.choice('v', 'View added tracks'.green) { view_queue }
         page.choice('n', 'Next Page'.magenta) { @next_page_proc.call }
         page.choice('p', 'Prev Page'.magenta) { @prev_page_proc.call }
       end
     end
 
-    def next_page_proc=(block)
-      @next_page_proc = block
-    end
-
-    def prev_page_proc=(block)
-      @prev_page_proc = block
-    end
-
-    module_function
+    private
 
     def add_track_to_queue(track)
       @queue << track
