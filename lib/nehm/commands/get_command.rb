@@ -19,8 +19,7 @@ module Nehm
 
       UI.say 'Getting information about track(s)'
       arg = @options[:args].pop
-      tracks = []
-      tracks +=
+      tracks =
         case arg
         when 'like'
           track_manager.likes(1, 0)
@@ -39,6 +38,8 @@ module Nehm
         else
           UI.term "Invalid argument/option '#{arg}'"
         end
+
+      UI.term 'There are no tracks yet' if tracks.nil?
 
       track_manager.process_tracks(tracks)
 
