@@ -35,13 +35,9 @@ module Nehm
         when %r{https:\/\/soundcloud.com\/}
           track_manager.track_from_url(arg)
         when nil
-          UI.error 'You must provide argument'
-          UI.say "Use #{'nehm help'.yellow} for help"
-          UI.term
+          UI.term 'You must provide argument'
         else
-          UI.error "Invalid argument/option #{arg}"
-          UI.say "Use #{'nehm help'.yellow} for help"
-          UI.term
+          UI.term "Invalid argument/option '#{arg}'"
         end
 
       track_manager.process_tracks(tracks)
