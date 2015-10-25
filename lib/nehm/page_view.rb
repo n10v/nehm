@@ -31,12 +31,12 @@ module Nehm
         @items << "\n"
       end
 
-      def next_page_proc=(proc)
-        @next_page_proc = proc
+      def next_page_proc=(block)
+        @next_page_proc = block
       end
 
-      def prev_page_proc=(proc)
-        @prev_page_proc = proc
+      def prev_page_proc=(block)
+        @prev_page_proc = block
       end
 
       def select
