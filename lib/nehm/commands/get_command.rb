@@ -42,8 +42,6 @@ module Nehm
       UI.term 'There are no tracks yet' if tracks.nil?
 
       track_manager.process_tracks(tracks)
-
-      UI.success 'Done!'
     end
 
     def arguments

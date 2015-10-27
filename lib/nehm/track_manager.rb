@@ -20,6 +20,7 @@ module Nehm
         @playlist.add_track(track) if @playlist
         UI.newline
       end
+      UI.success 'Done!'
     end
 
     def likes(limit, offset)
