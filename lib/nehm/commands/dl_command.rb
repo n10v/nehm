@@ -12,9 +12,10 @@ module Nehm
     end
 
     def execute
+      @options[:dl] = true
+
       get_cmd = CommandManager.command_instance('get')
       get_cmd.options = @options
-      get_cmd.options[:dl] = true
       get_cmd.execute
     end
 
