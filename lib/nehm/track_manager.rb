@@ -29,8 +29,10 @@ module Nehm
 
       # Removing unstreamable tracks
       first_count = likes.length
-      unstreamable_tracks = likes.reject! { |hash| hash['streamable'] == false }
-      UI.warning "Was skipped #{first_count - unstreamable_tracks.length} undownloadable track(s)" if unstreamable_tracks
+      likes.select! { |hash| hash['streamable'] }
+      difference = first_count - likes.length
+
+      UI.warning "Was skipped #{difference} undownloadable track(s)" if difference > 0
 
       likes.map! { |hash| Track.new(hash) }
     end
@@ -41,11 +43,11 @@ module Nehm
 
       # Removing playlists and unstreamable tracks
       first_count = posts.length
-      playlists = posts.reject! { |hash| hash['type'] == 'playlist' }
-      unstreamable_tracks = posts.reject! { |hash| hash['track']['streamable'] == false }
-      if playlists || unstreamable_tracks
-        UI.warning "Was skipped #{first_count - posts.length} undownloadable track(s) or playlist(s)"
-      end
+      posts.reject! { |hash| hash['type'] == 'playlist' }
+      posts.select! { |hash| hash['track']['streamable'] }
+      difference = first_count - posts.length
+
+      UI.warning "Was skipped #{difference} undownloadable track(s) or playlist(s)" if difference > 0
 
       posts.map! { |hash| Track.new(hash['track']) }
     end
