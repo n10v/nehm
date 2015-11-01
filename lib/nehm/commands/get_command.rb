@@ -21,17 +21,17 @@ module Nehm
       arg = @options[:args].pop
       tracks =
         case arg
-        when 'like'
-          track_manager.likes(1, 0)
-        when 'post'
-          track_manager.posts(1, 0)
-        when 'likes'
+        when /l.*s/
           count = @options[:args].pop.to_i
           track_manager.likes(count, 0)
-        when 'posts'
+        when /p.*s/
           count = @options[:args].pop.to_i
           track_manager.posts(count, 0)
-        when %r{https:\/\/soundcloud.com\/}
+        when /l/
+          track_manager.likes(1, 0)
+        when /p/
+          track_manager.posts(1, 0)
+        when /https:\/\/soundcloud.com\//
           track_manager.track_from_url(arg)
         when nil
           UI.term 'You must provide argument'
