@@ -57,6 +57,8 @@ module Nehm
         HTTP_CLIENT.resolve(url)
       rescue HTTPClient::Status404
         return nil
+      rescue HTTPClient::ConnectionError
+        UI.term "Connection error. Check your internet connection\nSoundCloud can also be down"
       end
     end
 
