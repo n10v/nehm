@@ -3,13 +3,9 @@ module Nehm
 
     def execute
       loop do
-        UI.say "Download path: #{Cfg[:dl_path].magenta}" if Cfg[:dl_path]
-        UI.say "Permalink: #{Cfg[:permalink].cyan}" if Cfg[:permalink]
-        UI.say "iTunes playlist: #{PlaylistManager.default_playlist.to_s.cyan}" if !OS.linux? && PlaylistManager.default_playlist
+        show_info
         UI.newline
-
         show_menu
-
         sleep(1)
         UI.newline
       end
@@ -28,6 +24,17 @@ module Nehm
     end
 
     private
+
+    def show_info
+      dl_path = PathManager.default_dl_path
+      UI.say "Download path: #{dl_path.magenta}" if dl_path
+
+      permalink = UserManager.default_permalink
+      UI.say "Permalink: #{permalink.cyan}" if permalink
+
+      playlist = PlaylistManager.default_playlist
+      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if !OS.linux? && playlist
+    end
 
     def show_menu
       UI.menu do |menu|
