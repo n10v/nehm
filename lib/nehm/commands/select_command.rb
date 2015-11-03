@@ -1,60 +1,17 @@
-require 'nehm/tracks_view'
+require 'nehm/tracks_view_command'
 
 module Nehm
 
   ##
   # Write here description for command
 
-  class SelectCommand < Command
-
-    DEFAULT_LIMIT = 10
-
-    DEFAULT_OFFSET = 0
+  class SelectCommand < TracksViewCommand
 
     def initialize
       super
 
-      add_option(:limit, 'limit NUMBER',
-                 'Show NUMBER tracks on each page')
-
-      add_option(:offset, 'offset NUMBER',
-                 'Show from NUMBER track')
-    end
-
-    def execute
-      type = @options[:args].shift
-      tracks_view = TracksView.new
-      track_manager = TrackManager.new(@options)
-      @limit = options[:limit] ? options[:limit].to_i : DEFAULT_LIMIT
-      @offset = options[:offset] ? options[:offset].to_i : DEFAULT_OFFSET
-
-      tracks_view.next_page_proc = method(:next_page)
-      tracks_view.prev_page_proc = method(:prev_page)
-
-      loop do
-        tracks =
-          case type
-          when /l/
-            track_manager.likes(@limit, @offset)
-          when /p/
-            track_manager.posts(@limit, @offset)
-          when nil
-            UI.term 'You must provide argument'
-          else
-            UI.term "Invalid argument/option '#{type}'"
-          end
-
-        # If tracks == nil, then there is a last page or there aren't tracks
-        if tracks.nil?
-          UI.error 'There are no more tracks'
-          prev_page
-          sleep(2)
-          next
-        end
-
-        tracks_view.view(tracks)
-
-      end
+      add_option(:from, 'from PERMALINK',
+                 'Select track(s) from user with PERMALINK')
     end
 
     def arguments
@@ -72,14 +29,19 @@ module Nehm
     def usage
     end
 
-    private
+    protected
 
-    def next_page
-      @offset += @limit
-    end
-
-    def prev_page
-      @offset -= @limit if @offset >= @limit
+    def get_tracks
+      case @type
+      when /l/
+        @track_manager.likes(@limit, @offset)
+      when /p/
+        @track_manager.posts(@limit, @offset)
+      when nil
+        UI.term 'You must provide argument'
+      else
+        UI.term "Invalid argument/option '#{type}'"
+      end
     end
 
   end
