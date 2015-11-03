@@ -5,9 +5,6 @@ module Nehm
 
   module PathManager
 
-    ##
-    # Returns default download path (contains in ~/.nehmconfig)
-
     def self.default_dl_path
       Cfg[:dl_path]
     end
