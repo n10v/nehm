@@ -12,13 +12,27 @@ module Nehm
       end
 
       def choice(index, desc, &block)
+        # Visual index - index that you see in menu
+        # Select index - index than can be selected
+        # For example, if you use ':tick' index
+        # In menu you see tick, but you can select it by number
+        # You receive a warning though
+
+        visual_index = select_index = index
+
         if index == :inc
-          index = @inc_index.to_s
+          visual_index = select_index = @inc_index.to_s
           @inc_index += 1
         end
 
-        @choices[index] = block
-        @items << "#{index} #{desc}"
+        if index == :tick
+          visual_index = '✔︎'
+          select_index = @inc_index.to_s
+          @inc_index += 1
+        end
+
+        @choices[select_index] = block
+        @items << "#{visual_index} #{desc}"
       end
 
       def header=(string)
