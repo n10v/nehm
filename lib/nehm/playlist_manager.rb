@@ -7,11 +7,8 @@ module Nehm
 
   module PlaylistManager
 
-    ##
-    # Returns default iTunes playlist (contains in ~/.nehmconfig)
-
     def self.default_playlist
-      default_user_playlist || music_master_library unless OS.linux?
+      default_user_playlist || music_master_library
     end
 
     ##
