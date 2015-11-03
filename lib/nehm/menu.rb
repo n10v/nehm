@@ -45,7 +45,7 @@ module Nehm
 
       def select
         newline
-        choice('e', 'Exit'.red) { raise Interrupt }
+        choice('e', 'Exit'.red) { UI.term }
 
         # Output items
         @items.each do |item|
