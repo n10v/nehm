@@ -5,8 +5,9 @@ module Nehm
 
   module UserManager
 
-    ##
-    # Returns default user id (contains in ~/.nehmconfig)
+    def self.default_permalink
+      Cfg[:permalink]
+    end
 
     def self.default_uid
       Cfg[:default_id]
