@@ -62,9 +62,9 @@ module Nehm
         menu.newline
 
         tracks.each do |track|
-          ids = @queue.map { |t| t.id } # Get ids of tracks in queue
+          ids = @queue.map(&:id) # Get ids of tracks in queue
           if ids.include? track.id
-            menu.choice(:dot, track.full_name) { already_added (track) }
+            menu.choice(:tick, track.full_name) { already_added(track) }
           else
             menu.choice(:inc, track.full_name) { add_track_to_queue(track) }
           end
@@ -108,6 +108,7 @@ module Nehm
 
     def already_added(track)
       UI.warning "'#{track.full_name}' was already added"
+      sleep(1)
     end
 
     def download_tracks_from_queue
