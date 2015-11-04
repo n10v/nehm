@@ -34,7 +34,7 @@ module Nehm
         when /https:\/\/soundcloud.com\//
           track_manager.track_from_url(arg)
         when nil
-          UI.term 'You must provide argument'
+          UI.term 'You must provide an argument'
         else
           UI.term "Invalid argument/option '#{arg}'"
         end

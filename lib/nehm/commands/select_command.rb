@@ -38,7 +38,7 @@ module Nehm
       when /p/
         @track_manager.posts(@limit, @offset)
       when nil
-        UI.term 'You must provide argument'
+        UI.term 'You must provide an argument'
       else
         UI.term "Invalid argument/option '#{type}'"
       end
