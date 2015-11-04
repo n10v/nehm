@@ -33,14 +33,14 @@ module Nehm
       UI.say "Permalink: #{permalink.cyan}" if permalink
 
       playlist = PlaylistManager.default_playlist
-      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if !OS.linux? && playlist
+      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if OS.mac? && playlist
     end
 
     def show_menu
       UI.menu do |menu|
         menu.choice(:inc, 'Edit download path'.freeze) { PathManager.set_dl_path }
         menu.choice(:inc, 'Edit permalink'.freeze) { UserManager.set_uid }
-        menu.choice(:inc, 'Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } unless OS.linux?
+        menu.choice(:inc, 'Edit iTunes playlist'.freeze) { PlaylistManager.set_playlist } if OS.mac?
       end
     end
 

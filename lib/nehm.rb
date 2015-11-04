@@ -23,14 +23,14 @@ module Nehm
   module_function
 
   def init
-    UI.success 'Hello!'
+    UI.say 'Hello!'.green
     UI.say 'Before using the nehm, you should set it up:'
     Cfg.create unless Cfg.exist?
 
     PathManager.set_dl_path
     UI.newline
 
-    unless OS.linux?
+    if OS.mac?
       PlaylistManager.set_playlist
       UI.newline
     end
