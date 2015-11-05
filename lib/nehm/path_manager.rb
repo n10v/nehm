@@ -28,7 +28,7 @@ module Nehm
         default_path = File.join(ENV['HOME'], '/Music')
 
         if Dir.exist?(default_path)
-          ask_sentence << " (press enter to set it to #{default_path.magenta})"
+          ask_sentence << " (press Enter to set it to #{default_path.magenta})"
         else
           default_path = nil
         end
