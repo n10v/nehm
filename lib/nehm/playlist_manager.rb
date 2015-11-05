@@ -8,7 +8,7 @@ module Nehm
   module PlaylistManager
 
     def self.default_playlist
-      default_user_playlist || music_master_library
+      default_user_playlist || music_master_library if OS.mac?
     end
 
     ##

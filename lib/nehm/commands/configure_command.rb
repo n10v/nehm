@@ -33,7 +33,7 @@ module Nehm
       UI.say "Permalink: #{permalink.cyan}" if permalink
 
       playlist = PlaylistManager.default_playlist
-      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if OS.mac? && playlist
+      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if playlist
     end
 
     def show_menu
