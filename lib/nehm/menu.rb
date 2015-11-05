@@ -14,8 +14,8 @@ module Nehm
       def choice(index, desc, &block)
         # Visual index - index that you see in menu
         # Select index - index than can be selected
-        # For example, if you use ':tick' index
-        # In menu you see tick, but you can select it by number
+        # For example, if you use ':added' index
+        # In menu you see 'A', but you can select it by number
         # You receive a warning though
 
         visual_index = select_index = index
@@ -25,8 +25,8 @@ module Nehm
           @inc_index += 1
         end
 
-        if index == :tick
-          visual_index = '✔︎'
+        if index == :added
+          visual_index = 'A'.green
           select_index = @inc_index.to_s
           @inc_index += 1
         end
