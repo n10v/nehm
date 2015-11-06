@@ -1,30 +1,12 @@
+require 'bundler'
 require 'colored'
 require 'nehm/ui'
-require_relative 'lib/nehm/version.rb'
-task default: %w(build install delete)
+require 'rake'
 
-file = 'nehm-' + Nehm::VERSION + '.gem'
+Bundler::GemHelper.install_tasks
+task default: %w(install)
 
-##
-# Build gem with project's gemspec
-
-task :build do
-  system('gem build nehm.gemspec')
-end
-
-##
-# Install gem from project root directory
-
-task :install do
-  system('gem install ./' + file)
-end
-
-##
-# Delete gem file
-
-task :delete do
-  File.delete('./' + file)
-end
+file = 'pkg/nehm-' + Nehm::VERSION + '.gem'
 
 ##
 # Push to rubygems
