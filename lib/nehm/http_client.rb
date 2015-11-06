@@ -39,6 +39,7 @@ module Nehm
     end
 
     private
+
     def form_uri(api_version, uri_string)
       uri =
         case api_version
@@ -50,12 +51,15 @@ module Nehm
       uri += uri_string
       uri += "&client_id=#{CLIENT_ID}" if api_version == 1
 
-      URI(uri)
+      uri
     end
 
     def get_hash(uri)
-      response = Net::HTTP.get_response(uri)
-      JSON.parse(response.body)
+      uri = URI.parse(uri)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      res = http.get(uri.request_uri)
+      JSON.parse(res.body)
     end
 
   end
