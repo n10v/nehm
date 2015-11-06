@@ -21,15 +21,15 @@ module Nehm
       arg = @options[:args].pop
       tracks =
         case arg
-        when /l.*s/
+        when /^l.*s$/
           count = @options[:args].pop.to_i
           track_manager.likes(count, 0)
-        when /p.*s/
+        when /^p.*s$/
           count = @options[:args].pop.to_i
           track_manager.posts(count, 0)
-        when /l/
+        when /^l/
           track_manager.likes(1, 0)
-        when /p/
+        when /^p/
           track_manager.posts(1, 0)
         when /https:\/\/soundcloud.com\//
           track_manager.track_from_url(arg)
