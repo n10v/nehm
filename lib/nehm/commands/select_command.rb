@@ -34,6 +34,7 @@ module Nehm
     end
 
     def usage
+      "#{program_name} ARGUMENT [OPTIONS]"
     end
 
     protected
