@@ -22,7 +22,7 @@ module Nehm
     end
 
     def summary
-      'Search tracks, print them nicely and download added tracks'
+      'Search tracks, print them nicely and download selected tracks'
     end
 
     def usage
