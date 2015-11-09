@@ -1,7 +1,7 @@
 module Nehm
 
   ##
-  # Path manager works with download pathes
+  # Path manager works with download paths
 
   module PathManager
 
