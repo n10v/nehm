@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
   spec.require_paths         = ['lib']
   spec.required_ruby_version = '>= 1.9.3'
 
-  spec.add_dependency 'bogy'
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'
   spec.add_dependency 'taglib-ruby', '>= 0.7.0'

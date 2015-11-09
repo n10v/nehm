@@ -1,4 +1,4 @@
-require 'bogy'
+require 'yaml'
 
 module Nehm
 
@@ -8,18 +8,18 @@ module Nehm
   module Cfg
 
     FILE_PATH = File.join(ENV['HOME'], '.nehmconfig')
-    CONFIG_FILE = Bogy.new(file: FILE_PATH)
 
     def self.[](key)
-      CONFIG_FILE[key.to_s]
+      config_file[key.to_s]
     end
 
     def self.[]=(key, value)
-      CONFIG_FILE[key.to_s] = value
+      config_file[key.to_s] = value
+      write
     end
 
     def self.create
-      File.open(FILE_PATH, 'w+') { |f| f.write("---\napp: nehm") }
+      File.open(FILE_PATH, 'w+') { |f| f.write('--- {}\n') }
     end
 
     def self.exist?
@@ -27,7 +27,20 @@ module Nehm
     end
 
     def self.key?(key)
-      CONFIG_FILE.to_h.key?(key.to_s)
+      config_file.to_h.key?(key.to_s)
+    end
+
+    module_function
+
+    def config_file
+      @config_file ||= YAML.load_file(FILE_PATH)
+      @config_file ||= {} if @config_file.nil?
+
+      @config_file
+    end
+
+    def write
+      IO.write(FILE_PATH, config_file)
     end
 
   end
