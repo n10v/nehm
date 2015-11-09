@@ -55,7 +55,7 @@ module Nehm
     end
 
     def get_hash(uri)
-      uri = URI.parse(uri)
+      uri = URI.parse(URI.escape(uri))
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       res = http.get(uri.request_uri)
