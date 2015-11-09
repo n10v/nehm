@@ -3,7 +3,8 @@ require 'nehm/tracks_view_command'
 module Nehm
 
   ##
-  # Write here description for command
+  # This command gets likes/posts from user's account,
+  # Prints as menu, and downloads selected tracks
 
   class SelectCommand < TracksViewCommand
 
@@ -23,7 +24,13 @@ module Nehm
       'nehm select'
     end
 
+    def execute
+      @type = @options[:args].shift
+      super
+    end
+
     def summary
+      'Get likes or posts from your account, nicely print them and download selected tracks'
     end
 
     def usage
