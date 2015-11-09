@@ -27,7 +27,6 @@ module Nehm
       old_offset = -1
 
       @queue = []
-      @type = @options[:args].shift
       @track_manager = TrackManager.new(@options)
 
       setup_environment

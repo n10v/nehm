@@ -57,6 +57,19 @@ module Nehm
       [Track.new(hash)]
     end
 
+    def search(query, limit, offset)
+      tracks = Client.search(query, limit, offset)
+
+      # Removing unstreamable tracks
+      first_count = tracks.length
+      tracks.select! { |hash| hash['streamable'] }
+      difference = first_count - tracks.length
+
+      UI.warning "Was skipped #{difference} undownloadable track(s)" if difference > 0
+
+      tracks.map! { |hash| Track.new(hash) }
+    end
+
     private
 
     def dl(track)

@@ -48,6 +48,18 @@ module Nehm
       tracks
     end
 
+    def self.search(query)
+      uri = "/tracks?q=#{query}"
+      HTTP_CLIENT.get(1, uri)
+    end
+
+    ##
+    # Returns track hash from SoundCloud by specified uri
+
+    def self.track(uri)
+      HTTP_CLIENT.resolve(uri)
+    end
+
     ##
     # Returns user hash from SoundCloud or nil if user doesn't exist
 
@@ -60,13 +72,6 @@ module Nehm
       rescue HTTPClient::ConnectionError
         UI.term "Connection error. Check your internet connection\nSoundCloud can also be down"
       end
-    end
-
-    ##
-    # Returns track hash from SoundCloud by specified uri
-
-    def self.track(uri)
-      HTTP_CLIENT.resolve(uri)
     end
 
     module_function
