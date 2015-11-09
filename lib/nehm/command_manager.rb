@@ -3,8 +3,8 @@ require 'nehm/command'
 module Nehm
 
   ##
-  # The command manager contains information about all nehm commands, find
-  # and run them
+  # The command manager contains information about all nehm commands
+  # It also find and run them
 
   module CommandManager
 
@@ -13,6 +13,7 @@ module Nehm
       :dl,
       :get,
       :help,
+      :search,
       :select,
       :version
     ]
