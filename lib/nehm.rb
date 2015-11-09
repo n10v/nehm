@@ -43,7 +43,7 @@ module Nehm
   end
 
   def initialized?
-    File.exist?(Cfg::FILE_PATH)
+    Cfg.exist?
   end
 
 end
