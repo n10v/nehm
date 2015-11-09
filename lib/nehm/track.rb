@@ -53,7 +53,9 @@ module Nehm
     end
 
     def url
-      "#{@hash['stream_url']}?client_id=#{HTTPClient::CLIENT_ID}"
+      # API V2 track hash has no 'stream_url' but 'uri'
+      dl_url = @hash['uri'] ? "#{@hash['uri']}/stream" : @hash['stream_url']
+      "#{dl_url}?client_id=#{HTTPClient::CLIENT_ID}"
     end
 
     def year
