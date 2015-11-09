@@ -10,11 +10,11 @@ module Nehm
     FILE_PATH = File.join(ENV['HOME'], '.nehmconfig')
 
     def self.[](key)
-      config_file[key.to_s]
+      config_hash[key.to_s]
     end
 
     def self.[]=(key, value)
-      config_file[key.to_s] = value
+      config_hash[key.to_s] = value
       write
     end
 
@@ -27,20 +27,20 @@ module Nehm
     end
 
     def self.key?(key)
-      config_file.to_h.key?(key.to_s)
+      config_hash.to_h.key?(key.to_s)
     end
 
     module_function
 
-    def config_file
-      @config_file ||= YAML.load_file(FILE_PATH)
-      @config_file ||= {} if @config_file.nil?
+    def config_hash
+      @config_hash ||= YAML.load_file(FILE_PATH)
+      @config_hash ||= {} if @config_hash.nil?
 
-      @config_file
+      @config_hash
     end
 
     def write
-      IO.write(FILE_PATH, config_file)
+      IO.write(FILE_PATH, config_hash.to_yaml)
     end
 
   end
