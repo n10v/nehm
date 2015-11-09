@@ -5,7 +5,7 @@ module Nehm
 
     def self.ask(arg)
       say arg
-      gets.chomp
+      $stdin.gets.chomp
     end
 
     def self.error(msg)
