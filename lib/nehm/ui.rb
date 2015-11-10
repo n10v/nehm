@@ -8,7 +8,7 @@ module Nehm
     # Because it's more comfortable to have a small delay
     # between interactions
 
-    SLEEP_PERIOD = 0.6
+    SLEEP_PERIOD = 0.7
 
     def self.ask(arg)
       say arg
