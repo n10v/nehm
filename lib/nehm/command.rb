@@ -12,7 +12,6 @@ module Nehm
 
     ##
     # Hash with options of the command.
-    # TODO: use options with dash
 
     attr_accessor :options
 
@@ -119,8 +118,11 @@ module Nehm
   #{'select'.green}     Get likes or posts from your account, nicely print them and download selected tracks
   #{'version'.green}    Show version of installed nehm
 
-See #{'nehm help [command]'.yellow} to read about a specific subcommand
-    EOF
+See #{'nehm help COMMAND'.yellow} to read about a specific subcommand
+
+Commands and arguments (but NOT options) may be abbreviated, so long as they are unambiguous.
+e.g. 'nehm g l' is short for 'nehm get like'.
+EOF
 
   end
 end
