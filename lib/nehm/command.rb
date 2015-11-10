@@ -16,7 +16,7 @@ module Nehm
     attr_accessor :options
 
     ##
-    # Hash with descriptions of each options.
+    # Hash with descriptions of each option.
 
     attr_accessor :options_descs
 
