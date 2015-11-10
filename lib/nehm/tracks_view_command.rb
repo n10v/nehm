@@ -55,9 +55,7 @@ module Nehm
 
     def show_menu(tracks)
       UI.menu do |menu|
-        menu.header = 'Select track to add it to download queue'.green
-
-        menu.newline
+        menu.header = 'Enter the number of track to add it to download queue'.green
 
         tracks.each do |track|
           ids = @queue.map(&:id) # Get ids of tracks in queue
