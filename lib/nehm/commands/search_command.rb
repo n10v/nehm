@@ -32,7 +32,7 @@ module Nehm
     protected
 
     def get_tracks
-      UI.term 'You must provide an argument' if @query.nil?
+      UI.term 'You must provide an argument' if @query.empty?
 
       @track_manager.search(@query, @limit, @offset)
     end
