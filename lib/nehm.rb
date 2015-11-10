@@ -12,8 +12,6 @@ require 'nehm/user_manager'
 
 module Nehm
 
-  # TODO: add rake tests
-
   def self.start(args)
     init unless initialized?
 
