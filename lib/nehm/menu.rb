@@ -2,7 +2,7 @@ module Nehm
   module UI
     class Menu
 
-      attr_writer :msg_bar
+      attr_writer :msg_bar, :header
 
       def initialize
         @choices = {}
@@ -37,8 +37,9 @@ module Nehm
         @items << "#{visual_index} #{desc}"
       end
 
-      def header=(string)
-        @items.unshift(string)
+      def show_header
+        UI.say @header
+        UI.newline
       end
 
       ##
@@ -58,6 +59,7 @@ module Nehm
       end
 
       def select
+        show_header unless @header.to_s.empty?
         show_msg_bar unless @msg_bar.to_s.empty?
 
         # Add exit option
