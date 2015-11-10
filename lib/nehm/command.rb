@@ -27,6 +27,7 @@ module Nehm
 
     def initialize
       @options = {}
+      @options_descs = {}
     end
 
     ##
@@ -100,8 +101,6 @@ module Nehm
     # See 'get_command.rb' as example.
 
     def add_option(option, usage, desc)
-      @options_descs ||= {}
-
       @options[option] = nil
       @options_descs[usage] = desc
     end
