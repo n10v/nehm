@@ -1,6 +1,5 @@
 require 'taglib'
 
-require 'nehm/applescript'
 require 'nehm/track'
 
 module Nehm

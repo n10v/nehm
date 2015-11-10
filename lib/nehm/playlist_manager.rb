@@ -1,3 +1,4 @@
+require 'nehm/applescript'
 require 'nehm/playlist'
 
 module Nehm
