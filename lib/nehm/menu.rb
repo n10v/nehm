@@ -2,6 +2,8 @@ module Nehm
   module UI
     class Menu
 
+      attr_writer :msg_bar
+
       def initialize
         @choices = {}
         @inc_index = 1
@@ -39,11 +41,26 @@ module Nehm
         @items << string
       end
 
+      ##
+      # Message bar used to show messages of
+      # last successful or not operations
+      # Shown before menu
+
+      def show_msg_bar
+        UI.say 'Message:'
+        UI.say "  #{@msg_bar}"
+        UI.newline
+        @msg_bar.clear
+      end
+
       def newline
         @items << "\n"
       end
 
       def select
+        show_msg_bar unless @msg_bar.to_s.empty?
+
+        # Add exit option
         newline
         choice('e', 'Exit'.red) { UI.term }
 

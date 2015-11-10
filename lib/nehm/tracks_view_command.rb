@@ -40,9 +40,8 @@ module Nehm
 
         # If tracks == nil, then there is a last page or there aren't tracks
         if tracks.nil?
-          UI.error 'There are no more tracks'
+          @msg = 'There are no more tracks'.red
           prev_page
-          sleep(1)
           next
         end
 
@@ -74,6 +73,8 @@ module Nehm
         menu.choice('d', 'Download tracks from queue'.green.freeze) { download_tracks_from_queue; UI.term }
         menu.choice('n', 'Next page'.magenta.freeze) { next_page }
         menu.choice('p', 'Prev page'.magenta.freeze) { prev_page }
+
+        menu.msg_bar = @msg
       end
     end
 
@@ -101,13 +102,11 @@ module Nehm
 
     def add_track_to_queue(track)
       @queue << track
-      UI.success "'#{track.full_name}' added"
-      sleep(1)
+      @msg = "'#{track.full_name}' added".green
     end
 
     def already_added(track)
-      UI.warning "'#{track.full_name}' was already added"
-      sleep(1)
+      @msg = "'#{track.full_name}' was already added".yellow
     end
 
     def download_tracks_from_queue
