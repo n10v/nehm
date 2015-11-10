@@ -19,7 +19,7 @@ module Nehm
     end
 
     def self.create
-      File.open(FILE_PATH, 'w+') { |f| f.write('--- {}\n') }
+      File.new(FILE_PATH, 'w+')
     end
 
     def self.exist?
@@ -27,14 +27,14 @@ module Nehm
     end
 
     def self.key?(key)
-      config_hash.to_h.key?(key.to_s)
+      config_hash.key?(key.to_s)
     end
 
     module_function
 
     def config_hash
       @config_hash ||= YAML.load_file(FILE_PATH)
-      @config_hash ||= {} if @config_hash.nil?
+      @config_hash ||= {} unless @config_hash
 
       @config_hash
     end
