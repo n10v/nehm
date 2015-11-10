@@ -39,7 +39,7 @@ module Nehm
     UI.newline
 
     UI.success "Now you can use nehm!\n"
-    sleep(1)
+    sleep(UI::SLEEP_PERIOD)
   end
 
   def initialized?

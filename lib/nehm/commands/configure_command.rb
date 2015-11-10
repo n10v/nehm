@@ -6,8 +6,7 @@ module Nehm
         show_info
         UI.newline
         show_menu
-        sleep(1)
-        UI.newline
+        sleep(UI::SLEEP_PERIOD)
       end
     end
 
