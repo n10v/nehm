@@ -27,47 +27,34 @@ module Nehm
       likes = Client.tracks(limit, offset, :likes, @uid)
       return nil if likes.empty?
 
-      # Removing unstreamable tracks
-      first_count = likes.length
-      likes.select! { |hash| hash['streamable'] }
-      difference = first_count - likes.length
-
-      UI.warning "Was skipped #{difference} undownloadable track(s)" if difference > 0
-
-      likes.map! { |hash| Track.new(hash) }
+      filter(likes)
+      convert(likes)
     end
 
     def posts(limit, offset)
       posts = Client.tracks(limit, offset, :posts, @uid)
       return nil if posts.empty?
 
-      # Removing playlists and unstreamable tracks
-      first_count = posts.length
       posts.reject! { |hash| hash['type'] == 'playlist' }
-      posts.select! { |hash| hash['track']['streamable'] }
-      difference = first_count - posts.length
-
-      UI.warning "Was skipped #{difference} undownloadable track(s) or playlist(s)" if difference > 0
-
-      posts.map! { |hash| Track.new(hash['track']) }
+      posts.map! { |hash| hash['track'] }
+      filter(posts)
+      convert(posts)
     end
 
     def track_from_url(url)
-      hash = Client.track(url)
-      [Track.new(hash)]
+      track = [Client.track(url)]
+      return nil if track.empty?
+
+      filter(track)
+      convert(track)
     end
 
     def search(query, limit, offset)
-      tracks = Client.search(query, limit, offset)
+      found = Client.search(query, limit, offset)
+      return nil if found.empty?
 
-      # Removing unstreamable tracks
-      first_count = tracks.length
-      tracks.select! { |hash| hash['streamable'] }
-      difference = first_count - tracks.length
-
-      UI.warning "Was skipped #{difference} undownloadable track(s)" if difference > 0
-
-      tracks.map! { |hash| Track.new(hash) }
+      filter(found)
+      convert(found)
     end
 
     private
@@ -103,8 +90,6 @@ module Nehm
       end
     end
 
-    private
-
     def setup_environment(options)
       # Setting up user id
       permalink = options[:from]
@@ -132,6 +117,19 @@ module Nehm
         playlist_name = options[:playlist]
         @playlist = playlist_name ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
       end
+    end
+
+    def filter(tracks)
+      # Removing unstreamable tracks
+      first_length = tracks.length
+      tracks.select! { |hash| hash['streamable'] }
+      diff = first_length - tracks.length
+
+      UI.warning "Was skipped #{diff} undownloadable track(s)" if diff > 0
+    end
+
+    def convert(tracks)
+      tracks.map! { |hash| Track.new(hash) }
     end
 
   end
