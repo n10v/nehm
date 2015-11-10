@@ -38,7 +38,7 @@ module Nehm
       end
 
       def header=(string)
-        @items << string
+        @items.unshift(string)
       end
 
       ##
