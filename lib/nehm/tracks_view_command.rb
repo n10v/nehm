@@ -57,6 +57,8 @@ module Nehm
       UI.menu do |menu|
         menu.header = 'Enter the number of track to add it to download queue'.green
 
+        menu.msg_bar = @msg
+
         tracks.each do |track|
           ids = @queue.map(&:id) # Get ids of tracks in queue
           if ids.include? track.id
@@ -71,8 +73,6 @@ module Nehm
         menu.choice('d', 'Download tracks from queue'.green.freeze) { download_tracks_from_queue; UI.term }
         menu.choice('n', 'Next page'.magenta.freeze) { next_page }
         menu.choice('p', 'Prev page'.magenta.freeze) { prev_page }
-
-        menu.msg_bar = @msg
       end
     end
 
