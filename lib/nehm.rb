@@ -28,15 +28,17 @@ module Nehm
     PathManager.set_dl_path
     UI.newline
 
+    UserManager.set_uid
+    UI.newline
+
     if OS.mac?
       PlaylistManager.set_playlist
       UI.newline
     end
 
-    UserManager.set_uid
+    UI.success "Now you can use nehm!"
     UI.newline
 
-    UI.success "Now you can use nehm!\n"
     sleep(UI::SLEEP_PERIOD)
   end
 
