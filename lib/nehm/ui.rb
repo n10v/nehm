@@ -4,9 +4,9 @@ module Nehm
   module UI
 
     ##
-    # This constant used to set delay between user operation.
+    # This constant used to set delay between user operation
     # Because it's more comfortable to have a small delay
-    # between interactions.
+    # between interactions
 
     SLEEP_PERIOD = 0.6
 

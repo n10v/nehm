@@ -5,25 +5,24 @@ module Nehm
   ##
   # Base class for all Nehm commands. When creating a new nehm command, define
   # #initialize, #execute, #arguments, #program_name, #summary and #usage
-  # (as appropriate).
-  # See the above mentioned methods for details.
+  # (as appropriate)
+  # See the above mentioned methods for details
 
   class Command
 
     ##
-    # Hash with options of the command.
+    # Hash with options of the command
 
     attr_accessor :options
 
     ##
-    # Hash with descriptions of each option.
+    # Hash with descriptions of each option
 
     attr_accessor :options_descs
 
     ##
-    # In 'initialize' should be defined all options by method 'add_option'.
-    #
-    # See get_command.rb as example.
+    # In 'initialize' should be defined all options by method 'add_option'
+    # See get_command.rb as example
 
     def initialize
       @options = {}
@@ -31,7 +30,7 @@ module Nehm
     end
 
     ##
-    # Invoke the command with the given list of arguments.
+    # Invoke the command with the given list of arguments
 
     def invoke(args)
       handle_options(args)
@@ -40,7 +39,7 @@ module Nehm
 
     ##
     # Handle the given list of arguments by parsing them and recording the
-    # results.
+    # results
 
     def handle_options(args)
       parser = OptionParser.new(args, self)
@@ -48,16 +47,16 @@ module Nehm
     end
 
     ##
-    # Override to provide command handling.
+    # Override to provide command handling
     #
     # #options will be filled in with your parsed options, unparsed options will
-    # be left in #options[:args].
+    # be left in #options[:args]
 
     def execute
     end
 
     ##
-    # Override to provide details of the arguments a command takes.
+    # Override to provide details of the arguments a command takes
     #
     # For example:
     #
@@ -74,31 +73,31 @@ module Nehm
     end
 
     ##
-    # The name of the command for command-line invocation.
+    # The name of the command for command-line invocation
 
     def program_name
     end
 
     ##
-    # Override to display a short description of what this command does.
+    # Override to display a short description of what this command does
 
     def summary
     end
 
     ##
-    # Override to display the usage for an individual nehm command.
+    # Override to display the usage for an individual nehm command
     #
-    # The text "[options]" is automatically appended to the usage text.
+    # The text "[options]" is automatically appended to the usage text
 
     def usage
     end
 
     ##
-    # Add a command-line option.
+    # Add a command-line option
     #
-    # Nehm don't use options with dashes to be more user-friendly.
+    # Nehm don't use options with dashes to be more user-friendly
     #
-    # See 'get_command.rb' as example.
+    # See 'get_command.rb' as example
 
     def add_option(option, usage, desc)
       @options[option] = nil

@@ -19,7 +19,7 @@ module Nehm
     ]
 
     ##
-    # Run the command specified by 'args'.
+    # Run the command specified by 'args'
 
     def self.run(args)
       if args.empty?
