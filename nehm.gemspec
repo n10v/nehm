@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.homepage    = 'http://www.github.com/bogem/nehm'
   spec.license     = 'MIT'
 
-  spec.files                 = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(Screenshots|Rakefile)/}) }
+  spec.files                 = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(Pictures|Rakefile)/}) }
   spec.bindir                = 'bin'
   spec.executables           = 'nehm'
   spec.require_paths         = ['lib']
