@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.0.1
+* Make gem size smaller
+
 ## 2.0
 * Add 'select' and 'search' commands *(more info in README and `nehm help`)*
 * Many performance improvements *(changes in application structure)*
