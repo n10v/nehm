@@ -1,17 +1,35 @@
-# nehm
+<div align="center">
+<img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
-![ScreenShot](https://raw.github.com/bogem/nehm/master/Screenshots/screenshot.png)
 
-*nehm* is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way
+<p><b><i>nehm</i></b> is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way</p>
 
-[![Gem Version](https://badge.fury.io/rb/nehm.svg)](http://badge.fury.io/rb/nehm)
-[![Dependency Status](https://gemnasium.com/bogem/nehm.svg)](https://gemnasium.com/bogem/nehm)
-[![Code Climate](https://codeclimate.com/github/bogem/nehm/badges/gpa.svg)](https://codeclimate.com/github/bogem/nehm)
+<a href="http://badge.fury.io/rb/nehm"><img src="https://badge.fury.io/rb/nehm.svg" alt="Gem Version"></img></a>
+<a href="https://gemnasium.com/bogem/nehm"><img src="https://gemnasium.com/bogem/nehm.svg" alt="Dependency staus"></img></a>
+<a href="https://codeclimate.com/github/bogem/nehm"><img src="https://codeclimate.com/github/bogem/nehm/badges/gpa.svg" alt="Code climate"></img></a>
+</div>
 
-## DISCLAIMER
-***For personal use only***
+---
+<div align="center">
+<a href="https://www.dropbox.com/s/m4heiyq7vbpc4qs/1help.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/1help.png" alt="Help"></img></a>
+<a href="https://www.dropbox.com/s/b68flm7hv5myhk4/2get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/2get.png" alt="Select"></img></a>
+<a href="https://www.dropbox.com/s/5gy6c5nzrsvhlv0/3select.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/3select.png" alt="Select"></img></a>
+<a href="https://www.dropbox.com/s/ynn9kb0ykcdishp/4search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/4search.png" alt="Search"></img></a>
 
-***Nehm developer doesn't responsible for any illegal usage of this program***
+<p><b>(clickable screenshots)</b></p>
+
+</div>
+
+***
+
+<div align="center">
+<h2>DISCLAIMER</h2>
+
+<b><i><p>For personal use only</p>
+
+Nehm developer doesn't responsible for any illegal usage of this program</i></b>
+</div>
+
 
 ## Installation
 
@@ -48,57 +66,56 @@ Before using the nehm, you should set it up:
 Enter path to desirable download directory (press enter to set it to ...
 ```
 
-## Usage
+## Usage Examples
 
-**!!nehm doesn't add tracks to iTunes library, if you use Linux!!**
+Type `nehm help` to list of all available commands or `nehm help COMMAND` for specific command
 
-* Get (download to download directory, set tags and add to iTunes library) your last like
+Also commands and arguments (but **NOT** options) may be abbreviated, so long as they are unambiguous.
 
-  `nehm get like`
+#### Get (download to default directory, set tags and add to iTunes library) your last like
 
-* Get your last post (last track or repost from your profile)
+  `$ nehm get like` = `$ nehm g l`
 
-  `nehm get post`
+#### Get your last post (last track or repost from your profile)
 
-   ***(nehm doesn't get and download playlists. It just skips them)***
+  `$ nehm get post` = `$ nehm g p`
 
-* Get multiple last posts or likes
+#### Get multiple last posts or likes
 
-  `nehm get 3 posts` or `nehm get 3 likes`
+  `$ nehm get 3 posts` = `$ nehm get 3 ps`
 
-* Just download and set tags any track
+  `$ nehm get 5 likes` = `$ nehm get 5 ls`
 
-  `nehm dl post` or `nehm dl like` or `nehm dl 3 likes`
+#### Just download and set tags any track
 
-* Get tracks from another user
+  `$ nehm dl post` = `$ nehm d p`
 
-  `nehm get post from nasa` or `nehm dl like from bogem`
+#### Get tracks from another user
 
-* Get tracks to another directory
+  `$ nehm get post from nasa` or `$ nehm d l from bogem`
 
-  `nehm get post to ~/Downloads` or `nehm dl like from bogem to .`
+#### Get tracks to another directory
 
-* Get tracks to another iTunes playlist
+  `$ nehm g p to ~/Downloads` or `$ nehm d l from bogem to .`
 
-  `nehm get post pl MyPlaylist`
+#### Get tracks to another iTunes playlist
 
-* Get or download track from url
+  `$ nehm g p pl MyPlaylist`
 
-  `nehm get https://soundcloud.com/nasa/delta-iv-launch`
+#### Get or download track from url
 
-  or
+  `$ nehm g https://soundcloud.com/nasa/delta-iv-launch`
 
-  `nehm dl https://soundcloud.com/nasa/delta-iv-launch`
+#### Select likes or posts and download them
 
-* Configure (change download directory, permalink, playlist)
+  `$ nehm select likes` = `$ nehm sel l`
 
-  `nehm configure`
+#### Search for tracks and download them
 
-* Help
+  `$ nehm search kanye west` = `$ nehm sea kanye west`
 
-  `nehm help`
 
-##FAQ
+## FAQ
 
 **Q: What is permalink?**
 
