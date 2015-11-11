@@ -35,7 +35,7 @@ module Nehm
   #{'select'.green}     Get likes or posts from your account, nicely print them and download selected tracks
   #{'version'.green}    Show version of installed nehm
 
-See #{'nehm help COMMAND'.yellow} to read about a specific subcommand
+See #{'nehm help COMMAND'.yellow} to read about a specific command
 
 Commands and arguments (but NOT options) may be abbreviated, so long as they are unambiguous.
 e.g. 'nehm g l' is short for 'nehm get like'.
