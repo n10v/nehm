@@ -22,11 +22,6 @@ module Nehm
     # Run the command specified by 'args'
 
     def self.run(args)
-      if args.empty?
-        UI.say Nehm::Command::HELP
-        UI.term
-      end
-
       cmd_name = args.shift.downcase
       cmd = find_command(cmd_name)
       cmd.invoke(args)

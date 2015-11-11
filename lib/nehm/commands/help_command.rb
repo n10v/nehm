@@ -6,7 +6,7 @@ module Nehm
     def execute
       command_name = options[:args].pop
       if command_name.nil?
-        UI.say Nehm::Command::HELP
+        UI.say HELP
         UI.term
       end
 
