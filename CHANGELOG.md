@@ -1,5 +1,12 @@
 # nehm change log
 
+## 2.0
+* Add 'select' and 'search' commands *(more info in README and `nehm help`)*
+* Many performance improvements *(changes in application structure)*
+* More stable *(Many bug fixes and error handling)*
+* Less dependencies *(Remove 4 dependencies)*
+* Prettier README
+
 ## 1.6.1
 * Fix nehm's fails when download tracks from url
 
