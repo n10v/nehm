@@ -44,10 +44,12 @@ module Nehm
 
         ids = @queue.map(&:id) # Get ids of tracks in queue
         tracks.each do |track|
+          track_info = "#{track.full_name} | #{track.duration}"
+
           if ids.include? track.id
-            menu.choice(:added, track.full_name)
+            menu.choice(:added, track_info)
           else
-            menu.choice(:inc, track.full_name) { add_track_to_queue(track) }
+            menu.choice(:inc, track_info) { add_track_to_queue(track) }
           end
         end
 
