@@ -21,8 +21,12 @@ module Nehm
     end
 
     def duration
-      duration_in_seconds = @hash['duration'] / 1000
-      Time.at(duration_in_seconds).strftime("%M:%S")
+      seconds = @hash['duration'] / 1000
+
+      time = Time.at(seconds)
+      time -= time.utc_offset
+
+      time.hour > 0 ? time.strftime("%H:%M:%S") : time.strftime("%M:%S")
     end
 
     def file_name
