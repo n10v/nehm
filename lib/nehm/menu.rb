@@ -2,8 +2,6 @@ module Nehm
   module UI
     class Menu
 
-      attr_writer :msg_bar, :header
-
       def initialize
         @choices = {}
         @inc_index = 1
@@ -37,21 +35,13 @@ module Nehm
         @items << "#{visual_index} #{desc}"
       end
 
+      def header=(value)
+        @items.unshift(value)
+      end
+
       def show_header
         UI.say @header
         UI.newline
-      end
-
-      ##
-      # Message bar used to show messages of
-      # last successful or not operations
-      # Shown before menu
-
-      def show_msg_bar
-        UI.say 'Message:'
-        UI.say "  #{@msg_bar}"
-        UI.newline
-        @msg_bar.clear
       end
 
       def newline
@@ -59,9 +49,6 @@ module Nehm
       end
 
       def select
-        show_header unless @header.to_s.empty?
-        show_msg_bar unless @msg_bar.to_s.empty?
-
         # Add exit option
         newline
         choice('e', 'Exit'.red) { UI.term }
@@ -83,7 +70,7 @@ module Nehm
         loop do
           if @choices.keys.include? selected
             block = @choices[selected]
-            block.call
+            block.call unless block.nil?
             break
           else
             selected = UI.ask "You must choose one of [#{@choices.keys.join(', ')}]"

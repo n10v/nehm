@@ -19,15 +19,13 @@ module Nehm
       @track_manager = TrackManager.new(@options)
 
       loop do
-        # If offset changed
+        # If offset changed, update list of tracks
         unless old_offset == @offset
           tracks = get_tracks
           old_offset = @offset
         end
 
-        # If tracks == nil, then there is a last page or there aren't tracks
         if tracks.nil?
-          @msg = 'There are no more tracks'.red
           prev_page
           next
         end
@@ -44,12 +42,10 @@ module Nehm
       UI.menu do |menu|
         menu.header = 'Enter the number of track to add it to download queue'.green
 
-        menu.msg_bar = @msg
-
+        ids = @queue.map(&:id) # Get ids of tracks in queue
         tracks.each do |track|
-          ids = @queue.map(&:id) # Get ids of tracks in queue
           if ids.include? track.id
-            menu.choice(:added, track.full_name) { already_added(track) }
+            menu.choice(:added, track.full_name)
           else
             menu.choice(:inc, track.full_name) { add_track_to_queue(track) }
           end
@@ -77,11 +73,6 @@ module Nehm
 
     def add_track_to_queue(track)
       @queue << track
-      @msg = "'#{track.full_name}' added".green
-    end
-
-    def already_added(track)
-      @msg = "'#{track.full_name}' was already added".yellow
     end
 
     def download_tracks_from_queue
