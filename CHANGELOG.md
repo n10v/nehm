@@ -1,5 +1,12 @@
 # nehm change log
 
+## 2.1
+* `search` command
+  * Use dash-options *(see help)*
+  * Remove `offset` option
+* Show duration of track in `search` and `select` commands
+* Remove message bar in `search` and `select` commands
+
 ## 2.0.1
 * Make gem size smaller
 
