@@ -6,7 +6,7 @@ module Nehm
         show_info
         UI.newline
         show_menu
-        sleep(UI::SLEEP_PERIOD)
+        UI.sleep
       end
     end
 
@@ -31,8 +31,10 @@ module Nehm
       permalink = UserManager.default_permalink
       UI.say "Permalink: #{permalink.cyan}" if permalink
 
-      playlist = PlaylistManager.default_playlist
-      UI.say "iTunes playlist: #{playlist.to_s.cyan}" if playlist
+      if OS.mac?
+        playlist = PlaylistManager.default_playlist
+        UI.say "iTunes playlist: #{playlist.to_s.cyan}" if playlist
+      end
     end
 
     def show_menu

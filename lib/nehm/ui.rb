@@ -31,6 +31,10 @@ module Nehm
       puts msg.green
     end
 
+    def self.sleep
+      sleep(SLEEP_PERIOD)
+    end
+
     def self.menu(&block)
       Menu.new(&block)
     end

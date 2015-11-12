@@ -62,7 +62,7 @@ EOF
     UI.success "Now you can use nehm!"
     UI.newline
 
-    sleep(UI::SLEEP_PERIOD)
+    UI.sleep
   end
 
   def initialized?
