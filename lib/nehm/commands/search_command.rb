@@ -6,9 +6,30 @@ module Nehm
 
     def initialize
       super
+
+      add_option(:"-t", '-t PATH',
+                 'Download track(s) to PATH')
+
+      add_option(:"-pl", '-pl PLAYLIST',
+                 'Add track(s) to iTunes playlist with PLAYLIST name')
+
+      add_option(:"-lim", '-lim NUMBER',
+                 'Show NUMBER tracks on each page')
+
     end
 
     def execute
+      # Convert dash-options to normal options
+      options_to_convert = { :"-t"   => :to,
+                            :"-pl"  => :pl,
+                            :"-lim" => :limit }
+
+      options_to_convert.each do |k,v|
+        value = @options[k]
+        @options.delete(k)
+        @options[v] = value unless value.nil?
+      end
+
       @query = @options[:args].join(' ')
       super
     end
@@ -34,7 +55,7 @@ module Nehm
     def get_tracks
       UI.term 'You must provide an argument' if @query.empty?
 
-      @track_manager.search(@query, @limit, @offset)
+      @track_manager.search(@query, @limit)
     end
 
   end
