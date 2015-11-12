@@ -49,8 +49,8 @@ module Nehm
       tracks
     end
 
-    def self.search(query, limit, offset)
-      uri = "/tracks?q=#{query}&limit=#{limit}&offset=#{offset}"
+    def self.search(query, limit)
+      uri = "/tracks?q=#{query}&limit=#{limit}"
       HTTP_CLIENT.get(1, uri)
     end
 

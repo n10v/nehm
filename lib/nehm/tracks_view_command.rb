@@ -7,29 +7,16 @@ module Nehm
 
     def initialize
       super
-
-      add_option(:to, 'to PATH',
-                 'Download track(s) to PATH')
-
-      add_option(:pl, 'pl PLAYLIST',
-                 'Add track(s) to iTunes playlist with PLAYLIST name')
-
-      add_option(:limit, 'limit NUMBER',
-                 'Show NUMBER tracks on each page')
-
-      add_option(:offset, 'offset NUMBER',
-                 'Show from NUMBER track')
-
     end
 
     def execute
+      setup_environment
+
       tracks = []
       old_offset = -1
 
       @queue = []
       @track_manager = TrackManager.new(@options)
-
-      setup_environment
 
       loop do
         # If offset changed
@@ -85,16 +72,6 @@ module Nehm
           limit
         else
           DEFAULT_LIMIT
-        end
-
-      offset = @options[:offset]
-      @offset =
-        if offset
-          offset = offset.to_i
-          UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
-          offset
-        else
-          DEFAULT_OFFSET
         end
     end
 

@@ -48,8 +48,8 @@ module Nehm
       convert(track)
     end
 
-    def search(query, limit, offset)
-      found = Client.search(query, limit, offset)
+    def search(query, limit)
+      found = Client.search(query, limit)
       return nil if found.empty?
 
       filter(found)

@@ -13,6 +13,18 @@ module Nehm
 
       add_option(:from, 'from PERMALINK',
                  'Select track(s) from user with PERMALINK')
+
+      add_option(:to, 'to PATH',
+                 'Download track(s) to PATH')
+
+      add_option(:pl, 'pl PLAYLIST',
+                 'Add track(s) to iTunes playlist with PLAYLIST name')
+
+      add_option(:limit, 'limit NUMBER',
+                 'Show NUMBER tracks on each page')
+
+      add_option(:offset, 'offset NUMBER',
+                 'Show from NUMBER+1 track')
     end
 
     def arguments
@@ -50,6 +62,20 @@ module Nehm
       else
         UI.term "Invalid argument/option '#{type}'"
       end
+    end
+
+    def setup_environment
+      super
+
+      offset = @options[:offset]
+      @offset =
+        if offset
+          offset = offset.to_i
+          UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
+          offset
+        else
+          DEFAULT_OFFSET
+        end
     end
 
   end
