@@ -2,7 +2,7 @@
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
 
-<p><b><i>nehm</i></b> is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way</p>
+<p><b><i>nehm</i></b> is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your <b>SoundCloud</b> posts or likes in convenient way</p>
 
 <a href="http://badge.fury.io/rb/nehm"><img src="https://badge.fury.io/rb/nehm.svg" alt="Gem Version"></img></a>
 <a href="https://gemnasium.com/bogem/nehm"><img src="https://gemnasium.com/bogem/nehm.svg" alt="Dependency staus"></img></a>
@@ -16,7 +16,7 @@
 <a href="https://www.dropbox.com/s/5gy6c5nzrsvhlv0/3select.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/3select.png" alt="Select"></img></a>
 <a href="https://www.dropbox.com/s/ynn9kb0ykcdishp/4search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/4search.png" alt="Search"></img></a>
 
-<p><b>(clickable screenshots)</b></p>
+<p><b>(click to zoom)</b></p>
 
 </div>
 
