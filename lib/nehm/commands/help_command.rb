@@ -19,7 +19,7 @@ module Nehm
     end
 
     def arguments
-      { 'COMMAND' => 'name of command to show help' }
+      { 'COMMAND' => 'name of command (can be abbreviated) to show help' }
     end
 
     def program_name
