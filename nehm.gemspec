@@ -24,4 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'
   spec.add_dependency 'taglib-ruby', '>= 0.7.0'
+
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'rake'
 end
