@@ -19,6 +19,10 @@ module Nehm
       puts "#{msg}\n".red
     end
 
+    def self.menu(&block)
+      Menu.new(&block)
+    end
+
     def self.newline
       puts
     end
@@ -27,16 +31,12 @@ module Nehm
       puts msg
     end
 
-    def self.success(msg)
-      puts msg.green
-    end
-
     def self.sleep
       sleep(SLEEP_PERIOD)
     end
 
-    def self.menu(&block)
-      Menu.new(&block)
+    def self.success(msg)
+      puts msg.green
     end
 
     def self.term(msg = nil)
