@@ -1,6 +1,8 @@
 module Nehm
   class GetCommand < Command
 
+    FIRST_TRACK = [1, 0]
+
     def initialize
       super
 
@@ -28,9 +30,9 @@ module Nehm
           count = @options[:args].pop.to_i
           track_manager.posts(count, 0)
         when /^l/
-          track_manager.likes(1, 0)
+          track_manager.likes(*FIRST_TRACK)
         when /^p/
-          track_manager.posts(1, 0)
+          track_manager.posts(*FIRST_TRACK)
         when /https:\/\/soundcloud.com\//
           track_manager.track_from_url(arg)
         when nil
