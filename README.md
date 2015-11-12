@@ -82,9 +82,9 @@ Also commands and arguments (but **NOT** options) may be abbreviated, so long as
 
 #### Get multiple last posts or likes
 
-  `$ nehm get 3 posts` = `$ nehm get 3 ps`
+  `$ nehm get 3 posts` = `$ nehm g 3 ps`
 
-  `$ nehm get 5 likes` = `$ nehm get 5 ls`
+  `$ nehm get 5 likes` = `$ nehm g 5 ls`
 
 #### Just download and set tags any track
 
