@@ -64,19 +64,5 @@ module Nehm
       end
     end
 
-    def setup_environment
-      super
-
-      offset = @options[:offset]
-      @offset =
-        if offset
-          offset = offset.to_i
-          UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
-          offset
-        else
-          DEFAULT_OFFSET
-        end
-    end
-
   end
 end
