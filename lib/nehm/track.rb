@@ -20,6 +20,11 @@ module Nehm
       Artwork.new(self)
     end
 
+    def duration
+      duration_in_seconds = @hash['duration'] / 1000
+      Time.at(duration_in_seconds).strftime("%M:%S")
+    end
+
     def file_name
       "#{full_name.tr(',./\\\'$%"', '')}.mp3"
     end
