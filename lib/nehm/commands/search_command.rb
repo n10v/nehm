@@ -14,7 +14,7 @@ module Nehm
                  'Add track(s) to iTunes playlist with PLAYLIST name')
 
       add_option(:"-lim", '-lim NUMBER',
-                 'Show NUMBER tracks on each page')
+                 'Show NUMBER+1 tracks on each page')
 
     end
 
