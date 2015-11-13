@@ -16,13 +16,17 @@ module Nehm
       add_option(:"-lim", '-lim NUMBER',
                  'Show NUMBER+1 tracks on each page')
 
+      add_option(:"-dl", '-dl yes',
+                 "Don't add a track to iTunes. Just download and set tags")
+
     end
 
     def execute
       # Convert dash-options to normal options
       options_to_convert = { :"-t"   => :to,
-                            :"-pl"  => :pl,
-                            :"-lim" => :limit }
+                             :"-pl"  => :pl,
+                             :"-lim" => :limit,
+                             :"-dl"  => :dl }
 
       options_to_convert.each do |k,v|
         value = @options[k]

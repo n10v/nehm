@@ -112,7 +112,7 @@ module Nehm
 
       # Setting up iTunes playlist
       @playlist = nil
-      if !options[:dl] && OS.mac?
+      if options[:dl] != 'yes' && OS.mac?
         playlist_name = options[:pl]
         @playlist = playlist_name ? PlaylistManager.get_playlist(playlist_name) : PlaylistManager.default_playlist
       end
