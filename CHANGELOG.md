@@ -1,7 +1,7 @@
 # nehm change log
 
 ## 2.1.1
-* Add 'dl yes' option to 'select' and 'search' commands
+* Add `dl yes` option to `select` and `search` commands
 
 ## 2.1
 * `search` command
