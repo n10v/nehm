@@ -27,7 +27,7 @@ module Nehm
                  'Show from NUMBER+1 track')
 
       add_option(:dl, 'dl yes',
-                 "Don't add a track to iTunes. Just download and set tags")
+                 "Don't add tracks to iTunes. Just download and set tags")
     end
 
     def arguments

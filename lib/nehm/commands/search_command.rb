@@ -14,10 +14,10 @@ module Nehm
                  'Add track(s) to iTunes playlist with PLAYLIST name')
 
       add_option(:"-lim", '-lim NUMBER',
-                 'Show NUMBER+1 tracks on each page')
+                 'Show NUMBER tracks on each page')
 
       add_option(:"-dl", '-dl yes',
-                 "Don't add a track to iTunes. Just download and set tags")
+                 "Don't add tracks to iTunes. Just download and set tags")
 
     end
 
