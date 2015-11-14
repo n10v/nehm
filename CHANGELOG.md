@@ -1,5 +1,10 @@
 # nehm change log
 
+## 2.1.3
+* Fix bug, when `nehm` couldn't be initialized if you enter no command
+* More detailed error description if there is no query in `search` command
+* Fix `select` and `search` help
+
 ## 2.1.2
 * Fix infinite loop in `select` and `search` commands if there are no tracks
 
