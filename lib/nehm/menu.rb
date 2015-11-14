@@ -39,11 +39,6 @@ module Nehm
         @items.unshift(value)
       end
 
-      def show_header
-        UI.say @header
-        UI.newline
-      end
-
       def newline
         @items << "\n"
       end
