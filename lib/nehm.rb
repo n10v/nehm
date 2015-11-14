@@ -13,12 +13,12 @@ require 'nehm/user_manager'
 module Nehm
 
   def self.start(args)
+    init unless initialized?
+
     if args.empty?
       UI.say HELP
       UI.term
     end
-
-    init unless initialized?
 
     CommandManager.run(args)
   end
