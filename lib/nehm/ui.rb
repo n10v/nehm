@@ -32,7 +32,7 @@ module Nehm
     end
 
     def self.sleep
-      sleep(SLEEP_PERIOD)
+      Kernel.sleep(SLEEP_PERIOD)
     end
 
     def self.success(msg)
