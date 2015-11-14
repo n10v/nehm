@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.1.2
+* Fix infinite loop in `select` and `search` commands if there are no tracks
+
 ## 2.1.1
 * Add `dl yes` option to `select` and `search` commands
 
