@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.1.4
+* Fix bug `wrong number of arguments (1 for 0)` in `configure` command or in first initialization
+
 ## 2.1.3
 * Fix bug, when `nehm` couldn't be initialized if you enter no command
 * More detailed error description if there is no query in `search` command
