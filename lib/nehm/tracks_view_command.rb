@@ -12,11 +12,13 @@ module Nehm
     def execute
       setup_environment
 
-      tracks = []
-      old_offset = -1
+      old_offset = @offset
 
       @queue = []
       @track_manager = TrackManager.new(@options)
+
+      tracks = get_tracks
+      UI.term 'There are no tracks yet' if tracks.nil?
 
       loop do
         # If offset changed, update list of tracks
