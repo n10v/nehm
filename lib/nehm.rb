@@ -59,7 +59,7 @@ EOF
       UI.newline
     end
 
-    UI.success "Now you can use nehm!"
+    UI.success 'Now you can use nehm!'
     UI.newline
 
     UI.sleep

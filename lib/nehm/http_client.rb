@@ -33,9 +33,7 @@ module Nehm
         end
       end
 
-      if response['status'] =~ /302/
-        get_hash(response['location'])
-      end
+      get_hash(response['location']) if response['status'] =~ /302/
     end
 
     private

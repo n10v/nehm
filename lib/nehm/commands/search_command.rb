@@ -28,7 +28,7 @@ module Nehm
                              :"-lim" => :limit,
                              :"-dl"  => :dl }
 
-      options_to_convert.each do |k,v|
+      options_to_convert.each do |k, v|
         value = @options[k]
         @options.delete(k)
         @options[v] = value unless value.nil?
