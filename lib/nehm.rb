@@ -12,15 +12,23 @@ require 'nehm/user_manager'
 
 module Nehm
 
+  class NehmExit < SystemExit; end
+
   def self.start(args)
     init unless initialized?
 
-    if args.empty?
-      UI.say HELP
-      UI.term
-    end
+    begin
+      if args.empty?
+        UI.say HELP
+        UI.term
+      end
 
-    CommandManager.run(args)
+      CommandManager.run(args)
+    rescue StandardError, Timeout::Error => ex
+      Nehm::UI.term "While executing nehm ... (#{ex.class})\n    #{ex}"
+    rescue Interrupt
+    rescue NehmExit
+    end
   end
 
   HELP = <<-EOF

@@ -40,11 +40,8 @@ module Nehm
     end
 
     def self.term(msg = nil)
-      if msg
-        abort msg.red
-      else
-        exit
-      end
+      puts msg.red if msg
+      raise NehmExit
     end
 
     def self.warning(msg)

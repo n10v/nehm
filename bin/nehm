@@ -5,10 +5,4 @@ require 'nehm'
 
 $stderr = STDOUT
 
-begin
-  Nehm.start(ARGV)
-rescue Interrupt # SIGINT
-  Nehm::UI.term
-rescue StandardError, Timeout::Error => ex
-  Nehm::UI.term "While executing nehm ... (#{ex.class})\n    #{ex}"
-end
+Nehm.start(ARGV)
