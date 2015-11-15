@@ -64,25 +64,8 @@ module Nehm
     end
 
     def setup_environment
-      limit = @options[:limit]
-      @limit =
-        if limit
-          limit = limit.to_i
-          UI.term "Invalid limit value\nIt should be more than 0" if limit <= 0
-          limit
-        else
-          DEFAULT_LIMIT
-        end
-
-      offset = @options[:offset]
-      @offset =
-        if offset
-          offset = offset.to_i
-          UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
-          offset
-        else
-          DEFAULT_OFFSET
-        end
+      @limit = @options[:limit] ? @options[:limit].to_i : DEFAULT_LIMIT
+      @offset = @options[:offset] ? @options[:offset].to_i : DEFAULT_OFFSET
     end
 
     def add_track_to_queue(track)

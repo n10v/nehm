@@ -23,6 +23,9 @@ module Nehm
     end
 
     def likes(limit, offset)
+      UI.term "Invalid limit value\nIt should be more than 0" if limit <= 0
+      UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
+
       likes = Client.tracks(limit, offset, :likes, @uid)
       return nil if likes.empty?
 
@@ -31,6 +34,9 @@ module Nehm
     end
 
     def posts(limit, offset)
+      UI.term "Invalid limit value\nIt should be more than 0" if limit <= 0
+      UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
+
       posts = Client.tracks(limit, offset, :posts, @uid)
       return nil if posts.empty?
 
@@ -41,7 +47,9 @@ module Nehm
     end
 
     def track_from_url(url)
-      track = [Client.track(url)]
+      track = [Client.resolve(url)]
+
+      UI.term 'Invalid URL! Please type link to track' if track.first['kind'] != 'track'
       return nil if track.empty?
 
       filter(track)
@@ -49,6 +57,9 @@ module Nehm
     end
 
     def search(query, limit, offset)
+      UI.term "Invalid limit value\nIt should be more than 0" if limit <= 0
+      UI.term "Invalid offset value\nIt should be more or equal 0" if offset < 0
+
       found = Client.search(query, limit, offset)
       return nil if found.empty?
 

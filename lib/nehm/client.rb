@@ -28,8 +28,6 @@ module Nehm
     # Returns raw array of likes or posts (depends on argument 'type')
 
     def self.tracks(count, offset, type, uid)
-      UI.term "Invalid number of #{type}" if count == 0
-
       iterations = count.to_f / TRACKS_LIMIT
       iterations = iterations.ceil
 
@@ -55,9 +53,9 @@ module Nehm
     end
 
     ##
-    # Returns track hash from SoundCloud by specified uri
+    # Returns hash from SoundCloud by specified uri
 
-    def self.track(uri)
+    def self.resolve(uri)
       HTTP_CLIENT.resolve(uri)
     end
 
