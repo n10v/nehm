@@ -1,5 +1,9 @@
 # nehm change log
 
+## 2.1.5
+* Remove `Getting information about tracks(s)` message in `get` and `dl` commands
+* Handle more errors
+
 ## 2.1.4
 * Fix bug `wrong number of arguments (1 for 0)` in `configure` command or in first initialization
 
