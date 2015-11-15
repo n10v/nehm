@@ -19,7 +19,6 @@ module Nehm
     def execute
       track_manager = TrackManager.new(@options)
 
-      UI.say 'Getting information about track(s)'
       arg = @options[:args].pop
       tracks =
         case arg
