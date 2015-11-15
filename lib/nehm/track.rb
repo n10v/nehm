@@ -26,7 +26,7 @@ module Nehm
       time = Time.at(seconds)
       time -= time.utc_offset
 
-      time.hour > 0 ? time.strftime("%H:%M:%S") : time.strftime("%M:%S")
+      time.hour > 0 ? time.strftime('%H:%M:%S') : time.strftime('%M:%S')
     end
 
     def file_name
