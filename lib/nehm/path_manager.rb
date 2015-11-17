@@ -14,7 +14,7 @@ module Nehm
 
     def self.get_path(path)
       # Check path for existence
-      UI.term 'Invalid download path! Please enter correct path' unless Dir.exist?(path)
+      UI.term 'Invalid download path. Please enter correct path' unless Dir.exist?(path)
 
       File.expand_path(path)
     end

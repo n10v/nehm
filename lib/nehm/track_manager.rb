@@ -106,7 +106,8 @@ module Nehm
       @uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
       unless @uid
         UI.error "You didn't logged in"
-        UI.say "Login from #{'nehm configure'.yellow} or use #{'[from PERMALINK]'.yellow} option"
+        UI.say "Login from #{'nehm configure'.yellow} " \
+               "or use #{'[from PERMALINK]'.yellow} option"
         UI.term
       end
 
@@ -117,7 +118,8 @@ module Nehm
         ENV['dl_path'] = dl_path
       else
         UI.error "You don't set up download path!"
-        UI.say "Set it up from #{'nehm configure'.yellow} or use #{'[to PATH_TO_DIRECTORY]'.yellow} option"
+        UI.say "Set it up from #{'nehm configure'.yellow} " \
+               "or use #{'to PATH'.yellow} option"
         UI.term
       end
 
