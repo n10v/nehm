@@ -2,7 +2,7 @@
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
 
-<p><b><i>nehm</i></b> is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your <b>SoundCloud</b> posts or likes in convenient way</p>
+<p><b><i>nehm</i></b> is a console tool, which downloads, sets IDv3 tags (and adds to your iTunes library) your <b>SoundCloud</b> posts or likes in convenient way</p>
 
 <a href="http://badge.fury.io/rb/nehm"><img src="https://badge.fury.io/rb/nehm.svg" alt="Gem Version"></img></a>
 <a href="https://gemnasium.com/bogem/nehm"><img src="https://gemnasium.com/bogem/nehm.svg" alt="Dependency staus"></img></a>

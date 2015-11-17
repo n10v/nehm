@@ -32,11 +32,11 @@ module Nehm
   end
 
   HELP = <<-EOF
-#{'nehm'.green} is a console tool, which downloads, sets IDv3 tags and adds to your iTunes library your SoundCloud posts or likes in convenient way
+#{'nehm'.green} is a console tool, which downloads, sets IDv3 tags (and adds to your iTunes library) your SoundCloud posts or likes in convenient way
 
 #{'Available nehm commands:'.yellow}
-  #{'get'.green}        Download, set tags and add to your iTunes library last post or like from your profile
-  #{'dl'.green}         Download and set tags last post or like from your profile
+  #{'get'.green}        Download, set tags and add to your iTunes library last post(s) or like(s) from your profile
+  #{'dl'.green}         Download and set tags last post(s) or like(s) from your profile
   #{'configure'.green}  Configure application
   #{'help'.green}       Show help for specified command
   #{'search'.green}     Search tracks, print them nicely and download selected tracks
