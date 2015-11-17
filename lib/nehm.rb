@@ -15,9 +15,9 @@ module Nehm
   class NehmExit < SystemExit; end
 
   def self.start(args)
-    init unless initialized?
-
     begin
+      init unless initialized?
+
       if args.empty?
         UI.say HELP
         UI.term
