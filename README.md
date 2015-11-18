@@ -33,7 +33,9 @@ Nehm developer doesn't responsible for any illegal usage of this program</i></b>
 
 ## Installation
 
-**1. Install `taglib` library**
+**1. [Install Ruby](https://www.ruby-lang.org/en/documentation/installation/)**
+
+**2. Install `taglib` library**
 
 **Mac OS X:**
 
@@ -49,22 +51,24 @@ Debian/Ubuntu: `sudo apt-get install libtag1-dev`
 
 Fedora/RHEL: `sudo yum install taglib-devel`
 
-**2. Install `nehm` gem:**
+**3. Install `nehm` gem:**
 
 `gem install nehm`
 
 ## First usage
 
-If you just installed nehm, write any command for its setup
+If you just installed `nehm`, write any command for its setup
 
 For example, `nehm help`
 
-nehm should answer like this:
+`nehm` should answer like this:
 ```
 Hello!
 Before using the nehm, you should set it up:
 Enter path to desirable download directory (press enter to set it to ...
 ```
+
+And then follow instruction, which `nehm` gives
 
 ## Usage Examples
 
