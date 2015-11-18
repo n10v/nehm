@@ -47,7 +47,8 @@ module Nehm
     end
 
     def summary
-      'Search tracks, print them nicely and download selected tracks'
+      'Search tracks, print them nicely and download, set tags and add ' \
+                                                          'to iTunes selected'
     end
 
     def usage

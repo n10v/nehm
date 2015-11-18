@@ -45,7 +45,8 @@ module Nehm
     end
 
     def summary
-      'Get list of likes or posts from your account and download selected'
+      'Get list of likes or posts from your account and download, set tags ' \
+                                                  'and add to iTunes selected'
     end
 
     def usage
