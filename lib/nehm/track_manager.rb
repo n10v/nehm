@@ -117,7 +117,7 @@ module Nehm
       if dl_path
         ENV['dl_path'] = dl_path
       else
-        UI.error "You don't set up download path!"
+        UI.error "You didn't set up download path!"
         UI.say "Set it up from #{'nehm configure'.yellow} " \
                "or use #{'to PATH'.yellow} option"
         UI.term
