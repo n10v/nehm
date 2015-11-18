@@ -45,8 +45,8 @@ module Nehm
 
 See #{'nehm help COMMAND'.yellow} to read about a specific command
 
-Commands and arguments (but NOT options) may be abbreviated, so long as they are unambiguous.
-e.g. #{'nehm g l'.magenta} is short for #{'nehm get like'.magenta}.
+Commands and arguments (but NOT options) may be abbreviated, so long as they are unambiguous
+e.g. #{'nehm g l'.magenta} is short for #{'nehm get like'.magenta}
 EOF
 
   module_function
