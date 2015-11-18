@@ -1,5 +1,10 @@
 # nehm change log
 
+## 2.2
+* Rename `select` command to `list`
+* Some prettifying things in `help`
+* Small bug fixes
+
 ## 2.1.5
 * Remove `Getting information about tracks(s)` message in `get` and `dl` commands
 * Handle more errors
