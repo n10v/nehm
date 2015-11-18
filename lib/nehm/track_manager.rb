@@ -107,7 +107,7 @@ module Nehm
       unless @uid
         UI.error "You didn't logged in"
         UI.say "Login from #{'nehm configure'.yellow} " \
-               "or use #{'[from PERMALINK]'.yellow} option"
+               "or use #{'from PERMALINK'.yellow} option"
         UI.term
       end
 
