@@ -13,8 +13,8 @@ module Nehm
       :dl,
       :get,
       :help,
+      :list,
       :search,
-      :select,
       :version
     ]
 

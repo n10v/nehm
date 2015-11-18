@@ -12,8 +12,8 @@
 ---
 <div align="center">
 <a href="https://www.dropbox.com/s/m4heiyq7vbpc4qs/1help.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/1help.png" alt="Help"></img></a>
-<a href="https://www.dropbox.com/s/b68flm7hv5myhk4/2get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/2get.png" alt="Select"></img></a>
-<a href="https://www.dropbox.com/s/5gy6c5nzrsvhlv0/3select.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/3select.png" alt="Select"></img></a>
+<a href="https://www.dropbox.com/s/b68flm7hv5myhk4/2get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/2get.png" alt="Get"></img></a>
+<a href="https://www.dropbox.com/s/5gy6c5nzrsvhlv0/3select.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/3select.png" alt="List"></img></a>
 <a href="https://www.dropbox.com/s/ynn9kb0ykcdishp/4search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/4search.png" alt="Search"></img></a>
 
 <p><b>(click to zoom)</b></p>
@@ -106,13 +106,13 @@ Also commands and arguments (but **NOT** options) may be abbreviated, so long as
 
   `$ nehm g https://soundcloud.com/nasa/delta-iv-launch`
 
-#### Select likes or posts and download them
+#### Get list of likes or posts and download them
 
-  `$ nehm select likes` = `$ nehm sel l`
+  `$ nehm list likes` = `$ nehm l l`
 
 #### Search for tracks and download them
 
-  `$ nehm search kanye west` = `$ nehm sea kanye west`
+  `$ nehm search kanye west` = `$ nehm s kanye west`
 
 
 ## FAQ

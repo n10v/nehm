@@ -3,16 +3,16 @@ require 'nehm/tracks_view_command'
 module Nehm
 
   ##
-  # This command gets likes/posts from user's account,
+  # This command gets list of likes/posts from user's account,
   # Prints as menu, and downloads selected tracks
 
-  class SelectCommand < TracksViewCommand
+  class ListCommand < TracksViewCommand
 
     def initialize
       super
 
       add_option(:from, 'from PERMALINK',
-                 'Select track(s) from user with PERMALINK')
+                 'Get list of track(s) from user with PERMALINK')
 
       add_option(:to, 'to PATH',
                  'Download track(s) to PATH')
@@ -31,12 +31,12 @@ module Nehm
     end
 
     def arguments
-      { 'likes' => 'Select likes',
-        'posts' => 'Select posts' }
+      { 'likes' => 'List of likes',
+        'posts' => 'List of posts' }
     end
 
     def program_name
-      'nehm select'
+      'nehm list'
     end
 
     def execute
@@ -45,7 +45,7 @@ module Nehm
     end
 
     def summary
-      'Get likes or posts from your account, nicely print them and download selected tracks'
+      'Get list of likes or posts from your account and download selected'
     end
 
     def usage

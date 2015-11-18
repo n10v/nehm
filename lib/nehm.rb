@@ -39,8 +39,8 @@ module Nehm
   #{'dl'.green}         Download and set tags last post(s) or like(s) from your profile
   #{'configure'.green}  Configure application
   #{'help'.green}       Show help for specified command
+  #{'list'.green}       Get list of likes or posts from your account and download selected
   #{'search'.green}     Search tracks, print them nicely and download selected tracks
-  #{'select'.green}     Get likes or posts from your account, nicely print them and download selected tracks
   #{'version'.green}    Show version of installed nehm
 
 See #{'nehm help COMMAND'.yellow} to read about a specific command
