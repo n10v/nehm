@@ -106,7 +106,7 @@ Also commands and arguments (but **NOT** options) may be abbreviated, so long as
 
   `$ nehm g https://soundcloud.com/nasa/delta-iv-launch`
 
-#### Get list of likes or posts and download them
+#### Get list of likes or posts and download selected
 
   `$ nehm list likes` = `$ nehm l l`
 
