@@ -30,7 +30,7 @@ module Nehm
     end
 
     def file_name
-      "#{full_name.tr(',./\\\'$%"', '')}.mp3"
+      "#{full_name.tr(",./'\\\"$%", '')}.mp3"
     end
 
     def file_path
