@@ -12,7 +12,6 @@ module Nehm
 
     def process_tracks(tracks)
       tracks.reverse_each do |track|
-        UI.newline
         dl(track)
         tag(track)
         track.artwork.suicide

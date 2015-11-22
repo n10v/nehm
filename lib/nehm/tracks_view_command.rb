@@ -73,6 +73,7 @@ module Nehm
     end
 
     def download_tracks_from_queue
+      UI.newline
       @track_manager.process_tracks(@queue)
     end
 
