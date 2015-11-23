@@ -7,7 +7,7 @@
 <a href="http://badge.fury.io/rb/nehm"><img src="https://badge.fury.io/rb/nehm.svg" alt="Gem Version"></img></a>
 <a href="https://gemnasium.com/bogem/nehm"><img src="https://gemnasium.com/bogem/nehm.svg" alt="Dependency staus"></img></a>
 <a href="https://codeclimate.com/github/bogem/nehm"><img src="https://codeclimate.com/github/bogem/nehm/badges/gpa.svg" alt="Code climate"></img></a>
-<a href="https://github.com/bogem/nehm/blob/master/LICENSE.txt"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></img></a>
+<a href="https://github.com/bogem/nehm/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></img></a>
 </div>
 
 ---
