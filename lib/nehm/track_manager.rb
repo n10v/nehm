@@ -39,7 +39,6 @@ module Nehm
       posts = Client.tracks(limit, offset, :posts, @uid)
       return nil if posts.empty?
 
-      posts.reject! { |hash| hash['type'] == 'playlist' }
       posts.map! { |hash| hash['track'] }
       filter(posts)
       convert(posts)
@@ -131,9 +130,13 @@ module Nehm
     end
 
     def filter(tracks)
-      # Removing unstreamable tracks
       first_length = tracks.length
-      tracks.select! { |hash| hash['streamable'] }
+
+      # Filters
+      tracks.select! do |hash|
+        hash['type'] != 'playlist' || hash['streamable'] unless hash.nil?
+      end
+
       diff = first_length - tracks.length
 
       UI.warning "Was skipped #{diff} undownloadable track(s)" if diff > 0
