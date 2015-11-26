@@ -1,4 +1,14 @@
 module Nehm
+
+  ##
+  # TracksViewCommand is a super class for all commands, that show tracks
+  # in list and let download selected tracks. When creating a new
+  # TracksViewCommand, define #get_tracks (protected), #initialize, #arguments, #program_name,
+  # #summary and #usage. You can also define #execute if you need, but
+  # you must place also 'super' in this inherited method
+  #
+  # See 'list_command.rb' or 'search_command.rb' as example
+
   class TracksViewCommand < Command
 
     DEFAULT_LIMIT = 10
@@ -38,7 +48,10 @@ module Nehm
 
     protected
 
-    def get_tracks; end
+    def get_tracks
+      raise StandardError, "You must define 'get_tracks' method"
+    end
+
 
     def show_menu(tracks)
       UI.menu do |menu|
