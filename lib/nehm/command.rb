@@ -53,6 +53,7 @@ module Nehm
     # be left in #options[:args]
 
     def execute
+      raise StandardError, 'generic command has no actions'
     end
 
     ##
