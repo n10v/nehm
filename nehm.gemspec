@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.executables           = 'nehm'
   spec.require_paths         = ['lib']
   spec.required_ruby_version = '>= 1.9.3'
-  spec.post_install_message  = "Don't forget to install Taglib from OS' package manager!"
 
   spec.add_dependency 'certifi'
   spec.add_dependency 'colored'
