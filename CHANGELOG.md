@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.2.1
+* Small improvements
+
 ## 2.2
 * Rename `select` command to `list`
 * Some prettifying things in `help`
