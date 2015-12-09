@@ -10,13 +10,13 @@ module Nehm
 
     SLEEP_PERIOD = 0.7
 
-    def self.ask(arg)
+    def self.ask(arg = "")
       say arg
       $stdin.gets.chomp
     end
 
     def self.error(msg)
-      puts "#{msg}\n".red
+      say "#{msg}\n".red
     end
 
     def self.menu(&block)
@@ -24,10 +24,10 @@ module Nehm
     end
 
     def self.newline
-      puts
+      say
     end
 
-    def self.say(msg)
+    def self.say(msg = '')
       puts msg
     end
 
@@ -36,16 +36,16 @@ module Nehm
     end
 
     def self.success(msg)
-      puts msg.green
+      say msg.green
     end
 
     def self.term(msg = nil)
-      puts msg.red if msg
+      say msg.red if msg
       raise NehmExit
     end
 
     def self.warning(msg)
-      puts "#{msg}".yellow
+      say "#{msg}".yellow
     end
 
   end
