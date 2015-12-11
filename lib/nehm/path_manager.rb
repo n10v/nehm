@@ -14,7 +14,7 @@ module Nehm
 
     def self.get_path(path)
       unless Dir.exist?(path)
-        UI.warning "This directory doesn't exist."
+        UI.warning "Directory #{path} doesn't exist."
         wish = UI.ask('Want to create it? (Y/n):')
         wish = 'y' if wish == ''
 
