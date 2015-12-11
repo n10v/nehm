@@ -13,8 +13,19 @@ module Nehm
     # Checks path for validation and returns it if valid
 
     def self.get_path(path)
-      # Check path for existence
-      UI.term 'Invalid download path. Please enter correct path' unless Dir.exist?(path)
+      unless Dir.exist?(path)
+        UI.warning "This directory doesn't exist."
+        wish = UI.ask('Want to create it? (Y/n):')
+        wish = 'y' if wish == ''
+
+        if wish.downcase =~ /y/
+          UI.say "Creating directory: #{path}"
+          UI.newline
+          Dir.mkdir(File.expand_path(path), 0775)
+        else
+          UI.term
+        end
+      end
 
       File.expand_path(path)
     end
