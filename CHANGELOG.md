@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.2.2
+* If you input in `to` option non-existing directory, you can create it from `nehm`
+
 ## 2.2.1
 * Small improvements
 
