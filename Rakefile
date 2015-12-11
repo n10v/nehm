@@ -13,7 +13,6 @@ file = 'pkg/nehm-' + Nehm::VERSION + '.gem'
 
 task :push => :build do
   `gem push #{file}`
-  File.delete('./' + file)
 end
 
 ##
