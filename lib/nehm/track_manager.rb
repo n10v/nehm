@@ -103,7 +103,7 @@ module Nehm
       permalink = options[:from]
       @uid = permalink ? UserManager.get_uid(permalink) : UserManager.default_uid
       unless @uid
-        UI.error "You didn't logged in"
+        UI.error "You didn't log in"
         UI.say "Login from #{'nehm configure'.yellow} " \
                "or use #{'from PERMALINK'.yellow} option"
         UI.term
