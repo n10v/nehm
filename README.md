@@ -128,7 +128,7 @@ A: Permalink is the last word in your profile url. **Example:** for profile url 
 
 ## License
 
-MIT License
+MIT
 
 ## Links
 
