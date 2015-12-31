@@ -1,5 +1,8 @@
 # nehm change log
 
+## 2.2.3
+* Fix https://github.com/bogem/nehm/issues/3. Thanks `galaris` for report
+
 ## 2.2.2
 * If you input in `to` option non-existing directory, you can create it from `nehm`
 
