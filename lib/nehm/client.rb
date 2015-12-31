@@ -36,13 +36,16 @@ module Nehm
         limit = count < TRACKS_LIMIT ? count : TRACKS_LIMIT
         count -= TRACKS_LIMIT
 
-        tracks +=
+        received =
           case type
           when :likes
             likes(limit, i * TRACKS_LIMIT + offset, uid)
           when :posts
             posts(limit, i * TRACKS_LIMIT + offset, uid)
           end
+
+        tracks += received if received.is_a? Array # If received is a hash, then
+                                                   # there was error
       end
       tracks
     end
