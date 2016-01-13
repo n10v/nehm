@@ -134,7 +134,7 @@ module Nehm
 
       # Filters
       tracks.select! do |hash|
-        hash['type'] != 'playlist' || hash['streamable'] unless hash.nil?
+        (hash['type'] != 'playlist' || hash['streamable']) && !hash.nil?
       end
 
       diff = first_length - tracks.length
