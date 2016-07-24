@@ -1,5 +1,12 @@
 # nehm change log
 
+## 3.0
+* **Rewritten in Go: faster, less memory usage, more stable, easier to install (no need to install `Taglib`)**
+* `nehm` can't download posts, because of changes in SoundCloud API :(
+* `nehm` command used to show list of likes, not help as earlier
+* Removed `configure` command. Now you should configure `nehm` in configure file (more in README)
+* ... and some other improvements
+
 ## 2.2.3
 * Fix https://github.com/bogem/nehm/issues/3. Thanks `galaris` for report
 
