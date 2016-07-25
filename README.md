@@ -124,7 +124,7 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 
 ![iTunes music master library](https://raw.github.com/bogem/nehm/master/Pictures/music_master_library.png)
 
-For example, english users should use `nehm get -i 'Music'`, russian users - `nehm get -i Музыка`.
+For example, english users should use `nehm get -i Music`, russian users - `nehm get -i Музыка`.
 
 ## License
 
