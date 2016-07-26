@@ -34,6 +34,9 @@ func (tp TrackProcessor) ProcessAll(tracks []track.Track) {
 func (tp TrackProcessor) Process(t track.Track) {
 	// Download track
 	trackPath := path.Join(tp.DownloadFolder, t.Filename())
+	if _, err := os.OpenFile(trackPath, os.O_CREATE, 0644); err != nil {
+		ui.Term(err, "couldn't create track file")
+	}
 	downloadTrack(t, trackPath)
 
 	// Download artwork
