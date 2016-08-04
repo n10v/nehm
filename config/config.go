@@ -65,7 +65,7 @@ func GetInt(key string) int { return cast.ToInt(Get(key)) }
 func GetPermalink() string {
 	permalink := GetString("permalink")
 	if permalink == "" {
-		ui.Term(nil, "You didn't set a permalink. Use flag '-f' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
+		ui.Term(nil, "You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
 	}
 	return permalink
 }
