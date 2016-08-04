@@ -73,9 +73,9 @@ First of all, you should configure `nehm`:
 
 #### Example:
 ```
-permalink: "bogem"
-dl_folder: "/Users/bogem/Music"
-itunes_playlist: "2016"
+permalink: bogem
+dl_folder: /Users/bogem/Music
+itunes_playlist: iPod
 ```
 
 ## Usage Examples
