@@ -58,6 +58,6 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	}.Show()
 }
 
-func searchGetTracks(limit, offset uint) []track.Track {
+func searchGetTracks(offset uint) []track.Track {
 	return client.Search(searchQuery, limit, offset)
 }

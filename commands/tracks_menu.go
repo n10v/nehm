@@ -17,7 +17,7 @@ import (
 )
 
 type TracksMenu struct {
-	GetTracks      func(limit, offset uint) []track.Track
+	GetTracks      func(offset uint) []track.Track
 	Limit          uint
 	Offset         uint
 	TrackProcessor trackprocessor.TrackProcessor
@@ -28,10 +28,10 @@ type TracksMenu struct {
 func (tm TracksMenu) Show() {
 	oldOffset := tm.Offset
 	ui.Say("Getting information about tracks")
-	tracks := tm.GetTracks(tm.Limit, tm.Offset)
+	tracks := tm.GetTracks(tm.Offset)
 	for {
 		if oldOffset != tm.Offset {
-			tracks = tm.GetTracks(tm.Limit, tm.Offset)
+			tracks = tm.GetTracks(tm.Offset)
 		}
 		oldOffset = tm.Offset
 		trackItems := tm.formTrackItems(tracks)

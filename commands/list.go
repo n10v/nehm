@@ -31,9 +31,6 @@ func init() {
 	listCommand.Flags().AddFlag(dlFolderFlag)
 	listCommand.Flags().AddFlag(permalinkFlag)
 
-	config.BindPFlag("dl_folder", listCommand.Flags().Lookup("dl_folder"))
-	config.BindPFlag("permalink", listCommand.Flags().Lookup("permalink"))
-
 	if runtime.GOOS == "darwin" {
 		listCommand.Flags().AddFlag(itunesPlaylistFlag)
 	}
@@ -64,6 +61,6 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	}.Show()
 }
 
-func listGetTracks(limit, offset uint) []track.Track {
+func listGetTracks(offset uint) []track.Track {
 	return client.Favorites(limit, offset, listUID)
 }
