@@ -22,23 +22,20 @@ var (
 		Run:   showListOfTracks,
 	}
 
-	listLimit  uint
-	listOffset uint
-	listUID    string
+	listUID string
 )
 
 func init() {
-	listCommand.Flags().UintVarP(&listLimit, "limit", "l", 10, "count of tracks on each page")
-	listCommand.Flags().UintVarP(&listOffset, "offset", "o", 0, "offset relative to first like")
-	listCommand.Flags().StringP("dl_folder", "f", "", "filesystem path to download folder")
-	listCommand.Flags().StringP("permalink", "p", "", "user's permalink")
+	listCommand.Flags().AddFlag(limitFlag)
+	listCommand.Flags().AddFlag(offsetFlag)
+	listCommand.Flags().AddFlag(dlFolderFlag)
+	listCommand.Flags().AddFlag(permalinkFlag)
 
 	config.BindPFlag("dl_folder", listCommand.Flags().Lookup("dl_folder"))
 	config.BindPFlag("permalink", listCommand.Flags().Lookup("permalink"))
 
 	if runtime.GOOS == "darwin" {
-		listCommand.Flags().StringP("itunes_playlist", "i", "", "name of iTunes playlist")
-		config.BindPFlag("itunes_playlist", listCommand.Flags().Lookup("itunes_playlist"))
+		listCommand.Flags().AddFlag(itunesPlaylistFlag)
 	}
 }
 
@@ -61,8 +58,8 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 
 	TracksMenu{
 		GetTracks:      listGetTracks,
-		Limit:          listLimit,
-		Offset:         listOffset,
+		Limit:          limit,
+		Offset:         offset,
 		TrackProcessor: tp,
 	}.Show()
 }

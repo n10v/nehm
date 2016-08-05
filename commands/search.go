@@ -23,19 +23,15 @@ var (
 		Run:     searchAndShowTracks,
 	}
 
-	searchLimit uint
 	searchQuery string
 )
 
 func init() {
-	searchCommand.Flags().UintVarP(&searchLimit, "limit", "l", 10, "count of tracks on each page")
-	searchCommand.Flags().StringP("dl_folder", "f", "", "filesystem path to download folder")
-
-	config.BindPFlag("dl_folder", listCommand.Flags().Lookup("dl_folder"))
+	searchCommand.Flags().AddFlag(limitFlag)
+	searchCommand.Flags().AddFlag(dlFolderFlag)
 
 	if runtime.GOOS == "darwin" {
-		searchCommand.Flags().StringP("itunes_playlist", "i", "", "name of iTunes playlist")
-		config.BindPFlag("itunes_playlist", listCommand.Flags().Lookup("itunes_playlist"))
+		searchCommand.Flags().AddFlag(itunesPlaylistFlag)
 	}
 }
 
@@ -57,7 +53,7 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 
 	TracksMenu{
 		GetTracks:      searchGetTracks,
-		Limit:          searchLimit,
+		Limit:          limit,
 		TrackProcessor: tp,
 	}.Show()
 }

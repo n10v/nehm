@@ -24,29 +24,20 @@ var (
 		Aliases: []string{"g"},
 		Run:     getTracks,
 	}
-
-	getOffset uint
-	getUID    string
 )
 
 func init() {
-	getCommand.Flags().UintVarP(&getOffset, "offset", "o", 0, "offset relative to first like")
-	getCommand.Flags().StringP("dl_folder", "f", "", "filesystem path to download folder")
-	getCommand.Flags().StringP("permalink", "p", "", "user's permalink")
-
-	config.BindPFlag("dl_folder", getCommand.Flags().Lookup("dl_folder"))
-	config.BindPFlag("permalink", getCommand.Flags().Lookup("permalink"))
+	getCommand.Flags().AddFlag(offsetFlag)
+	getCommand.Flags().AddFlag(dlFolderFlag)
+	getCommand.Flags().AddFlag(permalinkFlag)
 
 	if runtime.GOOS == "darwin" {
-		getCommand.Flags().StringP("itunes_playlist", "i", "", "name of iTunes playlist")
-		config.BindPFlag("itunes_playlist", getCommand.Flags().Lookup("itunes_playlist"))
+		getCommand.Flags().AddFlag(itunesPlaylistFlag)
 	}
 }
 
 func getTracks(cmd *cobra.Command, args []string) {
 	config.Read()
-
-	getUID = client.UID(config.GetPermalink())
 
 	var tracks []track.Track
 	if len(args) == 0 {
@@ -76,7 +67,8 @@ func getTracks(cmd *cobra.Command, args []string) {
 }
 
 func getLastTracks(count uint) []track.Track {
-	return client.Favorites(count, getOffset, getUID)
+	uid := client.UID(config.GetPermalink())
+	return client.Favorites(count, offset, uid)
 }
 
 func isSoundCloudURL(url string) bool {
