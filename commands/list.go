@@ -11,7 +11,6 @@ import (
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
 	"github.com/bogem/nehm/trackprocessor"
-	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -47,7 +46,6 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	config.Read()
 
 	// Get permalink
-	ui.Say("Getting ID of user")
 	listUID = client.UID(config.GetPermalink())
 
 	// Get download folder
