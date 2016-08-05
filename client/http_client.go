@@ -21,12 +21,6 @@ const (
 var errForbidden = errors.New("403 - Forbidden")
 var errNotFound = errors.New("404 - Not Found")
 
-type JSONResolveResponse struct {
-	location string  `json:"location"`
-	status   float64 `json:"status"`
-	kind     string  `json:"kind"`
-}
-
 func resolve(params url.Values) ([]byte, error) {
 	uri := formResolveURI(params)
 	return get(uri)
