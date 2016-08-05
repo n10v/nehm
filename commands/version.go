@@ -18,7 +18,7 @@ var (
 	}
 )
 
-const version = "3.0"
+const version = "3.0.1"
 
 func showVersion(cmd *cobra.Command, args []string) {
 	ui.Say(version)

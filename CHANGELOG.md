@@ -1,5 +1,9 @@
 # nehm change log
 
+## 3.0.1
+* Fixed https://github.com/bogem/nehm/issues/5. Thanks [https://github.com/redwards510](redwards510) for report
+* Now tracks are downloaded with not so strict permissions (0766)
+
 ## 3.0
 * **Rewritten in Go: faster, less memory usage, more stable, easier to install (no need to install `Taglib`)**
 * `nehm` can't download posts, because of changes in SoundCloud API :(
