@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-package trackprocessor
+package tracksprocessor
 
 import (
 	"io/ioutil"
@@ -17,19 +17,19 @@ import (
 	"github.com/bogem/nehm/ui"
 )
 
-type TrackProcessor struct {
+type TracksProcessor struct {
 	DownloadFolder string // In this folder tracks will be downloaded
 	ItunesPlaylist string // In this playlist tracks will be added
 }
 
-func NewConfiguredTrackProcessor() *TrackProcessor {
-	return &TrackProcessor{
+func NewConfiguredTracksProcessor() *TracksProcessor {
+	return &TracksProcessor{
 		DownloadFolder: config.GetDLFolder(),
 		ItunesPlaylist: config.GetItunesPlaylist(),
 	}
 }
 
-func (tp TrackProcessor) ProcessAll(tracks []track.Track) {
+func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
 		ui.Term(nil, "There are no tracks to download")
 	}
@@ -43,7 +43,7 @@ func (tp TrackProcessor) ProcessAll(tracks []track.Track) {
 	ui.Quit()
 }
 
-func (tp TrackProcessor) Process(t track.Track) {
+func (tp TracksProcessor) Process(t track.Track) {
 	// Download track
 	trackPath := path.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.OpenFile(trackPath, os.O_CREATE, 0766); err != nil {
