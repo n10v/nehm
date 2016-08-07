@@ -32,6 +32,10 @@ var (
 //
 // Get returns an interface. For a specific value use one of the Get____ methods.
 func Get(key string) interface{} {
+	if len(configHash) == 0 {
+		read()
+	}
+
 	// from github.com/spf13/viper
 	// Copyright © 2014 Steve Francia <spf@spf13.com>.
 	//
@@ -49,6 +53,27 @@ func Get(key string) interface{} {
 	}
 
 	return configHash[key]
+}
+
+// read will discover and load the config file from disk.
+func read() {
+	configFile, err := os.Open(configPath)
+	if os.IsNotExist(err) {
+		ui.Error(nil, "There is no config file in your home directory")
+		return
+	}
+	if err != nil {
+		ui.Term(err, "couldn't open the config file")
+	}
+
+	configData, err := ioutil.ReadAll(configFile)
+	if err != nil {
+		ui.Term(err, "couldn't read the config file")
+	}
+
+	if err := yaml.Unmarshal(configData, configHash); err != nil {
+		ui.Term(err, "couldn't unmarshal the config file")
+	}
 }
 
 // GetString returns the value associated with the key as a string.
@@ -101,27 +126,6 @@ func GetItunesPlaylist() string {
 		}
 	}
 	return playlist
-}
-
-// Read will discover and load the config file from disk.
-func Read() {
-	configFile, err := os.Open(configPath)
-	if err == os.ErrNotExist {
-		ui.Error(nil, "There is no config file in your home directory")
-		return
-	}
-	if err != nil {
-		ui.Term(err, "couldn't open the config file")
-	}
-
-	configData, err := ioutil.ReadAll(configFile)
-	if err != nil {
-		ui.Term(err, "couldn't read the config file")
-	}
-
-	if err := yaml.Unmarshal(configData, configHash); err != nil {
-		ui.Term(err, "couldn't unmarshal the config file")
-	}
 }
 
 // Bind a specific key to a pflag (as used by cobra).
