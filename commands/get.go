@@ -54,14 +54,14 @@ func getTracks(cmd *cobra.Command, args []string) {
 	}
 
 	// Get download folder
-	dl_folder := config.GetDLFolder()
+	dlFolder := config.GetDLFolder()
 
 	// Get iTunes playlist
-	itunes_playlist := config.GetItunesPlaylist()
+	itunesPlaylist := config.GetItunesPlaylist()
 
 	tp := trackprocessor.TrackProcessor{
-		DownloadFolder: dl_folder,
-		ItunesPlaylist: itunes_playlist,
+		DownloadFolder: dlFolder,
+		ItunesPlaylist: itunesPlaylist,
 	}
 	tp.ProcessAll(tracks)
 }

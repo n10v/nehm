@@ -74,12 +74,12 @@ func GetPermalink() string {
 // If key "dl_folder" is blank in config, then it returns path to
 // home directory.
 func GetDLFolder() string {
-	dl_folder := GetString("dl_folder")
-	if dl_folder == "" {
+	dlFolder := GetString("dl_folder")
+	if dlFolder == "" {
 		ui.Warning("You didn't set a download folder. Tracks will be downloaded to your home directory.")
 		return os.Getenv("HOME")
 	}
-	return dl_folder
+	return dlFolder
 }
 
 // GetItunesPlaylist returns the value associated with
