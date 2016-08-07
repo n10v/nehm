@@ -16,8 +16,12 @@ import (
 	"github.com/fatih/color"
 )
 
-var endSelection bool
+var finishSelection bool
 
+// TracksMenu get tracks from GetTracks function, show these tracks in menu
+// and adds them to TracksMenu.Selected.
+//
+// TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
 	GetTracks func(offset uint) []track.Track
 	Limit     uint
@@ -29,7 +33,7 @@ func (tm TracksMenu) Show() {
 	ui.Say("Getting information about tracks")
 	tracks := tm.GetTracks(tm.Offset)
 	oldOffset := tm.Offset
-	for !endSelection {
+	for !finishSelection {
 		if oldOffset != tm.Offset {
 			tracks = tm.GetTracks(tm.Offset)
 			oldOffset = tm.Offset
@@ -108,7 +112,7 @@ func (tm *TracksMenu) generateControlItems() []ui.MenuItem {
 		ui.MenuItem{
 			Index: "d",
 			Desc:  color.GreenString("Download tracks"),
-			Run:   func() { endSelection = true },
+			Run:   func() { finishSelection = true },
 		},
 
 		ui.MenuItem{
