@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
 	"strconv"
 
 	"github.com/bogem/nehm/track"
@@ -83,7 +84,12 @@ func contains(s []track.Track, t track.Track) bool {
 }
 
 func clearScreen() {
-	cmd := exec.Command("clear")
+	var cmd exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cls")
+	} else {
+		cmd = exec.Command("clear")
+	}
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
