@@ -12,6 +12,11 @@ func newStringValue(val string) *stringValue {
 	return (*stringValue)(&val)
 }
 
+func newStringValueP(defaultValue string, p *string) *stringValue {
+	*p = defaultValue
+	return (*stringValue)(p)
+}
+
 func (s *stringValue) Set(val string) error {
 	*s = stringValue(val)
 	return nil
@@ -28,6 +33,11 @@ type uintValue uint
 
 func newUintValue(val uint) *uintValue {
 	return (*uintValue)(&val)
+}
+
+func newUintValueP(defaultValue uint, p *uint) *uintValue {
+	*p = defaultValue
+	return (*uintValue)(p)
 }
 
 func (i *uintValue) Set(s string) error {

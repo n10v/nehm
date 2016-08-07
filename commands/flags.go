@@ -6,8 +6,7 @@ import (
 )
 
 var (
-	limit  uint = 10
-	offset uint
+	limit, offset uint
 
 	dlFolderFlag = &pflag.Flag{
 		Name:      "dl_folder",
@@ -33,14 +32,14 @@ var (
 	limitFlag = &pflag.Flag{
 		Name:      "limit",
 		Shorthand: "l",
-		Value:     newUintValue(limit),
+		Value:     newUintValueP(10, &limit),
 		Usage:     "count of tracks on each page",
 	}
 
 	offsetFlag = &pflag.Flag{
 		Name:      "offset",
 		Shorthand: "o",
-		Value:     newUintValue(offset),
+		Value:     newUintValueP(0, &offset),
 		Usage:     "offset relative to first like",
 	}
 )
