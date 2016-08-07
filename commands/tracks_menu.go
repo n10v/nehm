@@ -12,29 +12,28 @@ import (
 	"strconv"
 
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/trackprocessor"
 	"github.com/bogem/nehm/ui"
 	"github.com/fatih/color"
 )
 
-type TracksMenu struct {
-	GetTracks      func(offset uint) []track.Track
-	Limit          uint
-	Offset         uint
-	TrackProcessor trackprocessor.TrackProcessor
+var endSelection bool
 
-	downloadQueue []track.Track
+type TracksMenu struct {
+	GetTracks func(offset uint) []track.Track
+	Limit     uint
+	Offset    uint
+	Selected  *[]track.Track
 }
 
 func (tm TracksMenu) Show() {
-	oldOffset := tm.Offset
 	ui.Say("Getting information about tracks")
 	tracks := tm.GetTracks(tm.Offset)
-	for {
+	oldOffset := tm.Offset
+	for !endSelection {
 		if oldOffset != tm.Offset {
 			tracks = tm.GetTracks(tm.Offset)
+			oldOffset = tm.Offset
 		}
-		oldOffset = tm.Offset
 		trackItems := tm.formTrackItems(tracks)
 		clearScreen()
 		tm.showMenu(trackItems)
@@ -48,11 +47,12 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []ui.MenuItem {
 		trackItems = make([]ui.MenuItem, 0, tm.Limit)
 	}
 	trackItems = trackItems[:0]
+
 	for i, t := range tracks {
 		desc := fmt.Sprintf("%v (%v)", t.Fullname(), t.Duration())
 
 		var trackItem ui.MenuItem
-		if contains(tm.downloadQueue, t) {
+		if contains(*tm.Selected, t) {
 			trackItem = ui.MenuItem{
 				Index: color.GreenString("A"),
 				Desc:  desc,
@@ -62,16 +62,12 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []ui.MenuItem {
 			trackItem = ui.MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
-				Run:   func() { tm.AddToDownloadQueue(tDup) },
+				Run:   func() { *tm.Selected = append(*tm.Selected, tDup) },
 			}
 		}
 		trackItems = append(trackItems, trackItem)
 	}
 	return trackItems
-}
-
-func (tm *TracksMenu) AddToDownloadQueue(t track.Track) {
-	tm.downloadQueue = append(tm.downloadQueue, t)
 }
 
 func contains(s []track.Track, t track.Track) bool {
@@ -104,7 +100,7 @@ func (tm *TracksMenu) showMenu(trackItems []ui.MenuItem) {
 	menu.AddItems(trackItems)
 	menu.AddNewline()
 	menu.AddItems(controlItems)
-	menu.Run()
+	menu.Show()
 }
 
 func (tm *TracksMenu) generateControlItems() []ui.MenuItem {
@@ -112,7 +108,7 @@ func (tm *TracksMenu) generateControlItems() []ui.MenuItem {
 		ui.MenuItem{
 			Index: "d",
 			Desc:  color.GreenString("Download tracks"),
-			Run:   func() { tm.TrackProcessor.ProcessAll(tm.downloadQueue) },
+			Run:   func() { endSelection = true },
 		},
 
 		ui.MenuItem{
