@@ -1,5 +1,8 @@
 # nehm change log
 
+## 3.0.2
+* Fixed `list` and `offset` flags (they didn't work earlier at all)
+
 ## 3.0.1
 * Fixed https://github.com/bogem/nehm/issues/5. Thanks [redwards510](https://github.com/redwards510) for report
 * Now tracks are downloaded with not so strict permissions (0766)
