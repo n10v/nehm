@@ -42,7 +42,7 @@ func (m *Menu) AddNewline() {
 	m.AddItem(newlineItem)
 }
 
-func (m Menu) Run() {
+func (m Menu) Show() {
 	var choices = make(map[string]func())
 
 	m.AddNewline()
