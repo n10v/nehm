@@ -7,6 +7,7 @@ package ui
 import (
 	"bytes"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/fatih/color"
@@ -72,14 +73,44 @@ func choose(choices map[string]func()) {
 			chosen()
 			break
 		} else {
-			keys := make([]string, 0, len(choices))
+			var keys []string
 			for k := range choices {
 				keys = append(keys, k)
 			}
+			keys = sortKeys(keys)
 
-			sort.StringSlice(keys).Sort()
 			index = Ask("You must choose one of [" + strings.Join(keys, ", ") + "] :")
 			chosen = choices[index]
 		}
 	}
+}
+
+func sortKeys(keys []string) []string {
+	// find numeric keys
+	var numKeys []int
+	var stringKeys []string
+	for _, v := range keys {
+		vNum, err := strconv.Atoi(v)
+		if err != nil {
+			stringKeys = append(stringKeys, v)
+			continue
+		}
+		numKeys = append(numKeys, vNum)
+	}
+
+	// sort keys
+	sort.IntSlice(numKeys).Sort()
+	sort.StringSlice(stringKeys).Sort()
+
+	// convert numeric keys to string
+	sNumKeys := make([]string, 0, len(numKeys))
+	for _, n := range numKeys {
+		sNumKeys = append(sNumKeys, strconv.Itoa(n))
+	}
+
+	sorted := make([]string, 0, len(keys))
+	sorted = append(sorted, sNumKeys...)
+	sorted = append(sorted, stringKeys...)
+
+	return sorted
 }
