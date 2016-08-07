@@ -12,6 +12,7 @@ import (
 
 	"github.com/bogem/id3v2"
 	"github.com/bogem/nehm/applescript"
+	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
 	"github.com/bogem/nehm/ui"
 )
@@ -21,9 +22,16 @@ type TrackProcessor struct {
 	ItunesPlaylist string // In this playlist tracks will be added
 }
 
+func NewConfiguredTrackProcessor() *TrackProcessor {
+	return &TrackProcessor{
+		DownloadFolder: config.GetDLFolder(),
+		ItunesPlaylist: config.GetItunesPlaylist(),
+	}
+}
+
 func (tp TrackProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		ui.Term(nil, "There are no tracks to download.")
+		ui.Term(nil, "There are no tracks to download")
 	}
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
