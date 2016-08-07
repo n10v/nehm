@@ -84,7 +84,7 @@ func contains(s []track.Track, t track.Track) bool {
 }
 
 func clearScreen() {
-	var cmd exec.Cmd
+	var cmd *exec.Cmd
 	if runtime.GOOS == "windows" {
 		cmd = exec.Command("cls")
 	} else {
