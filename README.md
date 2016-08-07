@@ -130,7 +130,7 @@ For example, english users should use `nehm get -i Music`, russian users - `nehm
 
 ## TODO
 - [ ] Upload to `homebrew` 
-- [ ] Use built-in insted of CLI app `curl`
+- [ ] Use built-in downloader instead of `curl`
 
 ## License
 
