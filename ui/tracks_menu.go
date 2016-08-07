@@ -12,7 +12,6 @@ import (
 	"strconv"
 
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/ui"
 	"github.com/fatih/color"
 )
 
@@ -30,7 +29,7 @@ type TracksMenu struct {
 }
 
 func (tm TracksMenu) Show() {
-	ui.Say("Getting information about tracks")
+	Say("Getting information about tracks")
 	tracks := tm.GetTracks(tm.Offset)
 	oldOffset := tm.Offset
 	for !finishSelection {
@@ -44,26 +43,26 @@ func (tm TracksMenu) Show() {
 	}
 }
 
-var trackItems []ui.MenuItem
+var trackItems []MenuItem
 
-func (tm *TracksMenu) formTrackItems(tracks []track.Track) []ui.MenuItem {
+func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	if trackItems == nil {
-		trackItems = make([]ui.MenuItem, 0, tm.Limit)
+		trackItems = make([]MenuItem, 0, tm.Limit)
 	}
 	trackItems = trackItems[:0]
 
 	for i, t := range tracks {
 		desc := fmt.Sprintf("%v (%v)", t.Fullname(), t.Duration())
 
-		var trackItem ui.MenuItem
+		var trackItem MenuItem
 		if contains(*tm.Selected, t) {
-			trackItem = ui.MenuItem{
+			trackItem = MenuItem{
 				Index: color.GreenString("A"),
 				Desc:  desc,
 			}
 		} else {
 			tDup := t
-			trackItem = ui.MenuItem{
+			trackItem = MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
 				Run:   func() { *tm.Selected = append(*tm.Selected, tDup) },
@@ -94,34 +93,34 @@ func clearScreen() {
 	cmd.Run()
 }
 
-var controlItems []ui.MenuItem
+var controlItems []MenuItem
 
-func (tm *TracksMenu) showMenu(trackItems []ui.MenuItem) {
+func (tm *TracksMenu) showMenu(trackItems []MenuItem) {
 	if controlItems == nil {
 		controlItems = tm.generateControlItems()
 	}
-	menu := new(ui.Menu)
+	menu := new(Menu)
 	menu.AddItems(trackItems)
 	menu.AddNewline()
 	menu.AddItems(controlItems)
 	menu.Show()
 }
 
-func (tm *TracksMenu) generateControlItems() []ui.MenuItem {
-	return []ui.MenuItem{
-		ui.MenuItem{
+func (tm *TracksMenu) generateControlItems() []MenuItem {
+	return []MenuItem{
+		MenuItem{
 			Index: "d",
 			Desc:  color.GreenString("Download tracks"),
 			Run:   func() { finishSelection = true },
 		},
 
-		ui.MenuItem{
+		MenuItem{
 			Index: "n",
 			Desc:  "Next page",
 			Run:   func() { tm.Offset += tm.Limit },
 		},
 
-		ui.MenuItem{
+		MenuItem{
 			Index: "p",
 			Desc:  "Prev page",
 			Run: func() {
