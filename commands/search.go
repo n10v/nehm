@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/bogem/nehm/client"
-	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/trackprocessor"
+	"github.com/bogem/nehm/tracksprocessor"
+	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -38,24 +38,14 @@ func init() {
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	searchQuery = strings.Join(args, " ")
 
-	config.Read()
-
-	// Get download folder
-	dlFolder := config.GetDLFolder()
-
-	// Get iTunes playlist
-	itunesPlaylist := config.GetItunesPlaylist()
-
-	tp := trackprocessor.TrackProcessor{
-		DownloadFolder: dlFolder,
-		ItunesPlaylist: itunesPlaylist,
-	}
-
-	TracksMenu{
-		GetTracks:      searchGetTracks,
-		Limit:          limit,
-		TrackProcessor: tp,
+	var downloadTracks []track.Track
+	ui.TracksMenu{
+		GetTracks: searchGetTracks,
+		Limit:     limit,
+		Selected:  &downloadTracks,
 	}.Show()
+
+	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
 func searchGetTracks(offset uint) []track.Track {

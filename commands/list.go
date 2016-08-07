@@ -10,7 +10,8 @@ import (
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/trackprocessor"
+	"github.com/bogem/nehm/tracksprocessor"
+	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -37,28 +38,17 @@ func init() {
 }
 
 func showListOfTracks(cmd *cobra.Command, args []string) {
-	config.Read()
-
-	// Get permalink
 	listUID = client.UID(config.GetPermalink())
 
-	// Get download folder
-	dlFolder := config.GetDLFolder()
-
-	// Get iTunes playlist
-	itunesPlaylist := config.GetItunesPlaylist()
-
-	tp := trackprocessor.TrackProcessor{
-		DownloadFolder: dlFolder,
-		ItunesPlaylist: itunesPlaylist,
-	}
-
-	TracksMenu{
-		GetTracks:      listGetTracks,
-		Limit:          limit,
-		Offset:         offset,
-		TrackProcessor: tp,
+	var downloadTracks []track.Track
+	ui.TracksMenu{
+		GetTracks: listGetTracks,
+		Limit:     limit,
+		Offset:    offset,
+		Selected:  &downloadTracks,
 	}.Show()
+
+	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
 func listGetTracks(offset uint) []track.Track {
