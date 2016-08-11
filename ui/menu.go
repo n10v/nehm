@@ -30,23 +30,22 @@ type Menu struct {
 	items []MenuItem
 }
 
-func (m *Menu) AddItems(mis []MenuItem) {
+func (m *Menu) AddItems(mis ...MenuItem) {
 	m.items = append(m.items, mis...)
 }
 
-func (m *Menu) AddItem(mi MenuItem) {
-	m.items = append(m.items, mi)
+func (m *Menu) AddNewline() {
+	m.AddItems(newlineItem)
 }
 
-func (m *Menu) AddNewline() {
-	m.AddItem(newlineItem)
+func (m *Menu) Clear() {
+	m.items = m.items[:0]
 }
 
 func (m Menu) Show() {
 	var choices = make(map[string]func())
 
-	m.AddNewline()
-	m.AddItem(quitItem)
+	m.AddItems(quitItem)
 
 	output.Reset()
 
@@ -58,7 +57,6 @@ func (m Menu) Show() {
 	}
 	Say(output.String())
 
-	m.AddNewline()
 	choose(choices)
 }
 

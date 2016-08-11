@@ -96,20 +96,23 @@ func clearScreen() {
 	cmd.Run()
 }
 
-var controlItems []MenuItem
+var (
+	controlItems []MenuItem
+	menu         Menu
+)
 
 func (tm *TracksMenu) showMenu(trackItems []MenuItem) {
 	if controlItems == nil {
-		controlItems = tm.generateControlItems()
+		controlItems = tm.controlItems()
 	}
-	menu := new(Menu)
-	menu.AddItems(trackItems)
+	menu.Clear()
+	menu.AddItems(trackItems...)
 	menu.AddNewline()
-	menu.AddItems(controlItems)
+	menu.AddItems(controlItems...)
 	menu.Show()
 }
 
-func (tm *TracksMenu) generateControlItems() []MenuItem {
+func (tm *TracksMenu) controlItems() []MenuItem {
 	return []MenuItem{
 		MenuItem{
 			Index: "d",
