@@ -38,12 +38,11 @@ func init() {
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	searchQuery = strings.Join(args, " ")
 
-	var downloadTracks []track.Track
-	ui.TracksMenu{
+	tm := ui.TracksMenu{
 		GetTracks: searchGetTracks,
 		Limit:     limit,
-		Selected:  &downloadTracks,
-	}.Show()
+	}
+	downloadTracks := tm.Show()
 
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }

@@ -40,13 +40,12 @@ func init() {
 func showListOfTracks(cmd *cobra.Command, args []string) {
 	listUID = client.UID(config.GetPermalink())
 
-	var downloadTracks []track.Track
-	ui.TracksMenu{
+	tm := ui.TracksMenu{
 		GetTracks: listGetTracks,
 		Limit:     limit,
 		Offset:    offset,
-		Selected:  &downloadTracks,
-	}.Show()
+	}
+	downloadTracks := tm.Show()
 
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }

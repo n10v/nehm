@@ -15,24 +15,26 @@ import (
 	"github.com/fatih/color"
 )
 
-var finishSelection bool
-
-// TracksMenu get tracks from GetTracks function, show these tracks in menu
-// and adds them to TracksMenu.Selected.
+// TracksMenu gets tracks from GetTracks function, show these tracks in menu
+// and adds selected to TracksMenu.selected.
 //
 // TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
 	GetTracks func(offset uint) []track.Track
 	Limit     uint
 	Offset    uint
-	Selected  *[]track.Track
+
+	selected          []track.Track
+	selectionFinished bool
 }
 
-func (tm TracksMenu) Show() {
+// Show gets tracks from GetTracks function, show these tracks,
+// adds selected to TracksMenu.selected and returns them.
+func (tm TracksMenu) Show() []track.Track {
 	Say("Getting information about tracks")
 	tracks := tm.GetTracks(tm.Offset)
 	oldOffset := tm.Offset
-	for !finishSelection {
+	for !tm.selectionFinished {
 		if oldOffset != tm.Offset {
 			tracks = tm.GetTracks(tm.Offset)
 			oldOffset = tm.Offset
@@ -41,6 +43,7 @@ func (tm TracksMenu) Show() {
 		clearScreen()
 		tm.showMenu(trackItems)
 	}
+	return tm.selected
 }
 
 var trackItems []MenuItem
@@ -55,7 +58,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		desc := fmt.Sprintf("%v (%v)", t.Fullname(), t.Duration())
 
 		var trackItem MenuItem
-		if contains(*tm.Selected, t) {
+		if contains(tm.selected, t) {
 			trackItem = MenuItem{
 				Index: color.GreenString("A"),
 				Desc:  desc,
@@ -65,7 +68,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 			trackItem = MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
-				Run:   func() { *tm.Selected = append(*tm.Selected, tDup) },
+				Run:   func() { tm.selected = append(tm.selected, tDup) },
 			}
 		}
 		trackItems = append(trackItems, trackItem)
@@ -111,7 +114,7 @@ func (tm *TracksMenu) generateControlItems() []MenuItem {
 		MenuItem{
 			Index: "d",
 			Desc:  color.GreenString("Download tracks"),
-			Run:   func() { finishSelection = true },
+			Run:   func() { tm.selectionFinished = true },
 		},
 
 		MenuItem{
