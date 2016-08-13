@@ -2,7 +2,7 @@
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
 
-<p><b><i>nehm</i></b> is a console tool, which downloads, sets ID3 tags and adds to your iTunes library (if you're using macOS) your <b>SoundCloud</b> likes in convenient way.</p>
+<p><b><i>nehm</i></b> is a console tool, which downloads, sets ID3 tags and adds to your iTunes library (if you use macOS) your <b>SoundCloud</b> likes in convenient way.</p>
 
 <a href="https://github.com/bogem/nehm/releases"><img src="https://img.shields.io/github/release/bogem/nehm.svg?maxAge=2592000" alt="Release"></img></a>
 
