@@ -33,7 +33,7 @@ Nehm developer doesn't responsible for any illegal usage of this program</i></b>
 
 `nehm` *wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
 
-*If you have ideas to improve `nehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `nehm`, don't hesitate to write an issue. I will answer as soon as possible.*
+***If you have ideas to improve `nehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `nehm`, don't hesitate to write an issue. I will answer as soon as possible.***
 ## Installation
 ### Binary installation of latest release
 ```bash
