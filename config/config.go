@@ -2,7 +2,8 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-// Mini-realization of spf13/viper
+// Config is used for reading a config file and flags.
+// Inspired from spf13/viper.
 package config
 
 import (
@@ -16,13 +17,13 @@ import (
 
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/ui"
-	"github.com/spf13/cast"
 	"github.com/spf13/pflag"
 )
 
 var (
+	configHash = make(map[string]string)
 	configPath = path.Join(os.Getenv("HOME"), ".nehmconfig")
-	configHash = make(map[string]interface{})
+	configRead bool
 	flags      = make(map[string]*pflag.Flag)
 )
 
@@ -30,26 +31,17 @@ var (
 // place from where it is set. Get will check value in the following order:
 // flag, config file.
 //
-// Get returns an interface. For a specific value use one of the Get____ methods.
-func Get(key string) interface{} {
-	if len(configHash) == 0 {
+// Get returns a string. For a specific value you can use one of the Get____ methods.
+func Get(key string) string {
+	if !configRead {
+		configRead = true
 		read()
 	}
 
-	// from github.com/spf13/viper
-	// Copyright © 2014 Steve Francia <spf@spf13.com>.
-	//
-	// PFlags first
+	// flags first
 	flag, exists := flags[key]
 	if exists && flag.Changed {
-		switch flag.Value.Type() {
-		case "int", "int8", "int16", "int32", "int64":
-			return cast.ToInt(flag.Value.String())
-		case "bool":
-			return cast.ToBool(flag.Value.String())
-		default:
-			return flag.Value.String()
-		}
+		return flag.Value.String()
 	}
 
 	return configHash[key]
@@ -76,19 +68,10 @@ func read() {
 	}
 }
 
-// GetString returns the value associated with the key as a string.
-func GetString(key string) string { return cast.ToString(Get(key)) }
-
-// GetBool returns the value associated with the key as a boolean.
-func GetBool(key string) bool { return cast.ToBool(Get(key)) }
-
-// GetInt returns the value associated with the key as an integer.
-func GetInt(key string) int { return cast.ToInt(Get(key)) }
-
 // GetPermalink returns the value associated with the key "permalink".
 // It guarantees that will be returned non-blank string.
 func GetPermalink() string {
-	permalink := GetString("permalink")
+	permalink := Get("permalink")
 	if permalink == "" {
 		ui.Term(nil, "You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
 	}
@@ -99,7 +82,7 @@ func GetPermalink() string {
 // If key "dl_folder" is blank in config, then it returns path to
 // home directory.
 func GetDLFolder() string {
-	dlFolder := GetString("dl_folder")
+	dlFolder := Get("dl_folder")
 	if dlFolder == "" {
 		ui.Warning("You didn't set a download folder. Tracks will be downloaded to your home directory.")
 		return os.Getenv("HOME")
@@ -113,7 +96,7 @@ func GetDLFolder() string {
 func GetItunesPlaylist() string {
 	playlist := ""
 	if runtime.GOOS == "darwin" {
-		playlist = GetString("itunes_playlist")
+		playlist = Get("itunes_playlist")
 
 		if playlist == "" {
 			ui.Warning("You didn't set an iTunes playlist. Tracks won't be added to iTunes.")
