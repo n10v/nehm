@@ -34,6 +34,11 @@ func (tm TracksMenu) Show() []track.Track {
 	Say("Getting information about tracks")
 	tracks := tm.GetTracks(tm.Offset)
 	oldOffset := tm.Offset
+
+	if len(tracks) == 0 {
+		Term(nil, "There are not tracks to show")
+	}
+
 	for !tm.selectionFinished {
 		if oldOffset != tm.Offset {
 			tracks = tm.GetTracks(tm.Offset)
