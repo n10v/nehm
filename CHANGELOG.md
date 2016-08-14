@@ -1,5 +1,8 @@
 # nehm change log
 
+## 3.0.3
+* Minor performance improvements
+
 ## 3.0.2
 * Fixed `list` and `offset` flags (they didn't work earlier at all)
 
