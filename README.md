@@ -46,7 +46,7 @@ rm /usr/local/bin/nehm
 
 # get latest release
 mkdir /tmp/nehm
-curl -L "https://github.com/bogem/nehm/releases/download/v3.0/nehm-3.0-$OS-$ARCH.tgz" -o /tmp/nehm/nehm.tgz
+curl -L "https://github.com/bogem/nehm/releases/download/v3.0.3/nehm-3.0.3-$OS-$ARCH.tgz" -o /tmp/nehm/nehm.tgz
 tar xzf /tmp/nehm/nehm.tgz
 mv tmp/nehm/nehm /usr/local/bin
 rm -rf tmp/nehm
