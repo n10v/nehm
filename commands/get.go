@@ -5,7 +5,6 @@
 package commands
 
 import (
-	"runtime"
 	"strconv"
 	"strings"
 
@@ -27,16 +26,13 @@ var (
 )
 
 func init() {
-	getCommand.Flags().AddFlag(offsetFlag)
-	getCommand.Flags().AddFlag(dlFolderFlag)
-	getCommand.Flags().AddFlag(permalinkFlag)
-
-	if runtime.GOOS == "darwin" {
-		getCommand.Flags().AddFlag(itunesPlaylistFlag)
-	}
+	addCommonFlags(getCommand)
+	addOffsetFlag(getCommand)
+	addPermalinkFlag(getCommand)
 }
 
 func getTracks(cmd *cobra.Command, args []string) {
+	initializeConfig(cmd)
 	var downloadTracks []track.Track
 	if len(args) == 0 {
 		downloadTracks = getLastTracks(1)

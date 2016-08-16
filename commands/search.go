@@ -5,7 +5,6 @@
 package commands
 
 import (
-	"runtime"
 	"strings"
 
 	"github.com/bogem/nehm/client"
@@ -27,15 +26,13 @@ var (
 )
 
 func init() {
-	searchCommand.Flags().AddFlag(limitFlag)
-	searchCommand.Flags().AddFlag(dlFolderFlag)
-
-	if runtime.GOOS == "darwin" {
-		searchCommand.Flags().AddFlag(itunesPlaylistFlag)
-	}
+	addCommonFlags(searchCommand)
+	addLimitFlag(searchCommand)
 }
 
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
+	initializeConfig(cmd)
+
 	searchQuery = strings.Join(args, " ")
 
 	tm := ui.TracksMenu{

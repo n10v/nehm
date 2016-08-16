@@ -5,8 +5,6 @@
 package commands
 
 import (
-	"runtime"
-
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
@@ -22,23 +20,18 @@ var (
 		Long:  "nehm is a console tool, which downloads, sets ID3 tags (and adds to your iTunes library) your SoundCloud likes in convenient way",
 		Run:   showListOfTracks,
 	}
-
-	listUID string
 )
 
 func init() {
-	listCommand.Flags().AddFlag(limitFlag)
-	listCommand.Flags().AddFlag(offsetFlag)
-	listCommand.Flags().AddFlag(dlFolderFlag)
-	listCommand.Flags().AddFlag(permalinkFlag)
-
-	if runtime.GOOS == "darwin" {
-		listCommand.Flags().AddFlag(itunesPlaylistFlag)
-	}
+	addCommonFlags(listCommand)
+	addLimitFlag(listCommand)
+	addOffsetFlag(listCommand)
+	addPermalinkFlag(listCommand)
 }
 
 func showListOfTracks(cmd *cobra.Command, args []string) {
-	listUID = client.UID(config.GetPermalink())
+	initializeConfig(cmd)
+	config.Set("UID", client.UID(config.GetPermalink()))
 
 	tm := ui.TracksMenu{
 		GetTracks: listGetTracks,
@@ -51,5 +44,5 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 }
 
 func listGetTracks(offset uint) []track.Track {
-	return client.Favorites(limit, offset, listUID)
+	return client.Favorites(limit, offset, config.Get("UID"))
 }
