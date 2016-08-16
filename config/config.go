@@ -17,14 +17,14 @@ import (
 
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/ui"
-	"github.com/spf13/pflag"
 )
 
 var (
-	configHash = make(map[string]string)
+	override = make(map[string]string)
+	config   = make(map[string]string)
+
 	configPath = path.Join(os.Getenv("HOME"), ".nehmconfig")
 	configRead bool
-	flags      = make(map[string]*pflag.Flag)
 )
 
 // Get has the behavior of returning the value associated with the first
@@ -33,18 +33,15 @@ var (
 //
 // Get returns a string. For a specific value you can use one of the Get____ methods.
 func Get(key string) string {
+	if value, exists := override[key]; exists {
+		return value
+	}
+
 	if !configRead {
 		configRead = true
 		read()
 	}
-
-	// flags first
-	flag, exists := flags[key]
-	if exists && flag.Changed {
-		return flag.Value.String()
-	}
-
-	return configHash[key]
+	return config[key]
 }
 
 // read will discover and load the config file from disk.
@@ -63,7 +60,7 @@ func read() {
 		ui.Term(err, "couldn't read the config file")
 	}
 
-	if err := yaml.Unmarshal(configData, configHash); err != nil {
+	if err := yaml.Unmarshal(configData, config); err != nil {
 		ui.Term(err, "couldn't unmarshal the config file")
 	}
 }
@@ -111,7 +108,7 @@ func GetItunesPlaylist() string {
 	return playlist
 }
 
-// Bind a specific key to a pflag (as used by cobra).
-func BindPFlag(key string, flag *pflag.Flag) {
-	flags[key] = flag
+// Sets the value for the key in the override regiser.
+func Set(key, value string) {
+	override[key] = value
 }
