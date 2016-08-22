@@ -52,7 +52,7 @@ func (t Track) Duration() string {
 
 func (t Track) Filename() string {
 	// Replace all filesystem non-friendly runes with the underscore
-	toReplace := "/\\\"'$%  "
+	toReplace := "/\\\"'$"
 	replaceRunes := func(r rune) rune {
 		if strings.ContainsRune(toReplace, r) {
 			return '_'
