@@ -112,6 +112,7 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 For example, english users should use `nehm get -i Music`, russian users - `nehm get -i Музыка`.
 
 ## TODO
+- [ ] Update installation instructions
 - [ ] Upload to `homebrew` 
 - [ ] Use built-in downloader instead of `curl`
 
