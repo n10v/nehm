@@ -35,30 +35,11 @@ Nehm developer doesn't responsible for any illegal usage of this program</i></b>
 
 ***If you have ideas to improve `nehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `nehm`, don't hesitate to write an issue. I will answer as soon as possible.***
 ## Installation
-### Binary installation of latest release
-```bash
-export OS=macOS # can be 'linux', 'freebsd', 'netbsd', 'openbsd', 'windows'
-export ARCH=64bit # can be '32bit', 'arm32', 'arm64'
-
-# prepare for first install and upgrade
-mkdir -p /usr/local/bin
-rm /usr/local/bin/nehm
-
-# get latest release
-mkdir /tmp/nehm
-curl -L "https://github.com/bogem/nehm/releases/download/v3.0.3/nehm-3.0.3-$OS-$ARCH.tgz" -o /tmp/nehm/nehm.tgz
-tar xzf /tmp/nehm/nehm.tgz
-mv tmp/nehm/nehm /usr/local/bin
-rm -rf tmp/nehm
-
-# test
-nehm version
-```
-
-### Advanced install
 Install via `go` command:
 
 	$ go get -u github.com/bogem/nehm
+	
+or you can download and install binary from [latest release](https://github.com/bogem/nehm/releases).
 
 ## Configuration
 First of all, you should configure `nehm`:
