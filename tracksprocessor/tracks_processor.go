@@ -96,6 +96,7 @@ func tag(t track.Track, trackPath string, artworkFile *os.File) {
 	if err != nil {
 		ui.Term(err, "couldn't open track file")
 	}
+	defer tag.Close()
 
 	tag.SetArtist(t.Artist())
 	tag.SetTitle(t.Title())
@@ -109,7 +110,7 @@ func tag(t track.Track, trackPath string, artworkFile *os.File) {
 	}
 	tag.AddAttachedPicture(pic)
 
-	if err := tag.Flush(); err != nil {
+	if err := tag.Save(); err != nil {
 		ui.Term(err, "couldn't write tag to file")
 	}
 }
