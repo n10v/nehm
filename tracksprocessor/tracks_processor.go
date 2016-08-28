@@ -68,6 +68,7 @@ func (tp TracksProcessor) Process(t track.Track) {
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
+		ui.Say("Adding to iTunes")
 		applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist)
 	}
 }
