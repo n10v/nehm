@@ -5,6 +5,7 @@
 package tracksprocessor
 
 import (
+	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -92,7 +93,7 @@ func runDownloadCmd(path, url string) {
 	}
 }
 
-func tag(t track.Track, trackPath string, artworkFile *os.File) {
+func tag(t track.Track, trackPath string, artwork io.Reader) {
 	tag, err := id3v2.Open(trackPath)
 	if err != nil {
 		ui.Term(err, "couldn't open track file")
@@ -107,7 +108,7 @@ func tag(t track.Track, trackPath string, artworkFile *os.File) {
 		Encoding:    id3v2.ENUTF8,
 		MimeType:    "image/jpeg",
 		PictureType: id3v2.PTFrontCover,
-		Picture:     artworkFile,
+		Picture:     artwork,
 	}
 	tag.AddAttachedPicture(pic)
 

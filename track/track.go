@@ -18,7 +18,6 @@ const (
 // ffjson: noencoder
 type Track struct {
 	artist string
-	folder string
 	title  string
 
 	// Properties needed for JSON unmarshalling
