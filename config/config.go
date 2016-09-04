@@ -42,6 +42,7 @@ func Get(key string) string {
 		configRead = true
 		read()
 	}
+
 	return config[key]
 }
 
@@ -80,7 +81,7 @@ func GetPermalink() string {
 // If key "dl_folder" is blank in config, then it returns path to
 // home directory.
 func GetDLFolder() string {
-	dlFolder := Get("dl_folder")
+	dlFolder := Get("dlFolder")
 	if dlFolder == "" {
 		ui.Warning("You didn't set a download folder. Tracks will be downloaded to your home directory.")
 		return os.Getenv("HOME")
@@ -94,7 +95,7 @@ func GetDLFolder() string {
 func GetItunesPlaylist() string {
 	playlist := ""
 	if runtime.GOOS == "darwin" {
-		playlist = Get("itunes_playlist")
+		playlist = Get("itunesPlaylist")
 
 		if playlist == "" {
 			ui.Warning("You didn't set an iTunes playlist. Tracks won't be added to iTunes.")
