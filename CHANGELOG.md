@@ -3,7 +3,7 @@
 ## 3.0.4
 * Now variables in config file are written in camel case, i.e.
 `dl_folder` now is `dlFolder` and `itunes_playlist` now is `itunesPlaylist`.
-* Minor performance improvements and bug fixes
+* Less binary size, performance improvements and bug fixes
 
 ## 3.0.3
 * Minor performance improvements
