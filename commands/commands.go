@@ -29,10 +29,10 @@ func Execute() {
 
 // addCommonFlags adds common flags related to download tracks.
 func addCommonFlags(cmd *cobra.Command) {
-	cmd.Flags().StringVarP(&dlFolder, "dl_folder", "f", "", "filesystem path to download folder")
+	cmd.Flags().StringVarP(&dlFolder, "dlFolder", "f", "", "filesystem path to download folder")
 
 	if runtime.GOOS == "darwin" {
-		cmd.Flags().StringVarP(&itunesPlaylist, "itunes_playlist", "i", "", "name of iTunes playlist")
+		cmd.Flags().StringVarP(&itunesPlaylist, "itunesPlaylist", "i", "", "name of iTunes playlist")
 	}
 }
 
@@ -58,11 +58,11 @@ func flagChanged(fs *pflag.FlagSet, key string) bool {
 
 // initializeConfig initializes a config file with sensible default configuration flags.
 func initializeConfig(cmd *cobra.Command) {
-	if flagChanged(cmd.Flags(), "dl_folder") {
-		config.Set("dl_folder", dlFolder)
+	if flagChanged(cmd.Flags(), "dlFolder") {
+		config.Set("dlFolder", dlFolder)
 	}
-	if flagChanged(cmd.Flags(), "itunes_playlist") {
-		config.Set("itunes_playlist", itunesPlaylist)
+	if flagChanged(cmd.Flags(), "itunesPlaylist") {
+		config.Set("itunesPlaylist", itunesPlaylist)
 	}
 	if flagChanged(cmd.Flags(), "permalink") {
 		config.Set("permalink", permalink)
