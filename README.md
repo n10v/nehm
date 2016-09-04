@@ -38,7 +38,7 @@ Nehm developer doesn't responsible for any illegal usage of this program</i></b>
 Install via `go` command:
 
 	$ go get -u github.com/bogem/nehm
-	
+
 or you can download and install binary from [latest release](https://github.com/bogem/nehm/releases).
 
 ## Configuration
@@ -57,8 +57,8 @@ First of all, you should configure `nehm`:
 #### Example:
 ```
 permalink: bogem
-dl_folder: /Users/bogem/Music
-itunes_playlist: iPod
+dlFolder: /Users/bogem/Music
+itunesPlaylist: iPod
 ```
 
 ## Usage Examples
@@ -81,15 +81,15 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 
 #### Download last 3 likes
 
-    $ nehm get 3
+	$ nehm get 3
 
- #### Download second like and don't add it to iTunes playlist
+#### Download second like and don't add it to iTunes playlist
 
 	$ nehm get -o 1 -i ''
 
 #### Download track from URL
 
-    $ nehm get soundcloud.com/nasa/golden-record-russian-greeting
+	$ nehm get soundcloud.com/nasa/golden-record-russian-greeting
 
 #### Search for tracks and download them
 
@@ -112,8 +112,7 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 For example, english users should use `nehm get -i Music`, russian users - `nehm get -i Музыка`.
 
 ## TODO
-- [ ] Update installation instructions
-- [ ] Upload to `homebrew` 
+- [ ] Upload to `homebrew`
 - [ ] Use built-in downloader instead of `curl`
 
 ## License
