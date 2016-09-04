@@ -18,12 +18,12 @@ func Ask(s string) string {
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		Term(err, "couldn't read the input")
+		Term("Couldn't read the input", err)
 	}
 	return strings.TrimSpace(input)
 }
 
-func Error(err error, message string) {
+func Error(message string, err error) {
 	var out string
 	if err == nil {
 		out = message
@@ -51,8 +51,8 @@ func Success(s string) {
 	Say(color.GreenString(s))
 }
 
-func Term(err error, message string) {
-	Error(err, message)
+func Term(message string, err error) {
+	Error(message, err)
 	os.Exit(1)
 }
 

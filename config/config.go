@@ -50,20 +50,20 @@ func Get(key string) string {
 func read() {
 	configFile, err := os.Open(configPath)
 	if os.IsNotExist(err) {
-		ui.Error(nil, "There is no config file in your home directory")
+		ui.Error("There is no config file in your home directory.", nil)
 		return
 	}
 	if err != nil {
-		ui.Term(err, "couldn't open the config file")
+		ui.Term("Couldn't open the config file", err)
 	}
 
 	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
-		ui.Term(err, "couldn't read the config file")
+		ui.Term("Couldn't read the config file", err)
 	}
 
 	if err := yaml.Unmarshal(configData, config); err != nil {
-		ui.Term(err, "couldn't unmarshal the config file")
+		ui.Term("Couldn't unmarshal the config file", err)
 	}
 }
 
@@ -72,7 +72,7 @@ func read() {
 func GetPermalink() string {
 	permalink := Get("permalink")
 	if permalink == "" {
-		ui.Term(nil, "You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
+		ui.Term("You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.", nil)
 	}
 	return permalink
 }
@@ -104,7 +104,7 @@ func GetItunesPlaylist() string {
 
 		playlistsList := applescript.ListOfPlaylists()
 		if !strings.Contains(playlistsList, playlist) {
-			ui.Term(nil, "Playlist "+playlist+" doesn't exist. Please enter correct name")
+			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
 		}
 	}
 	return playlist

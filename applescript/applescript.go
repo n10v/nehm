@@ -59,7 +59,7 @@ func executeOSAScript(commandType string, args ...string) string {
 
 	out, err := exec.Command("osascript", commandArgs...).Output()
 	if err != nil {
-		ui.Term(err, string(out))
+		ui.Term(string(out), err)
 	}
 	return string(out)
 }
@@ -67,13 +67,13 @@ func executeOSAScript(commandType string, args ...string) string {
 func createFile() *os.File {
 	file, err := ioutil.TempFile("", "")
 	if err != nil {
-		ui.Term(err, "Couldn't create file with script")
+		ui.Term("Couldn't create file with script", err)
 	}
 	return file
 }
 
 func writeScriptToFile(script string, file *os.File) {
 	if _, err := file.Write([]byte(script)); err != nil {
-		ui.Term(err, "Couldn't write script to file")
+		ui.Term("Couldn't write script to file", err)
 	}
 }

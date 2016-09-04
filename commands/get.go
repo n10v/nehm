@@ -43,7 +43,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 		} else if num, err := strconv.Atoi(arg); err == nil {
 			downloadTracks = getLastTracks(uint(num))
 		} else {
-			ui.Term(nil, "You've entered invalid argument. Run 'nehm get --help' for usage")
+			ui.Term("You've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 		}
 	}
 

@@ -32,7 +32,7 @@ func NewConfiguredTracksProcessor() *TracksProcessor {
 
 func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		ui.Term(nil, "There are no tracks to download")
+		ui.Term("There are no tracks to download", nil)
 	}
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
@@ -48,14 +48,14 @@ func (tp TracksProcessor) Process(t track.Track) {
 	// Download track
 	trackPath := path.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.OpenFile(trackPath, os.O_CREATE, 0766); err != nil {
-		ui.Term(err, "couldn't create track file")
+		ui.Term("Couldn't create track file", err)
 	}
 	downloadTrack(t, trackPath)
 
 	// Download artwork
 	artworkFile, err := ioutil.TempFile("", "")
 	if err != nil {
-		ui.Term(err, "creation of artwork file failed")
+		ui.Term("Creation of artwork file failed", err)
 	}
 	artworkPath := artworkFile.Name()
 	downloadArtwork(t, artworkPath)
@@ -89,14 +89,14 @@ func runDownloadCmd(path, url string) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		ui.Term(err, "download failed")
+		ui.Term("Download failed", err)
 	}
 }
 
 func tag(t track.Track, trackPath string, artwork io.Reader) {
 	tag, err := id3v2.Open(trackPath)
 	if err != nil {
-		ui.Term(err, "couldn't open track file")
+		ui.Term("Couldn't open track file", err)
 	}
 	defer tag.Close()
 
@@ -113,6 +113,6 @@ func tag(t track.Track, trackPath string, artwork io.Reader) {
 	tag.AddAttachedPicture(pic)
 
 	if err := tag.Save(); err != nil {
-		ui.Term(err, "couldn't write tag to file")
+		ui.Term("Couldn't write tag to file", err)
 	}
 }
