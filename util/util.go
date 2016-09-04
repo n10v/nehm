@@ -6,7 +6,10 @@ package util
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -42,4 +45,11 @@ func formatNumber(num int) (formated string) {
 	}
 	formated += strconv.Itoa(num)
 	return
+}
+
+func CleanPath(path string) string {
+	if strings.HasPrefix(path, "~") {
+		path = strings.Replace(path, "~", os.Getenv("HOME"), 1)
+	}
+	return filepath.Clean(path)
 }

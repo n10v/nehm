@@ -17,6 +17,7 @@ import (
 
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/ui"
+	"github.com/bogem/nehm/util"
 )
 
 var (
@@ -84,7 +85,7 @@ func GetDLFolder() string {
 		ui.Warning("You didn't set a download folder. Tracks will be downloaded to your home directory.")
 		return os.Getenv("HOME")
 	}
-	return dlFolder
+	return util.CleanPath(dlFolder)
 }
 
 // GetItunesPlaylist returns the value associated with
