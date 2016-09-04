@@ -13,74 +13,67 @@ import (
 )
 
 const (
-	addTrackToPlaylistScript = `
-		#!/usr/bin/osascript
-		on run argv
-			set posixFile to first item of argv
-			set playlistName to second item of argv
+	script = `
+on run argv
+	set commandType to first item of argv as string
+	if (commandType is equal to "add_track_to_playlist") then
+		add_track_to_playlist(second item of argv, third item of argv)
+	end if
+	if (commandType is equal to "list_of_playlists") then
+		list_of_playlists()
+	end if
+end run
 
-			tell application "iTunes"
-				set p to posixFile
-				set a to (p as POSIX file)
-				add a to playlist playlistName
-			end tell
-		end run`
+on add_track_to_playlist(trackPath, playlistName)
+	tell application "iTunes"
+		add (trackPath as POSIX file) to playlist playlistName
+	end tell
+end add_track_to_playlist
 
-	listOfPlaylistsScript = `
-		tell application "iTunes"
-			get name of playlists
-		end tell`
+on list_of_playlists()
+	tell application "iTunes"
+		get name of playlists
+	end tell
+end list_of_playlists
+`
 )
 
-type applescriptFile struct {
-	Script string
-	File   *os.File
+var scriptFile *os.File
+
+func AddTrackToPlaylist(trackPath, playlistName string) {
+	executeOSAScript("add_track_to_playlist", trackPath, playlistName)
 }
 
-var (
-	addTrackToPlaylistAF = applescriptFile{
-		Script: addTrackToPlaylistScript,
+func ListOfPlaylists() string {
+	return executeOSAScript("list_of_playlists")
+}
+
+func executeOSAScript(commandType string, args ...string) string {
+	if scriptFile == nil {
+		scriptFile = createFile()
+		writeScriptToFile(script, scriptFile)
 	}
 
-	listOfPlaylistsAF = applescriptFile{
-		Script: listOfPlaylistsScript,
-	}
-)
+	commandArgs := []string{scriptFile.Name(), commandType}
+	commandArgs = append(commandArgs, args...)
 
-func (af applescriptFile) Filepath() string {
-	if af.File == nil {
-		af.File = createFile()
-		af.writeScriptToFile()
+	out, err := exec.Command("osascript", commandArgs...).Output()
+	if err != nil {
+		ui.Term(err, string(out))
 	}
-	return af.File.Name()
+	return string(out)
 }
 
 func createFile() *os.File {
 	file, err := ioutil.TempFile("", "")
 	if err != nil {
-		ui.Term(err, "couldn't create file with script")
+		ui.Term(err, "Couldn't create file with script")
 	}
 	return file
 }
 
-func (af applescriptFile) writeScriptToFile() {
-	if _, err := af.File.Write([]byte(af.Script)); err != nil {
-		ui.Term(err, "couldn't write script to file")
+func writeScriptToFile(script string, file *os.File) {
+	if _, err := file.Write([]byte(script)); err != nil {
+		ui.Term(err, "Couldn't write script to file")
 	}
-}
-
-func AddTrackToPlaylist(trackPath, playlistName string) {
-	executeOSAScript(addTrackToPlaylistAF.Filepath(), trackPath, playlistName)
-}
-
-func ListOfPlaylists() string {
-	return executeOSAScript(listOfPlaylistsAF.Filepath())
-}
-
-func executeOSAScript(args ...string) string {
-	out, err := exec.Command("osascript", args...).Output()
-	if err != nil {
-		ui.Term(err, string(out))
-	}
-	return string(out)
 }
