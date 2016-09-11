@@ -50,9 +50,9 @@ First of all, you should configure `nehm`:
 
 `permalink` - permalink of your SoundCloud profile (last word in your profile URL. More in [FAQ](#faq)),
 
-`dl_folder` - filesystem path to download folder, where will be downloaded all tracks,
+`dlFolder` - filesystem path to download folder, where will be downloaded all tracks,
 
-`itunes_playlist` - name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
+`itunesPlaylist` - name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
 
 #### Example:
 ```
