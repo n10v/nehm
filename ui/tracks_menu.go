@@ -94,11 +94,11 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 				Desc:  desc,
 			}
 		} else {
-			tDup := t
+			t := t // https://golang.org/doc/faq#closures_and_goroutines
 			trackItem = MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
-				Run:   func() { tm.selected = append(tm.selected, tDup) },
+				Run:   func() { tm.selected = append(tm.selected, t) },
 			}
 		}
 		trackItems = append(trackItems, trackItem)
