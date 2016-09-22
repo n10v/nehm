@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/fatih/color"
 )
@@ -47,12 +48,18 @@ func Say(s string) {
 	fmt.Println(s)
 }
 
+func Sleep() {
+	time.Sleep(2 * time.Second)
+}
+
 func Success(s string) {
 	Say(color.GreenString(s))
 }
 
 func Term(message string, err error) {
-	Error(message, err)
+	if message != "" && err != nil {
+		Error(message, err)
+	}
 	os.Exit(1)
 }
 
