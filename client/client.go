@@ -19,7 +19,7 @@ const (
 	soundCloudLink = "http://soundcloud.com/"
 )
 
-func Favorites(count, offset uint, uid string) []track.Track {
+func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 	// TODO: If user has more tracks than count
 	requestsCount := float64(count) / float64(tracksLimit)
 	requestsCount = math.Ceil(requestsCount)
@@ -39,14 +39,11 @@ func Favorites(count, offset uint, uid string) []track.Track {
 		params.Set("offset", strconv.Itoa(int((i*tracksLimit)+offset)))
 
 		bFavs, err := getFavorites(uid, params)
-		if err == errForbidden {
-			ui.Term("You don't permitted to see these likes.", nil)
-		}
-		if err == errNotFound {
+		if err == ErrNotFound {
 			break
 		}
 		if err != nil {
-			ui.Term("Couldn't get your likes", err)
+			return nil, err
 		}
 
 		var favs []track.Track
@@ -55,7 +52,7 @@ func Favorites(count, offset uint, uid string) []track.Track {
 		}
 		tracks = append(tracks, favs...)
 	}
-	return tracks
+	return tracks, nil
 }
 
 type JSONUser struct {
@@ -80,7 +77,7 @@ func UID(permalink string) string {
 	return strconv.Itoa(jUser.ID)
 }
 
-func Search(query string, limit, offset uint) []track.Track {
+func Search(query string, limit, offset uint) ([]track.Track, error) {
 	params := url.Values{}
 	params.Set("q", query)
 	params.Set("limit", strconv.Itoa(int(limit)))
@@ -88,7 +85,7 @@ func Search(query string, limit, offset uint) []track.Track {
 
 	bFound, err := search(params)
 	if err != nil {
-		ui.Term("Couldn't get search results", err)
+		return nil, err
 	}
 
 	var found []track.Track
@@ -96,7 +93,7 @@ func Search(query string, limit, offset uint) []track.Track {
 		ui.Term("Couldn't unmarshal JSON with search results", err)
 	}
 
-	return found
+	return found, nil
 }
 
 func TrackFromURI(uri string) []track.Track {
@@ -104,10 +101,10 @@ func TrackFromURI(uri string) []track.Track {
 	params.Set("url", uri)
 
 	bTrack, err := resolve(params)
-	if err == errForbidden {
+	if err == ErrForbidden {
 		ui.Term("You haven't got any access to this track", err)
 	}
-	if err == errNotFound {
+	if err == ErrNotFound {
 		ui.Term("You've entered invalid url", err)
 	}
 	if err != nil {

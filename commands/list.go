@@ -43,6 +43,6 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
-func listGetTracks(offset uint) []track.Track {
+func listGetTracks(offset uint) ([]track.Track, error) {
 	return client.Favorites(limit, offset, config.Get("UID"))
 }

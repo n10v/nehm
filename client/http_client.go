@@ -82,9 +82,9 @@ func makeGetRequest(uri string) (int, []byte, error) {
 func handleStatusCode(statusCode int) error {
 	switch {
 	case statusCode == 403:
-		return errForbidden
+		return ErrForbidden
 	case statusCode == 404:
-		return errNotFound
+		return ErrNotFound
 	case statusCode >= 300 && statusCode < 500:
 		return fmt.Errorf("invalid response from SoundCloud: %v", statusCode)
 	case statusCode >= 500:

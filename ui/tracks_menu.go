@@ -20,7 +20,7 @@ import (
 //
 // TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
-	GetTracks func(offset uint) []track.Track
+	GetTracks func(offset uint) ([]track.Track, error)
 	Limit     uint
 	Offset    uint
 
@@ -32,7 +32,11 @@ type TracksMenu struct {
 // adds selected to TracksMenu.selected and returns them.
 func (tm TracksMenu) Show() []track.Track {
 	Say("Getting information about tracks")
-	tracks := tm.GetTracks(tm.Offset)
+	tracks, err := tm.GetTracks(tm.Offset)
+	if err != nil {
+		handleError(err)
+		Term("", nil)
+	}
 	oldOffset := tm.Offset
 
 	if len(tracks) == 0 {
@@ -41,14 +45,35 @@ func (tm TracksMenu) Show() []track.Track {
 
 	for !tm.selectionFinished {
 		if oldOffset != tm.Offset {
-			tracks = tm.GetTracks(tm.Offset)
 			oldOffset = tm.Offset
+			tracks, err = tm.GetTracks(tm.Offset)
+			if err != nil {
+				handleError(err)
+				if tm.Offset >= tm.Limit {
+					Say("Downloading previous page")
+					Sleep() // pause the goroutine so user can read the errors
+					tm.Offset -= tm.Limit
+					continue
+				} else {
+					Term("", nil)
+				}
+			}
 		}
+
 		trackItems := tm.formTrackItems(tracks)
 		clearScreen()
 		tm.showMenu(trackItems)
 	}
 	return tm.selected
+}
+
+func handleError(err error) {
+	switch {
+	case strings.Contains(err.Error(), "403"):
+		Error("You're not allowed to see these tracks", nil)
+	case strings.Contains(err.Error(), "404"):
+		Error("There are no tracks", nil)
+	}
 }
 
 var trackItems []MenuItem

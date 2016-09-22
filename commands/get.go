@@ -33,24 +33,30 @@ func init() {
 
 func getTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
-	var downloadTracks []track.Track
+
+	var arg string
 	if len(args) == 0 {
-		downloadTracks = getLastTracks(1)
+		arg = "1"
 	} else {
-		arg := args[0]
-		if isSoundCloudURL(arg) {
-			downloadTracks = getTrackFromURL(arg)
-		} else if num, err := strconv.Atoi(arg); err == nil {
-			downloadTracks = getLastTracks(uint(num))
-		} else {
-			ui.Term("You've entered invalid argument. Run 'nehm get --help' for usage.", nil)
+		arg = args[0]
+	}
+
+	var downloadTracks []track.Track
+	if isSoundCloudURL(arg) {
+		downloadTracks = getTrackFromURL(arg)
+	} else if num, err := strconv.Atoi(arg); err == nil {
+		downloadTracks, err = getLastTracks(uint(num))
+		if err != nil {
+			handleError(err)
 		}
+	} else {
+		ui.Term("You've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 	}
 
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
-func getLastTracks(count uint) []track.Track {
+func getLastTracks(count uint) ([]track.Track, error) {
 	uid := client.UID(config.GetPermalink())
 	return client.Favorites(count, offset, uid)
 }
@@ -61,4 +67,13 @@ func isSoundCloudURL(url string) bool {
 
 func getTrackFromURL(url string) []track.Track {
 	return client.TrackFromURI(url)
+}
+
+func handleError(err error) {
+	switch {
+	case strings.Contains(err.Error(), "403"):
+		ui.Term("You're not allowed to see these tracks", nil)
+	case strings.Contains(err.Error(), "404"):
+		ui.Term("There are no tracks", nil)
+	}
 }

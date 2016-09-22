@@ -44,6 +44,6 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
-func searchGetTracks(offset uint) []track.Track {
+func searchGetTracks(offset uint) ([]track.Track, error) {
 	return client.Search(searchQuery, limit, offset)
 }
