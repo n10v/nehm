@@ -5,11 +5,11 @@
 package ui
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
+	"strings"
 
 	"github.com/bogem/nehm/track"
 	"github.com/fatih/color"
@@ -60,7 +60,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	trackItems = trackItems[:0]
 
 	for i, t := range tracks {
-		desc := fmt.Sprintf("%v (%v)", t.Fullname(), t.Duration())
+		desc := t.Fullname() + "(" + t.Duration() + ")"
 
 		var trackItem MenuItem
 		if contains(tm.selected, t) {

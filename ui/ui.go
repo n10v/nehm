@@ -30,7 +30,7 @@ func Error(message string, err error) {
 	} else if message == "" {
 		out = err.Error()
 	} else {
-		out = fmt.Sprintf("%v: %v", message, err)
+		out = message + ": " + err.Error()
 	}
 	Say(color.RedString(out))
 }

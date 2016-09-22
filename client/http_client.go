@@ -5,6 +5,7 @@
 package client
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"net/url"
@@ -18,8 +19,12 @@ const (
 	clientID = "11a37feb6ccc034d5975f3f803928a32"
 )
 
-var errForbidden = errors.New("403 - Forbidden")
-var errNotFound = errors.New("404 - Not Found")
+var (
+	ErrForbidden = errors.New("403 - Forbidden")
+	ErrNotFound  = errors.New("404 - Not Found")
+
+	uriBuffer = new(bytes.Buffer)
+)
 
 func resolve(params url.Values) ([]byte, error) {
 	uri := formResolveURI(params)
@@ -37,8 +42,10 @@ func search(params url.Values) ([]byte, error) {
 }
 
 func formSearchURI(params url.Values) string {
+	uriBuffer.Reset()
 	addClientID(&params)
-	return fmt.Sprintf("%v/tracks?%v", apiURL, params.Encode())
+	fmt.Fprintf(uriBuffer, "%v/tracks?%v", apiURL, params.Encode())
+	return uriBuffer.String()
 }
 
 func getFavorites(uid string, params url.Values) ([]byte, error) {
@@ -47,8 +54,10 @@ func getFavorites(uid string, params url.Values) ([]byte, error) {
 }
 
 func formFavoritesURI(uid string, params url.Values) string {
+	uriBuffer.Reset()
 	addClientID(&params)
-	return fmt.Sprintf("%v/users/%v/favorites?%v", apiURL, uid, params.Encode())
+	fmt.Fprintf(uriBuffer, "%v/users/%v/favorites?%v", apiURL, uid, params.Encode())
+	return uriBuffer.String()
 }
 
 func addClientID(params *url.Values) {

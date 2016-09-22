@@ -5,7 +5,6 @@
 package util
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -32,9 +31,9 @@ func ParseDuration(duration int) (seconds, minutes, hours int) {
 }
 
 func DurationString(seconds, minutes, hours int) (duration string) {
-	duration = fmt.Sprintf("%v:%v", formatNumber(minutes), formatNumber(seconds))
+	duration = formatNumber(minutes) + ":" + formatNumber(seconds)
 	if hours > 0 {
-		duration = fmt.Sprintf("%v:%v", formatNumber(hours), duration)
+		duration = formatNumber(hours) + ":" + duration
 	}
 	return
 }

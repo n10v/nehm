@@ -5,7 +5,6 @@
 package track
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/bogem/nehm/util"
@@ -59,11 +58,11 @@ func (t Track) Filename() string {
 		return r
 	}
 
-	return fmt.Sprintf("%v.mp3", strings.Map(replaceRunes, t.Fullname()))
+	return strings.Map(replaceRunes, t.Fullname()) + ".mp3"
 }
 
 func (t Track) Fullname() string {
-	return fmt.Sprintf("%v - %v", t.Artist(), t.Title())
+	return t.Artist() + " - " + t.Title()
 }
 
 func (t Track) ID() float64 {
