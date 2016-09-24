@@ -11,11 +11,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fatih/color"
+	colorable "github.com/mattn/go-colorable"
 )
 
+var Output = colorable.NewColorableStdout()
+
 func Ask(s string) string {
-	fmt.Print(s + " ")
+	fmt.Fprint(Output, s+" ")
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
@@ -33,7 +35,7 @@ func Error(message string, err error) {
 	} else {
 		out = message + ": " + err.Error()
 	}
-	Say(color.RedString(out))
+	Say(RedString(out))
 }
 
 func Quit() {
@@ -45,7 +47,7 @@ func Newline() {
 }
 
 func Say(s string) {
-	fmt.Println(s)
+	fmt.Fprint(Output, s+"\n")
 }
 
 func Sleep() {
@@ -53,7 +55,7 @@ func Sleep() {
 }
 
 func Success(s string) {
-	Say(color.GreenString(s))
+	Say(GreenString(s))
 }
 
 func Term(message string, err error) {
@@ -64,5 +66,5 @@ func Term(message string, err error) {
 }
 
 func Warning(message string) {
-	Say(color.YellowString(message))
+	Say(YellowString(message))
 }
