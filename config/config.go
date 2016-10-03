@@ -110,7 +110,7 @@ func GetItunesPlaylist() string {
 	return playlist
 }
 
-// Sets the value for the key in the override regiser.
+// Set sets the value for the key in the override regiser.
 func Set(key, value string) {
 	override[key] = value
 }
