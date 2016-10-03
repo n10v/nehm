@@ -26,14 +26,20 @@ var (
 	uriBuffer = new(bytes.Buffer)
 )
 
+func addClientID(params *url.Values) {
+	params.Set("client_id", clientID)
+}
+
 func resolve(params url.Values) ([]byte, error) {
 	uri := formResolveURI(params)
 	return get(uri)
 }
 
 func formResolveURI(params url.Values) string {
+	uriBuffer.Reset()
 	addClientID(&params)
-	return fmt.Sprintf("%v/resolve?%v", apiURL, params.Encode())
+	fmt.Fprintf(uriBuffer, "%v/resolve?%v", apiURL, params.Encode())
+	return uriBuffer.String()
 }
 
 func search(params url.Values) ([]byte, error) {
@@ -60,10 +66,6 @@ func formFavoritesURI(uid string, params url.Values) string {
 	return uriBuffer.String()
 }
 
-func addClientID(params *url.Values) {
-	params.Set("client_id", clientID)
-}
-
 func get(uri string) ([]byte, error) {
 	statusCode, body, err := makeGetRequest(uri)
 	if err != nil {
@@ -75,8 +77,10 @@ func get(uri string) ([]byte, error) {
 	return body, nil
 }
 
+var bodyBuffer []byte
+
 func makeGetRequest(uri string) (int, []byte, error) {
-	return fasthttp.Get(nil, uri)
+	return fasthttp.Get(bodyBuffer, uri)
 }
 
 func handleStatusCode(statusCode int) error {
