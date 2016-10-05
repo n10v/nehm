@@ -16,16 +16,6 @@ import (
 
 var Output = colorable.NewColorableStdout()
 
-func Ask(s string) string {
-	fmt.Fprint(Output, s+" ")
-	reader := bufio.NewReader(os.Stdin)
-	input, err := reader.ReadString('\n')
-	if err != nil {
-		Term("Couldn't read the input", err)
-	}
-	return strings.TrimSpace(input)
-}
-
 func Error(message string, err error) {
 	var out string
 	if err == nil {
@@ -38,16 +28,29 @@ func Error(message string, err error) {
 	Say(RedString(out))
 }
 
-func Quit() {
-	os.Exit(0)
-}
-
 func Newline() {
 	Say("")
 }
 
+func Print(s string) {
+	fmt.Fprint(Output, s)
+}
+
+func Quit() {
+	os.Exit(0)
+}
+
+func ReadInput() string {
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		Term("Couldn't read the input", err)
+	}
+	return strings.TrimSpace(input)
+}
+
 func Say(s string) {
-	fmt.Fprint(Output, s+"\n")
+	Print(s + "\n")
 }
 
 func Sleep() {
