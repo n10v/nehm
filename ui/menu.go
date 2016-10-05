@@ -55,7 +55,7 @@ func (m Menu) Show() {
 			choices[item.Index] = item.Run
 		}
 	}
-	Say(output.String())
+	Println(output.String())
 
 	choose(choices)
 }

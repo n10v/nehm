@@ -69,18 +69,18 @@ func (tp TracksProcessor) Process(t track.Track) {
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
-		ui.Say("Adding to iTunes")
+		ui.Println("Adding to iTunes")
 		applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist)
 	}
 }
 
 func downloadTrack(t track.Track, path string) {
-	ui.Say("Downloading " + t.Artist() + " - " + t.Title())
+	ui.Println("Downloading " + t.Artist() + " - " + t.Title())
 	runDownloadCmd(path, t.URL())
 }
 
 func downloadArtwork(t track.Track, path string) {
-	ui.Say("Downloading artwork")
+	ui.Println("Downloading artwork")
 	runDownloadCmd(path, t.ArtworkURL())
 }
 

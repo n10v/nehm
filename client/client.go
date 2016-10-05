@@ -62,7 +62,7 @@ func UID(permalink string) string {
 	params := url.Values{}
 	params.Set("url", soundCloudLink+permalink)
 
-	ui.Say("Getting ID of user")
+	ui.Println("Getting ID of user")
 	bUser, err := resolve(params)
 	if err != nil {
 		ui.Term("There was a problem by resolving an id of user", err)

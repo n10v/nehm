@@ -31,7 +31,7 @@ type TracksMenu struct {
 // Show gets tracks from GetTracks function, show these tracks,
 // adds selected to TracksMenu.selected and returns them.
 func (tm TracksMenu) Show() []track.Track {
-	Say("Getting information about tracks")
+	Println("Getting information about tracks")
 	tracks, err := tm.GetTracks(tm.Offset)
 	if err != nil {
 		handleError(err)
@@ -50,7 +50,7 @@ func (tm TracksMenu) Show() []track.Track {
 			if err != nil {
 				handleError(err)
 				if tm.Offset >= tm.Limit {
-					Say("Downloading previous page")
+					Println("Downloading previous page")
 					Sleep() // pause the goroutine so user can read the errors
 					tm.Offset -= tm.Limit
 					continue

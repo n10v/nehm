@@ -25,15 +25,19 @@ func Error(message string, err error) {
 	} else {
 		out = message + ": " + err.Error()
 	}
-	Say(RedString(out))
+	Println(RedString(out))
 }
 
 func Newline() {
-	Say("")
+	Println("")
 }
 
 func Print(s string) {
 	fmt.Fprint(Output, s)
+}
+
+func Println(s string) {
+	Print(s + "\n")
 }
 
 func Quit() {
@@ -49,16 +53,12 @@ func ReadInput() string {
 	return strings.TrimSpace(input)
 }
 
-func Say(s string) {
-	Print(s + "\n")
-}
-
 func Sleep() {
 	time.Sleep(2 * time.Second)
 }
 
 func Success(s string) {
-	Say(GreenString(s))
+	Println(GreenString(s))
 }
 
 func Term(message string, err error) {
@@ -69,5 +69,5 @@ func Term(message string, err error) {
 }
 
 func Warning(message string) {
-	Say(YellowString(message))
+	Println(YellowString(message))
 }
