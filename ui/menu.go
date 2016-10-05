@@ -61,7 +61,8 @@ func (m Menu) Show() {
 }
 
 func choose(choices map[string]func()) {
-	var index = Ask("Enter option:")
+	Print("Enter option: ")
+	var index = ReadInput()
 	var chosen = choices[index]
 
 	Newline()
@@ -77,7 +78,8 @@ func choose(choices map[string]func()) {
 			}
 			keys = sortKeys(keys)
 
-			index = Ask("You must choose one of [" + strings.Join(keys, ", ") + "] :")
+			Print("You must choose one of [" + strings.Join(keys, ", ") + "]: ")
+			index = ReadInput()
 			chosen = choices[index]
 		}
 	}
