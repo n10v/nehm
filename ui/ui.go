@@ -59,7 +59,7 @@ func Success(s string) {
 }
 
 func Term(message string, err error) {
-	if message != "" && err != nil {
+	if message != "" || err != nil {
 		Error(message, err)
 	}
 	os.Exit(1)
