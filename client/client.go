@@ -20,7 +20,6 @@ const (
 )
 
 func Favorites(count, offset uint, uid string) ([]track.Track, error) {
-	// TODO: If user has more tracks than count
 	requestsCount := float64(count) / float64(tracksLimit)
 	requestsCount = math.Ceil(requestsCount)
 
