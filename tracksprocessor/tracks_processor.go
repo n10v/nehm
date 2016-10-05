@@ -47,7 +47,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 func (tp TracksProcessor) Process(t track.Track) {
 	// Download track
 	trackPath := path.Join(tp.DownloadFolder, t.Filename())
-	if _, err := os.OpenFile(trackPath, os.O_CREATE, 0766); err != nil {
+	if _, err := os.Create(trackPath); err != nil {
 		ui.Term("Couldn't create track file", err)
 	}
 	downloadTrack(t, trackPath)
