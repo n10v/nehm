@@ -85,7 +85,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	trackItems = trackItems[:0]
 
 	for i, t := range tracks {
-		desc := t.Fullname() + "(" + t.Duration() + ")"
+		desc := t.Fullname() + " (" + t.Duration() + ")"
 
 		var trackItem MenuItem
 		if contains(tm.selected, t) {
