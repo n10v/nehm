@@ -16,7 +16,7 @@ import (
 var (
 	listCommand = &cobra.Command{
 		Use:   "nehm",
-		Short: "list of likes from your account, select tracks, download them, set ID3 tags and add them to iTunes",
+		Short: "list likes from your account, download them, set ID3 tags and add them to iTunes",
 		Long:  "nehm is a console tool, which downloads, sets ID3 tags (and adds to your iTunes library) your SoundCloud likes in convenient way",
 		Run:   showListOfTracks,
 	}
