@@ -46,7 +46,7 @@ func formatNumber(num int) (formated string) {
 	return
 }
 
-func CleanPath(path string) string {
+func SanitizePath(path string) string {
 	if strings.HasPrefix(path, "~") {
 		path = strings.Replace(path, "~", os.Getenv("HOME"), 1)
 	}

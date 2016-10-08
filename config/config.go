@@ -87,7 +87,7 @@ func GetDLFolder() string {
 		ui.Warning("You didn't set a download folder. Tracks will be downloaded to your home directory.")
 		return os.Getenv("HOME")
 	}
-	return util.CleanPath(dlFolder)
+	return util.SanitizePath(dlFolder)
 }
 
 // GetItunesPlaylist returns the value associated with
