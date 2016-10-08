@@ -67,7 +67,7 @@ func formFavoritesURI(uid string, params url.Values) string {
 }
 
 func get(uri string) ([]byte, error) {
-	statusCode, body, err := makeGetRequest(uri)
+	statusCode, body, err := fasthttp.Get(nil, uri)
 	if err != nil {
 		return nil, err
 	}
@@ -75,12 +75,6 @@ func get(uri string) ([]byte, error) {
 		return nil, err
 	}
 	return body, nil
-}
-
-var bodyBuffer []byte
-
-func makeGetRequest(uri string) (int, []byte, error) {
-	return fasthttp.Get(bodyBuffer, uri)
 }
 
 func handleStatusCode(statusCode int) error {
