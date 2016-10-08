@@ -38,11 +38,11 @@ func DurationString(seconds, minutes, hours int) (duration string) {
 	return
 }
 
-func formatNumber(num int) (formated string) {
+func formatNumber(num int) (formatted string) {
 	if num < 10 {
-		formated += "0"
+		formatted += "0"
 	}
-	formated += strconv.Itoa(num)
+	formatted += strconv.Itoa(num)
 	return
 }
 
