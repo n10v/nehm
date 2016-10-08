@@ -56,6 +56,7 @@ func read() {
 	if err != nil {
 		ui.Term("Couldn't open the config file", err)
 	}
+	defer configFile.Close()
 
 	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
