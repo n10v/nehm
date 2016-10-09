@@ -14,7 +14,6 @@ const (
 	clientID = "11a37feb6ccc034d5975f3f803928a32"
 )
 
-// ffjson: noencoder
 type Track struct {
 	artist string
 	title  string
