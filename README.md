@@ -1,39 +1,36 @@
 <div align="center">
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
-
-
 <p><b><i>nehm</i></b> is a console tool, which downloads, sets ID3 tags and adds to your iTunes library (if you use macOS) your <b>SoundCloud</b> likes in convenient way.</p>
-
 <a href="https://github.com/bogem/nehm/releases"><img src="https://img.shields.io/github/release/bogem/nehm.svg?maxAge=2592000" alt="Release"></img></a>
-
 </div>
 
 ---
+
 <div align="center">
-<a href="https://www.dropbox.com/s/lvlp0257bzed8be/1list.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/1list.png" alt="List"></img></a>
-<a href="https://www.dropbox.com/s/b3it7u7xrlyioyc/2get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/2get.png" alt="Get"></img></a>
-<a href="https://www.dropbox.com/s/z1c1djykv60cscm/3search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/3search.png" alt="Search"></img></a>
-<a href="https://www.dropbox.com/s/4t3y85050u076g4/4help.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/4help.png" alt="Help"></img></a>
-
+<a href="https://www.raw.github.com/bogem/nehm/master/Pictures/list.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/list.thumb.png" alt="List"></img></a>
+<a href="https://www.raw.github.com/bogem/nehm/master/Pictures/get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/get.thumb.png" alt="List"></img></a>
+<a href="https://www.raw.github.com/bogem/nehm/master/Pictures/search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/search.thumb.png" alt="List"></img></a>
+<a href="https://www.raw.github.com/bogem/nehm/master/Pictures/help.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/help.thumb.png" alt="List"></img></a>
 <p><b>(click to zoom)</b></p>
-
 </div>
 
 ---
 
 <div align="center">
 <h2>DISCLAIMER</h2>
-
 <b><i><p>For personal use only</p>
-
-Nehm developer doesn't responsible for any illegal usage of this program</i></b>
+nehm developer doesn't responsible for any illegal usage of this program</i></b>
 </div>
+
+---
+
 ## Description
 `nehm` is a console tool written in `Go`. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged and can be added to iTunes playlist, **if you use `macOS`**.
 
 `nehm` *wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
 
 ***If you have ideas to improve `nehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `nehm`, don't hesitate to write an issue. I will answer as soon as possible.***
+
 ## Installation
 Install via `go` command:
 
