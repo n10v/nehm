@@ -79,7 +79,7 @@ func GetPermalink() string {
 }
 
 // GetPermalink returns the value associated with the key "dlFolder".
-// If key "dl_folder" is blank in config, then it returns path to
+// If key "dlFolder" is blank in config, then it returns path to
 // home directory.
 func GetDLFolder() string {
 	dlFolder := Get("dlFolder")
