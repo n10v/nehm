@@ -78,7 +78,7 @@ func GetPermalink() string {
 	return permalink
 }
 
-// GetPermalink returns the value associated with the key "dl_folder".
+// GetPermalink returns the value associated with the key "dlFolder".
 // If key "dl_folder" is blank in config, then it returns path to
 // home directory.
 func GetDLFolder() string {
@@ -91,7 +91,7 @@ func GetDLFolder() string {
 }
 
 // GetItunesPlaylist returns the value associated with
-// the key "itunes_playlist".
+// the key "itunesPlaylist".
 // If the OS of this computer isn't macOS, then it returns blank string.
 func GetItunesPlaylist() string {
 	playlist := ""
