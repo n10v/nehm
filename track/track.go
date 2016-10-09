@@ -61,7 +61,7 @@ func (t Track) Filename() string {
 }
 
 func (t Track) Fullname() string {
-	return t.Artist() + " - " + t.Title()
+	return t.Artist() + " — " + t.Title()
 }
 
 func (t Track) ID() float64 {
