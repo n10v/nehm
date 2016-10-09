@@ -17,8 +17,8 @@ const (
 	minutesInHour        = 60
 )
 
-func ParseDuration(duration int) (seconds, minutes, hours int) {
-	seconds = duration / millisecondsInSecond
+func ParseDuration(milliseconds int) (seconds, minutes, hours int) {
+	seconds = milliseconds / millisecondsInSecond
 	if seconds >= secondsInMinute {
 		minutes = seconds / secondsInMinute
 		seconds -= minutes * secondsInMinute
