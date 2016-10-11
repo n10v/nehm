@@ -125,4 +125,5 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
 		}
 	}
+	config.Set("itunesPlaylist", playlist)
 }
