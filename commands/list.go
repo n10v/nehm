@@ -31,7 +31,7 @@ func init() {
 
 func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
-	config.Set("UID", client.UID(config.GetPermalink()))
+	config.Set("UID", client.UID(config.Get("permalink")))
 
 	tp := tracksprocessor.NewConfiguredTracksProcessor()
 

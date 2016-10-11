@@ -59,7 +59,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
-	uid := client.UID(config.GetPermalink())
+	uid := client.UID(config.Get("permalink"))
 	return client.Favorites(count, offset, uid)
 }
 

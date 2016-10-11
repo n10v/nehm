@@ -5,9 +5,14 @@
 package commands
 
 import (
+	"os"
 	"runtime"
+	"strings"
 
+	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/ui"
+	"github.com/bogem/nehm/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -48,6 +53,29 @@ func addPermalinkFlag(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&permalink, "permalink", "p", "", "user's permalink")
 }
 
+// initializeConfig initializes a config with flags.
+func initializeConfig(cmd *cobra.Command) {
+	err := config.ReadInConfig()
+	if err == config.ErrNotExist {
+		ui.Warning("There is no config file. Read README to configure nehm")
+	} else {
+		ui.Term("", err)
+	}
+
+	loadDefaultSettings()
+
+	initializeDlFolder(cmd)
+	initializePermalink(cmd)
+	if runtime.GOOS == "darwin" {
+		initializeItunesPlaylist(cmd)
+	}
+}
+
+func loadDefaultSettings() {
+	config.SetDefault("dlFolder", os.Getenv("HOME"))
+	config.SetDefault("itunesPlaylist", "")
+}
+
 func flagChanged(fs *pflag.FlagSet, key string) bool {
 	flag := fs.Lookup(key)
 	if flag == nil {
@@ -56,15 +84,45 @@ func flagChanged(fs *pflag.FlagSet, key string) bool {
 	return flag.Changed
 }
 
-// initializeConfig initializes a config file with sensible default configuration flags.
-func initializeConfig(cmd *cobra.Command) {
+// initializeDlFolder initializes dlFolder value. If there is no dlFolder
+// set up, then dlFolder is set to HOME env variable.
+func initializeDlFolder(cmd *cobra.Command) {
+	var df string
 	if flagChanged(cmd.Flags(), "dlFolder") {
-		config.Set("dlFolder", dlFolder)
+		df = dlFolder
+	} else {
+		df = config.Get("dlFolder")
 	}
-	if flagChanged(cmd.Flags(), "itunesPlaylist") {
-		config.Set("itunesPlaylist", itunesPlaylist)
-	}
+	config.Set("dlFolder", util.SanitizePath(df))
+}
+
+// initializePermalink initializes permalink value. If there is no permalink
+// set up, then program is terminating.
+func initializePermalink(cmd *cobra.Command) {
 	if flagChanged(cmd.Flags(), "permalink") {
 		config.Set("permalink", permalink)
+	} else if config.Get("permalink") == "" {
+		ui.Term("You didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.", nil)
+	}
+}
+
+// initializeItunesPlaylist initializes itunesPlaylist value. If there is no
+// itunesPlaylist set up, then itunesPlaylist set up to blank string. Blank
+// string is the sign, what tracks should not to be added to iTunes.
+func initializeItunesPlaylist(cmd *cobra.Command) {
+	var playlist string
+	if flagChanged(cmd.Flags(), "itunesPlaylist") {
+		playlist = itunesPlaylist
+	} else {
+		playlist = config.Get("itunesPlaylist")
+	}
+	if playlist != "" {
+		playlistsList, err := applescript.ListOfPlaylists()
+		if err != nil {
+			ui.Term("Couldn't get list of playlists", err)
+		}
+		if !strings.Contains(playlistsList, playlist) {
+			ui.Term("Playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+		}
 	}
 }

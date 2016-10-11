@@ -5,11 +5,10 @@
 package applescript
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
 	"os/exec"
-
-	"github.com/bogem/nehm/ui"
 )
 
 const (
@@ -40,40 +39,28 @@ end list_of_playlists
 
 var scriptFile *os.File
 
-func AddTrackToPlaylist(trackPath, playlistName string) {
-	executeOSAScript("add_track_to_playlist", trackPath, playlistName)
+func AddTrackToPlaylist(trackPath, playlistName string) error {
+	if output, err := executeOSAScript("add_track_to_playlist", trackPath, playlistName); err != nil {
+		return errors.New(output + ": " + err.Error())
+	}
+	return nil
 }
 
-func ListOfPlaylists() string {
+func ListOfPlaylists() (string, error) {
 	return executeOSAScript("list_of_playlists")
 }
 
-func executeOSAScript(commandType string, args ...string) string {
+func executeOSAScript(commandType string, args ...string) (output string, err error) {
 	if scriptFile == nil {
-		scriptFile = createFile()
-		writeScriptToFile(script, scriptFile)
+		scriptFile, err = ioutil.TempFile("", "")
+		if _, err := scriptFile.Write([]byte(script)); err != nil {
+			return "", errors.New("Couldn't write script to file: " + err.Error())
+		}
 	}
 
 	commandArgs := []string{scriptFile.Name(), commandType}
 	commandArgs = append(commandArgs, args...)
 
 	out, err := exec.Command("osascript", commandArgs...).Output()
-	if err != nil {
-		ui.Term(string(out), err)
-	}
-	return string(out)
-}
-
-func createFile() *os.File {
-	file, err := ioutil.TempFile("", "")
-	if err != nil {
-		ui.Term("Couldn't create file with script", err)
-	}
-	return file
-}
-
-func writeScriptToFile(script string, file *os.File) {
-	if _, err := file.Write([]byte(script)); err != nil {
-		ui.Term("Couldn't write script to file", err)
-	}
+	return string(out), err
 }

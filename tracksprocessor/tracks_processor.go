@@ -5,6 +5,7 @@
 package tracksprocessor
 
 import (
+	"errors"
 	"io"
 	"io/ioutil"
 	"os"
@@ -25,8 +26,8 @@ type TracksProcessor struct {
 
 func NewConfiguredTracksProcessor() *TracksProcessor {
 	return &TracksProcessor{
-		DownloadFolder: config.GetDLFolder(),
-		ItunesPlaylist: config.GetItunesPlaylist(),
+		DownloadFolder: config.Get("dlFolder"),
+		ItunesPlaylist: config.Get("itunesPlaylist"),
 	}
 }
 
@@ -37,66 +38,81 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
-		tp.Process(track)
+		if err := tp.Process(track); err != nil {
+			ui.Error("There was an error while downloading "+track.Fullname(), err)
+			ui.Newline()
+			continue
+		}
 		ui.Newline()
 	}
 	ui.Success("Done!")
 	ui.Quit()
 }
 
-func (tp TracksProcessor) Process(t track.Track) {
+func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := path.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.Create(trackPath); err != nil {
-		ui.Term("Couldn't create track file", err)
+		return errors.New("Couldn't create track file: " + err.Error())
 	}
-	downloadTrack(t, trackPath)
+	if err := downloadTrack(t, trackPath); err != nil {
+		return errors.New("Couldn't download track: " + err.Error())
+	}
 
 	// Download artwork
 	artworkFile, err := ioutil.TempFile("", "")
 	if err != nil {
-		ui.Term("Creation of artwork file failed", err)
+		return errors.New("Couldn't create artwork file: " + err.Error())
 	}
 	artworkPath := artworkFile.Name()
-	downloadArtwork(t, artworkPath)
+	if err := downloadArtwork(t, artworkPath); err != nil {
+		return errors.New("Couldn't download artwork file: " + err.Error())
+	}
 
 	// Tag track
-	tag(t, trackPath, artworkFile)
+	if err := tag(t, trackPath, artworkFile); err != nil {
+		return errors.New("Coudln't tag file: " + err.Error())
+	}
 
 	// Delete artwork
-	artworkFile.Close()
-	os.Remove(artworkPath)
+	if err := artworkFile.Close(); err != nil {
+		return errors.New("Couldn't close artwork file: " + err.Error())
+	}
+	if err := os.Remove(artworkPath); err != nil {
+		return errors.New("Couldn't remove artwork file: " + err.Error())
+	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
-		applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist)
+		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
+			return errors.New("Couldn't add track to playlist: " + err.Error())
+		}
 	}
+	return nil
 }
 
-func downloadTrack(t track.Track, path string) {
+func downloadTrack(t track.Track, path string) error {
 	ui.Println("Downloading " + t.Artist() + " - " + t.Title())
-	runDownloadCmd(path, t.URL())
+	return runDownloadCmd(path, t.URL())
 }
 
-func downloadArtwork(t track.Track, path string) {
+func downloadArtwork(t track.Track, path string) error {
 	ui.Println("Downloading artwork")
-	runDownloadCmd(path, t.ArtworkURL())
+	return runDownloadCmd(path, t.ArtworkURL())
 }
 
-func runDownloadCmd(path, url string) {
+func runDownloadCmd(path, url string) error {
 	cmd := exec.Command("curl", "-#", "-o", path, "-L", url)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	if err := cmd.Run(); err != nil {
-		ui.Term("Download failed", err)
-	}
+	return cmd.Run()
 }
 
-func tag(t track.Track, trackPath string, artwork io.Reader) {
+func tag(t track.Track, trackPath string, artwork io.Reader) error {
 	tag, err := id3v2.Open(trackPath)
 	if err != nil {
-		ui.Term("Couldn't open track file", err)
+		return err
 	}
 	defer tag.Close()
 
@@ -112,7 +128,5 @@ func tag(t track.Track, trackPath string, artwork io.Reader) {
 	}
 	tag.AddAttachedPicture(pic)
 
-	if err := tag.Save(); err != nil {
-		ui.Term("Couldn't write tag to file", err)
-	}
+	return tag.Save()
 }
