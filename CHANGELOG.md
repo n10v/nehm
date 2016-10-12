@@ -1,5 +1,12 @@
 # nehm change log
 
+## 3.1
+* If you didn't set dlFolder, `nehm` will download tracks to home directory implicitly
+* If you didn't set itunesPlaylist, `nehm` will not add tracks to iTunes implicitly
+* If there is any error in config, you will be notified before the showing of
+tracks menu
+* Minor performance improvements
+
 ## 3.0.4
 * Now variables in config file are written in camel case, i.e.
 `dl_folder` now is `dlFolder` and `itunes_playlist` now is `itunesPlaylist`.
