@@ -58,7 +58,7 @@ func initializeConfig(cmd *cobra.Command) {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
 		ui.Warning("There is no config file. Read README to configure nehm")
-	} else {
+	} else if err != nil {
 		ui.Term("", err)
 	}
 
