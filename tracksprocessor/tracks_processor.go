@@ -10,7 +10,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 
 	"github.com/bogem/id3v2"
 	"github.com/bogem/nehm/applescript"
@@ -51,42 +51,42 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
-	trackPath := path.Join(tp.DownloadFolder, t.Filename())
+	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, err := os.Create(trackPath); err != nil {
-		return errors.New("Couldn't create track file: " + err.Error())
+		return errors.New("couldn't create track file: " + err.Error())
 	}
 	if err := downloadTrack(t, trackPath); err != nil {
-		return errors.New("Couldn't download track: " + err.Error())
+		return errors.New("couldn't download track: " + err.Error())
 	}
 
 	// Download artwork
 	artworkFile, err := ioutil.TempFile("", "")
 	if err != nil {
-		return errors.New("Couldn't create artwork file: " + err.Error())
+		return errors.New("couldn't create artwork file: " + err.Error())
 	}
 	artworkPath := artworkFile.Name()
 	if err := downloadArtwork(t, artworkPath); err != nil {
-		return errors.New("Couldn't download artwork file: " + err.Error())
+		return errors.New("couldn't download artwork file: " + err.Error())
 	}
 
 	// Tag track
 	if err := tag(t, trackPath, artworkFile); err != nil {
-		return errors.New("Coudln't tag file: " + err.Error())
+		return errors.New("coudln't tag file: " + err.Error())
 	}
 
 	// Delete artwork
 	if err := artworkFile.Close(); err != nil {
-		return errors.New("Couldn't close artwork file: " + err.Error())
+		return errors.New("couldn't close artwork file: " + err.Error())
 	}
 	if err := os.Remove(artworkPath); err != nil {
-		return errors.New("Couldn't remove artwork file: " + err.Error())
+		return errors.New("couldn't remove artwork file: " + err.Error())
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
 		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
-			return errors.New("Couldn't add track to playlist: " + err.Error())
+			return errors.New("couldn't add track to playlist: " + err.Error())
 		}
 	}
 	return nil
