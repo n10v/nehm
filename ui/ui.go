@@ -17,13 +17,13 @@ import (
 var Output = colorable.NewColorableStdout()
 
 func Error(message string, err error) {
-	var out string
+	out := "ERROR: "
 	if err == nil {
-		out = message
+		out += message
 	} else if message == "" {
-		out = err.Error()
+		out += err.Error()
 	} else {
-		out = message + ": " + err.Error()
+		out += message + ": " + err.Error()
 	}
 	Println(RedString(out))
 }
@@ -69,5 +69,5 @@ func Term(message string, err error) {
 }
 
 func Warning(message string) {
-	Println(YellowString(message))
+	Println(YellowString("WARNING: " + message))
 }
