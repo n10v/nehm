@@ -4,6 +4,12 @@
 
 package ui
 
+import (
+	"os"
+
+	isatty "github.com/mattn/go-isatty"
+)
+
 const escape = "\x1b"
 
 // Foreground text colors
@@ -16,8 +22,13 @@ const (
 	fgCyan    = "36"
 )
 
+var noColor = !isatty.IsTerminal(os.Stdout.Fd())
+
 func colorize(code, text string) string {
-	return format(code) + text + unformat()
+	if !noColor {
+		return format(code) + text + unformat()
+	}
+	return text
 }
 
 func format(code string) string {
