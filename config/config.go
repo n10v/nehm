@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 
 	"gopkg.in/yaml.v2"
 )
@@ -21,7 +21,7 @@ var (
 	config   = make(map[string]string)
 	defaults = make(map[string]string)
 
-	configPath = path.Join(os.Getenv("HOME"), ".nehmconfig")
+	configPath = filepath.Join(os.Getenv("HOME"), ".nehmconfig")
 
 	ErrNotExist = errors.New("config file doesn't exist")
 )
