@@ -48,17 +48,17 @@ func ReadInConfig() error {
 		return ErrNotExist
 	}
 	if err != nil {
-		return errors.New("Couldn't open the config file: " + err.Error())
+		return errors.New("couldn't open the config file: " + err.Error())
 	}
 	defer configFile.Close()
 
 	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
-		return errors.New("Couldn't read the config file: " + err.Error())
+		return errors.New("couldn't read the config file: " + err.Error())
 	}
 
 	if err := yaml.Unmarshal(configData, config); err != nil {
-		return errors.New("Couldn't unmarshal the config file: " + err.Error())
+		return errors.New("couldn't unmarshal the config file: " + err.Error())
 	}
 
 	return nil
