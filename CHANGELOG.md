@@ -1,5 +1,12 @@
 # nehm change log
 
+## 3.2
+* Add errors stack after the downloading if there were errors
+* Add "ERROR: " and "WARNING: " prefixes for errors and warnings respectively
+* Return warnings in cases, if you didn't set dlFolder and itunesPlaylist
+* nehm will not colorize messages, if output isn't STDOUT
+* Minor performance, stability and binary size improvements
+
 ## 3.1
 * If you didn't set dlFolder, `nehm` will download tracks to home directory implicitly
 * If you didn't set itunesPlaylist, `nehm` will not add tracks to iTunes implicitly
