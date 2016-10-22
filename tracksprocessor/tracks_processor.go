@@ -35,16 +35,29 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
 		ui.Term("there are no tracks to download", nil)
 	}
+
+	var errors []string
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
 		if err := tp.Process(track); err != nil {
+			errors = append(errors, track.Fullname()+": "+err.Error())
+
 			ui.Error("there was an error while downloading "+track.Fullname(), err)
 			ui.Newline()
 			continue
 		}
 		ui.Newline()
 	}
+
+	if len(errors) > 0 {
+		ui.Println(ui.RedString("There were errors while downloading tracks:"))
+		for _, errText := range errors {
+			ui.Println(ui.RedString("  " + errText))
+		}
+		ui.Newline()
+	}
+
 	ui.Success("Done!")
 	ui.Quit()
 }
