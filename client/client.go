@@ -47,7 +47,7 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 
 		var favs []track.Track
 		if err := json.Unmarshal(bFavs, &favs); err != nil {
-			ui.Term("Could't unmarshal JSON with likes", err)
+			ui.Term("could't unmarshal JSON with likes", err)
 		}
 		tracks = append(tracks, favs...)
 	}
@@ -65,12 +65,12 @@ func UID(permalink string) string {
 	ui.Println("Getting ID of user")
 	bUser, err := resolve(params)
 	if err != nil {
-		ui.Term("There was a problem by resolving an id of user", err)
+		ui.Term("there was a problem by resolving an id of user", err)
 	}
 
 	var jUser JSONUser
 	if err := json.Unmarshal(bUser, &jUser); err != nil {
-		ui.Term("Couldn't unmarshall JSON with user object", err)
+		ui.Term("couldn't unmarshall JSON with user object", err)
 	}
 
 	return strconv.Itoa(jUser.ID)
@@ -89,7 +89,7 @@ func Search(query string, limit, offset uint) ([]track.Track, error) {
 
 	var found []track.Track
 	if err := json.Unmarshal(bFound, &found); err != nil {
-		ui.Term("Couldn't unmarshal JSON with search results", err)
+		ui.Term("couldn't unmarshal JSON with search results", err)
 	}
 
 	return found, nil
@@ -101,18 +101,18 @@ func TrackFromURI(uri string) []track.Track {
 
 	bTrack, err := resolve(params)
 	if err == ErrForbidden {
-		ui.Term("You haven't got any access to this track", err)
+		ui.Term("you haven't got any access to this track", err)
 	}
 	if err == ErrNotFound {
-		ui.Term("You've entered invalid url", err)
+		ui.Term("you've entered invalid url", err)
 	}
 	if err != nil {
-		ui.Term("Couldn't get track from url", err)
+		ui.Term("couldn't get track from url", err)
 	}
 
 	var t track.Track
 	if err := json.Unmarshal(bTrack, &t); err != nil {
-		ui.Term("Couldn't unmarshal JSON with track from URL", err)
+		ui.Term("couldn't unmarshal JSON with track from URL", err)
 	}
 
 	return []track.Track{t}

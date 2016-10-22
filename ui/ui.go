@@ -48,7 +48,7 @@ func ReadInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		Term("Couldn't read the input", err)
+		Term("couldn't read the input", err)
 	}
 	return strings.TrimSpace(input)
 }

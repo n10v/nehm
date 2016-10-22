@@ -33,13 +33,13 @@ func NewConfiguredTracksProcessor() *TracksProcessor {
 
 func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		ui.Term("There are no tracks to download", nil)
+		ui.Term("there are no tracks to download", nil)
 	}
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
 		if err := tp.Process(track); err != nil {
-			ui.Error("There was an error while downloading "+track.Fullname(), err)
+			ui.Error("there was an error while downloading "+track.Fullname(), err)
 			ui.Newline()
 			continue
 		}

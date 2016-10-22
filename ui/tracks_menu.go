@@ -39,7 +39,7 @@ func (tm TracksMenu) Show() []track.Track {
 	oldOffset := tm.Offset
 
 	if len(tracks) == 0 {
-		Term("There are not tracks to show", nil)
+		Term("there are not tracks to show", nil)
 	}
 
 	for !tm.selectionFinished {
@@ -69,9 +69,9 @@ func (tm TracksMenu) Show() []track.Track {
 func handleError(err error) {
 	switch {
 	case strings.Contains(err.Error(), "403"):
-		Error("You're not allowed to see these tracks", nil)
+		Error("you're not allowed to see these tracks", nil)
 	case strings.Contains(err.Error(), "404"):
-		Error("There are no tracks", nil)
+		Error("there are no tracks", nil)
 	}
 }
 

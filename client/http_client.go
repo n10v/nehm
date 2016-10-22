@@ -86,7 +86,7 @@ func handleStatusCode(statusCode int) error {
 	case statusCode >= 300 && statusCode < 500:
 		return fmt.Errorf("invalid response from SoundCloud: %v", statusCode)
 	case statusCode >= 500:
-		ui.Term("There is a problem by SoundCloud. Please wait a while", nil)
+		ui.Term("there is a problem by SoundCloud. Please wait a while", nil)
 	}
 	return nil
 }
