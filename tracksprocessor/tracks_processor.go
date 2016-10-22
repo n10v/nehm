@@ -42,10 +42,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 		track := tracks[i]
 		if err := tp.Process(track); err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
-
 			ui.Error("there was an error while downloading "+track.Fullname(), err)
-			ui.Newline()
-			continue
 		}
 		ui.Newline()
 	}
