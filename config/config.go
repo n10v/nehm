@@ -8,6 +8,7 @@ package config
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -48,17 +49,17 @@ func ReadInConfig() error {
 		return ErrNotExist
 	}
 	if err != nil {
-		return errors.New("couldn't open the config file: " + err.Error())
+		return fmt.Errorf("couldn't open the config file: %v", err)
 	}
 	defer configFile.Close()
 
 	configData, err := ioutil.ReadAll(configFile)
 	if err != nil {
-		return errors.New("couldn't read the config file: " + err.Error())
+		return fmt.Errorf("couldn't read the config file: %v", err)
 	}
 
 	if err := yaml.Unmarshal(configData, config); err != nil {
-		return errors.New("couldn't unmarshal the config file: " + err.Error())
+		return fmt.Errorf("couldn't unmarshal the config file: %v", err)
 	}
 
 	return nil

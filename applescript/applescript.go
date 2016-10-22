@@ -5,7 +5,7 @@
 package applescript
 
 import (
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -41,7 +41,7 @@ var scriptFile *os.File
 
 func AddTrackToPlaylist(trackPath, playlistName string) error {
 	if output, err := executeOSAScript("add_track_to_playlist", trackPath, playlistName); err != nil {
-		return errors.New(output + ": " + err.Error())
+		return fmt.Errorf("%v: %v", output, err)
 	}
 	return nil
 }
@@ -54,7 +54,7 @@ func executeOSAScript(commandType string, args ...string) (output string, err er
 	if scriptFile == nil {
 		scriptFile, err = ioutil.TempFile("", "")
 		if _, err := scriptFile.Write([]byte(script)); err != nil {
-			return "", errors.New("Couldn't write script to file: " + err.Error())
+			return "", fmt.Errorf("couldn't write script to file: %v", err)
 		}
 	}
 
