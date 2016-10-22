@@ -9,8 +9,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-
-	"github.com/fatih/color"
 )
 
 var (
@@ -21,7 +19,7 @@ var (
 	}
 	quitItem = MenuItem{
 		Index: "q",
-		Desc:  color.RedString("Quit"),
+		Desc:  RedString("Quit"),
 		Run:   func() { Quit() },
 	}
 )

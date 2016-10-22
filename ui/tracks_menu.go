@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/bogem/nehm/track"
-	"github.com/fatih/color"
 )
 
 // TracksMenu gets tracks from GetTracks function, show these tracks in menu
@@ -90,7 +89,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		var trackItem MenuItem
 		if contains(tm.selected, t) {
 			trackItem = MenuItem{
-				Index: color.GreenString("A"),
+				Index: GreenString("A"),
 				Desc:  desc,
 			}
 		} else {
@@ -146,7 +145,7 @@ func (tm *TracksMenu) controlItems() []MenuItem {
 	return []MenuItem{
 		MenuItem{
 			Index: "d",
-			Desc:  color.GreenString("Download tracks"),
+			Desc:  GreenString("Download tracks"),
 			Run:   func() { tm.selectionFinished = true },
 		},
 
