@@ -96,6 +96,7 @@ func initializeDlFolder(cmd *cobra.Command) {
 	}
 
 	if df == "" {
+		ui.Warning("you didn't set a download folder. Tracks will be downloaded to your home directory.")
 		df = os.Getenv("HOME")
 	}
 
@@ -126,19 +127,23 @@ func initializePermalink(cmd *cobra.Command) {
 func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
 
-	if flagChanged(cmd.Flags(), "itunesPlaylist") {
-		playlist = itunesPlaylist
-	} else {
-		playlist = config.Get("itunesPlaylist")
-	}
-
-	if playlist != "" {
-		playlistsList, err := applescript.ListOfPlaylists()
-		if err != nil {
-			ui.Term("couldn't get list of playlists", err)
+	if runtime.GOOS == "darwin" {
+		if flagChanged(cmd.Flags(), "itunesPlaylist") {
+			playlist = itunesPlaylist
+		} else {
+			playlist = config.Get("itunesPlaylist")
 		}
-		if !strings.Contains(playlistsList, playlist) {
-			ui.Term("playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+
+		if playlist == "" {
+			ui.Warning("you didn't set an iTunes playlist. Tracks won't be added to iTunes.")
+		} else {
+			playlistsList, err := applescript.ListOfPlaylists()
+			if err != nil {
+				ui.Term("couldn't get list of playlists", err)
+			}
+			if !strings.Contains(playlistsList, playlist) {
+				ui.Term("playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+			}
 		}
 	}
 
