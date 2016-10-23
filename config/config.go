@@ -41,8 +41,8 @@ func Get(key string) string {
 	return defaults[key]
 }
 
-// ReadInConfig will discover and load the config file from disk.
-// It will term the program, if there is an error.
+// ReadInConfig will discover and load the config file from disk, searching
+// in the defined path.
 func ReadInConfig() error {
 	configFile, err := os.Open(configPath)
 	if os.IsNotExist(err) {
