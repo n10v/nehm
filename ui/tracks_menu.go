@@ -15,7 +15,7 @@ import (
 )
 
 // TracksMenu gets tracks from GetTracks function, show these tracks in menu
-// and adds selected to TracksMenu.selected.
+// and returns selected.
 //
 // TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
@@ -72,6 +72,8 @@ func handleError(err error) {
 		Error("you're not allowed to see these tracks", nil)
 	case strings.Contains(err.Error(), "404"):
 		Error("there are no tracks", nil)
+	default:
+		Error("", err)
 	}
 }
 
