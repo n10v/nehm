@@ -62,44 +62,50 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
-	if _, err := os.Create(trackPath); err != nil {
-		return fmt.Errorf("couldn't create track file: %v", err)
+	if _, e := os.Create(trackPath); e != nil {
+		return fmt.Errorf("couldn't create track file: %v", e)
 	}
-	if err := downloadTrack(t, trackPath); err != nil {
-		return fmt.Errorf("couldn't download track: %v", err)
+	if e := downloadTrack(t, trackPath); e != nil {
+		return fmt.Errorf("couldn't download track: %v", e)
 	}
 
+	// err lets us to not prevent the processing of track further.
+	var err error
+
 	// Download artwork
-	artworkFile, err := ioutil.TempFile("", "")
-	if err != nil {
-		return fmt.Errorf("couldn't create artwork file: %v", err)
-	}
-	artworkPath := artworkFile.Name()
-	if err := downloadArtwork(t, artworkPath); err != nil {
-		return fmt.Errorf("couldn't download artwork file: %v", err)
+	var artworkPath string
+	artworkFile, e := ioutil.TempFile("", "")
+	if e != nil {
+		err = fmt.Errorf("couldn't create artwork file: %v", e)
+	} else {
+		artworkPath = artworkFile.Name()
+		if e = downloadArtwork(t, artworkPath); e != nil {
+			err = fmt.Errorf("couldn't download artwork file: %v", e)
+		}
 	}
 
 	// Tag track
-	if err := tag(t, trackPath, artworkFile); err != nil {
-		return fmt.Errorf("coudln't tag file: %v", err)
+	if e := tag(t, trackPath, artworkFile); e != nil {
+		err = fmt.Errorf("coudln't tag file: %v", e)
 	}
 
 	// Delete artwork
-	if err := artworkFile.Close(); err != nil {
-		return fmt.Errorf("couldn't close artwork file: %v", err)
+	if e := artworkFile.Close(); e != nil {
+		err = fmt.Errorf("couldn't close artwork file: %v", e)
 	}
-	if err := os.Remove(artworkPath); err != nil {
-		return fmt.Errorf("couldn't remove artwork file: %v", err)
+	if e := os.Remove(artworkPath); e != nil {
+		err = fmt.Errorf("couldn't remove artwork file: %v", e)
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
-		if err := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); err != nil {
-			return fmt.Errorf("couldn't add track to playlist: %v", err)
+		if e := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); e != nil {
+			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
 	}
-	return nil
+
+	return err
 }
 
 func downloadTrack(t track.Track, path string) error {
@@ -130,13 +136,15 @@ func tag(t track.Track, trackPath string, artwork io.Reader) error {
 	tag.SetTitle(t.Title())
 	tag.SetYear(t.Year())
 
-	pic := id3v2.PictureFrame{
-		Encoding:    id3v2.ENUTF8,
-		MimeType:    "image/jpeg",
-		PictureType: id3v2.PTFrontCover,
-		Picture:     artwork,
+	if artwork != nil {
+		pic := id3v2.PictureFrame{
+			Encoding:    id3v2.ENUTF8,
+			MimeType:    "image/jpeg",
+			PictureType: id3v2.PTFrontCover,
+			Picture:     artwork,
+		}
+		tag.AddAttachedPicture(pic)
 	}
-	tag.AddAttachedPicture(pic)
 
 	return tag.Save()
 }
