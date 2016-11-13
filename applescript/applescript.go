@@ -48,17 +48,19 @@ func ListOfPlaylists() (string, error) {
 	return executeOSAScript("list_of_playlists")
 }
 
-func executeOSAScript(commandType string, args ...string) (output string, err error) {
+// executeOSAScript executes AppleScript script with args and returns output and error.
+func executeOSAScript(args ...string) (string, error) {
 	if scriptFile == nil {
+		var err error
 		scriptFile, err = ioutil.TempFile("", "")
-		if _, err := scriptFile.Write([]byte(script)); err != nil {
+		if err != nil {
+			return "", fmt.Errorf("couldn't create osascript file: %v", err)
+		}
+		if _, err = scriptFile.Write([]byte(script)); err != nil {
 			return "", fmt.Errorf("couldn't write script to file: %v", err)
 		}
 	}
 
-	commandArgs := []string{scriptFile.Name(), commandType}
-	commandArgs = append(commandArgs, args...)
-
-	out, err := exec.Command("osascript", commandArgs...).Output()
+	out, err := exec.Command("osascript", append([]string{scriptFile.Name()}, args...)...).Output()
 	return string(out), err
 }
