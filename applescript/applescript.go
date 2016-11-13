@@ -40,10 +40,8 @@ end list_of_playlists
 var scriptFile *os.File
 
 func AddTrackToPlaylist(trackPath, playlistName string) error {
-	if output, err := executeOSAScript("add_track_to_playlist", trackPath, playlistName); err != nil {
-		return fmt.Errorf("%v: %v", output, err)
-	}
-	return nil
+	_, err := executeOSAScript("add_track_to_playlist", trackPath, playlistName)
+	return err
 }
 
 func ListOfPlaylists() (string, error) {
