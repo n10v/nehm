@@ -6,7 +6,6 @@ package tracksprocessor
 
 import (
 	"fmt"
-	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -63,10 +62,10 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
-		return fmt.Errorf("couldn't create track file: %v", e)
+		return fmt.Errorf("couldn't create track file:", e)
 	}
 	if e := downloadTrack(t, trackPath); e != nil {
-		return fmt.Errorf("couldn't download track: %v", e)
+		return fmt.Errorf("couldn't download track:", e)
 	}
 
 	// err lets us to not prevent the processing of track further.
@@ -74,34 +73,41 @@ func (tp TracksProcessor) Process(t track.Track) error {
 
 	// Download artwork
 	var artworkPath string
+	var artworkBytes []byte
 	artworkFile, e := ioutil.TempFile("", "")
 	if e != nil {
-		err = fmt.Errorf("couldn't create artwork file: %v", e)
+		err = fmt.Errorf("couldn't create artwork file:", e)
 	} else {
 		artworkPath = artworkFile.Name()
 		if e = downloadArtwork(t, artworkPath); e != nil {
-			err = fmt.Errorf("couldn't download artwork file: %v", e)
+			err = fmt.Errorf("couldn't download artwork file:", e)
+		}
+		if err == nil {
+			artworkBytes, e = ioutil.ReadAll(artworkFile)
+			if e != nil {
+				err = fmt.Errorf("couldn't read artwork file:", e)
+			}
 		}
 	}
 
 	// Tag track
-	if e := tag(t, trackPath, artworkFile); e != nil {
-		err = fmt.Errorf("coudln't tag file: %v", e)
+	if e := tag(t, trackPath, artworkBytes); e != nil {
+		err = fmt.Errorf("coudln't tag file:", e)
 	}
 
 	// Delete artwork
 	if e := artworkFile.Close(); e != nil {
-		err = fmt.Errorf("couldn't close artwork file: %v", e)
+		err = fmt.Errorf("couldn't close artwork file:", e)
 	}
 	if e := os.Remove(artworkPath); e != nil {
-		err = fmt.Errorf("couldn't remove artwork file: %v", e)
+		err = fmt.Errorf("couldn't remove artwork file:", e)
 	}
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
 		ui.Println("Adding to iTunes")
 		if e := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); e != nil {
-			err = fmt.Errorf("couldn't add track to playlist: %v", e)
+			err = fmt.Errorf("couldn't add track to playlist:", e)
 		}
 	}
 
@@ -125,7 +131,7 @@ func runDownloadCmd(path, url string) error {
 	return cmd.Run()
 }
 
-func tag(t track.Track, trackPath string, artwork io.Reader) error {
+func tag(t track.Track, trackPath string, artwork []byte) error {
 	tag, err := id3v2.Open(trackPath)
 	if err != nil {
 		return err
