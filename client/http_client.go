@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/bogem/nehm/ui"
 	"github.com/valyala/fasthttp"
@@ -84,7 +85,7 @@ func handleStatusCode(statusCode int) error {
 	case statusCode == 404:
 		return ErrNotFound
 	case statusCode >= 300 && statusCode < 500:
-		return fmt.Errorf("invalid response from SoundCloud: %v", statusCode)
+		ui.Term("invalid response from SoundCloud: " + strconv.Itoa(statusCode))
 	case statusCode >= 500:
 		ui.Term("there is a problem by SoundCloud. Please wait a while", nil)
 	}
