@@ -62,16 +62,9 @@ func initializeConfig(cmd *cobra.Command) {
 		ui.Term("", err)
 	}
 
-	loadDefaultSettings()
-
 	initializeDlFolder(cmd)
 	initializePermalink(cmd)
 	initializeItunesPlaylist(cmd)
-}
-
-func loadDefaultSettings() {
-	config.SetDefault("dlFolder", os.Getenv("HOME"))
-	config.SetDefault("itunesPlaylist", "")
 }
 
 func flagChanged(fs *pflag.FlagSet, key string) bool {

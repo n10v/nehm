@@ -69,8 +69,3 @@ func ReadInConfig() error {
 func Set(key, value string) {
 	override[key] = value
 }
-
-// SetDefault sets the value for the key in the default regiser.
-func SetDefault(key, value string) {
-	defaults[key] = value
-}
