@@ -43,7 +43,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 			errors = append(errors, track.Fullname()+": "+err.Error())
 			ui.Error("there was an error while downloading "+track.Fullname(), err)
 		}
-		ui.Newline()
+		ui.Println("")
 	}
 
 	if len(errors) > 0 {
@@ -51,7 +51,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 		for _, errText := range errors {
 			ui.Println(ui.RedString("  " + errText))
 		}
-		ui.Newline()
+		ui.Println("")
 	}
 
 	ui.Success("Done!")

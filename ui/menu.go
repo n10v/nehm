@@ -63,8 +63,7 @@ func choose(choices map[string]func()) {
 	var index = ReadInput()
 	var chosen = choices[index]
 
-	Newline()
-
+	Println("")
 	for {
 		if chosen != nil {
 			chosen()

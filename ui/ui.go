@@ -28,10 +28,6 @@ func Error(message string, err error) {
 	Println(RedString(out))
 }
 
-func Newline() {
-	Println("")
-}
-
 func Print(s string) {
 	fmt.Fprint(Output, s)
 }
