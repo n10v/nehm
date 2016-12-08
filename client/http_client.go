@@ -85,7 +85,7 @@ func handleStatusCode(statusCode int) error {
 	case statusCode == 404:
 		return ErrNotFound
 	case statusCode >= 300 && statusCode < 500:
-		ui.Term("invalid response from SoundCloud: " + strconv.Itoa(statusCode))
+		ui.Term("invalid response from SoundCloud: "+strconv.Itoa(statusCode), nil)
 	case statusCode >= 500:
 		ui.Term("there is a problem by SoundCloud. Please wait a while", nil)
 	}
