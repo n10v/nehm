@@ -5,13 +5,13 @@
 package client
 
 import (
+	"encoding/json"
 	"math"
 	"net/url"
 	"strconv"
 
 	"github.com/bogem/nehm/track"
 	"github.com/bogem/nehm/ui"
-	jsoniter "github.com/json-iterator/go"
 )
 
 const (
@@ -46,7 +46,7 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 		}
 
 		var favs []track.Track
-		if err := jsoniter.Unmarshal(bFavs, &favs); err != nil {
+		if err := json.Unmarshal(bFavs, &favs); err != nil {
 			ui.Term("could't unmarshal JSON with likes", err)
 		}
 		tracks = append(tracks, favs...)
@@ -69,7 +69,7 @@ func UID(permalink string) string {
 	}
 
 	var jUser JSONUser
-	if err := jsoniter.Unmarshal(bUser, &jUser); err != nil {
+	if err := json.Unmarshal(bUser, &jUser); err != nil {
 		ui.Term("couldn't unmarshall JSON with user object", err)
 	}
 
@@ -88,7 +88,7 @@ func Search(query string, limit, offset uint) ([]track.Track, error) {
 	}
 
 	var found []track.Track
-	if err := jsoniter.Unmarshal(bFound, &found); err != nil {
+	if err := json.Unmarshal(bFound, &found); err != nil {
 		ui.Term("couldn't unmarshal JSON with search results", err)
 	}
 
@@ -111,7 +111,7 @@ func TrackFromURI(uri string) []track.Track {
 	}
 
 	var t track.Track
-	if err := jsoniter.Unmarshal(bTrack, &t); err != nil {
+	if err := json.Unmarshal(bTrack, &t); err != nil {
 		ui.Term("couldn't unmarshal JSON with track from URL", err)
 	}
 

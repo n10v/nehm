@@ -20,13 +20,13 @@ type Track struct {
 	title  string
 
 	// Properties needed for JSON unmarshalling
-	JArtworkURL string `json:"artwork_url"`
-	JAuthor     Author `json:"user"`
-	JCreatedAt  string `json:"created_at"`
-	JDuration   int    `json:"duration"`
-	JID         int    `json:"id"`
-	JTitle      string `json:"title"`
-	JURL        string `json:"stream_url"`
+	JArtworkURL string  `json:"artwork_url"`
+	JAuthor     Author  `json:"user"`
+	JCreatedAt  string  `json:"created_at"`
+	JDuration   float64 `json:"duration"`
+	JID         float64 `json:"id"`
+	JTitle      string  `json:"title"`
+	JURL        string  `json:"stream_url"`
 }
 
 func (t *Track) Artist() string {
@@ -70,7 +70,7 @@ func (t Track) Fullname() string {
 	return t.Artist() + " — " + t.Title()
 }
 
-func (t Track) ID() int {
+func (t Track) ID() float64 {
 	return t.JID
 }
 
