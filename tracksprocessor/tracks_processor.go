@@ -60,6 +60,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
+	ui.Println("Downloading " + t.Artist() + " - " + t.Title())
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
 		return fmt.Errorf("couldn't create track file:", e)
@@ -115,7 +116,6 @@ func (tp TracksProcessor) Process(t track.Track) error {
 }
 
 func downloadTrack(t track.Track, path string) error {
-	ui.Println("Downloading " + t.Artist() + " - " + t.Title())
 	return runDownloadCmd(path, t.URL())
 }
 
