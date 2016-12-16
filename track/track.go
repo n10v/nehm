@@ -5,6 +5,7 @@
 package track
 
 import (
+	"runtime"
 	"strings"
 
 	"github.com/bogem/nehm/util"
@@ -49,7 +50,12 @@ func (t Track) Duration() string {
 
 func (t Track) Filename() string {
 	// Replace all filesystem non-friendly runes with the underscore
-	toReplace := ":/\\"
+	var toReplace string
+	if runtime.GOOS == "windows" {
+		toReplace = "<>:\"\\/|?*" // https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
+	} else {
+		toReplace = ":/\\"
+	}
 	replaceRunes := func(r rune) rune {
 		if strings.ContainsRune(toReplace, r) {
 			return '_'
@@ -77,10 +83,10 @@ func (t Track) name() (string, string) {
 	for _, sep := range separators {
 		if strings.Contains(t.JTitle, sep) {
 			splitted := strings.SplitN(t.JTitle, sep, 2)
-			return splitted[0], splitted[1]
+			return strings.TrimSpace(splitted[0]), strings.TrimSpace(splitted[1])
 		}
 	}
-	return t.JAuthor.Username, t.JTitle
+	return strings.TrimSpace(t.JAuthor.Username), strings.TrimSpace(t.JTitle)
 }
 
 func (t *Track) Title() string {
