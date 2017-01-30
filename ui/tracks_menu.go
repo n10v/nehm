@@ -116,13 +116,21 @@ func contains(s []track.Track, t track.Track) bool {
 	return false
 }
 
+// clearPath is used for holding the path to clear binary,
+// so exec.Command() don't have to always look the path to command.
+var clearPath string
+
 func clearScreen() {
-	var cmd *exec.Cmd
+	var err error
 	if runtime.GOOS == "windows" {
-		cmd = exec.Command("cls")
+		clearPath, err = exec.LookPath("cls")
 	} else {
-		cmd = exec.Command("clear")
+		clearPath, err = exec.LookPath("clear")
 	}
+	if err != nil { // if there is no clear command, just do not clear the screen
+		return
+	}
+	cmd := exec.Command(clearPath)
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
