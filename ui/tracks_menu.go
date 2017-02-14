@@ -23,7 +23,7 @@ type TracksMenu struct {
 	Limit     uint
 	Offset    uint
 
-	selected          map[float64]bool
+	selected          map[float64]track.Track
 	selectionFinished bool
 }
 
@@ -95,7 +95,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		desc := t.Fullname() + " (" + t.Duration() + ")"
 
 		var trackItem MenuItem
-		if contains := tm.selected[t.ID()]; contains {
+		if _, contains := tm.selected[t.ID()]; contains {
 			trackItem = MenuItem{
 				Index: GreenString("A"),
 				Desc:  desc,
@@ -105,7 +105,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 			trackItem = MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
-				Run:   func() { tm.selected[t.ID()] = true },
+				Run:   func() { tm.selected[t.ID()] = t },
 			}
 		}
 		trackItems = append(trackItems, trackItem)
