@@ -23,7 +23,7 @@ type TracksMenu struct {
 	Limit     uint
 	Offset    uint
 
-	selected          []track.Track
+	selected          map[float64]bool
 	selectionFinished bool
 }
 
@@ -42,6 +42,7 @@ func (tm TracksMenu) Show() []track.Track {
 		Term("there are no tracks to show", nil)
 	}
 
+	tm.selected = make(map[float64]track.Track)
 	for !tm.selectionFinished {
 		if oldOffset != tm.Offset {
 			oldOffset = tm.Offset
@@ -63,7 +64,12 @@ func (tm TracksMenu) Show() []track.Track {
 		clearScreen()
 		tm.showMenu(trackItems)
 	}
-	return tm.selected
+
+	selected := make([]track.Track, 0, len(tm.selected))
+	for _, t := range tm.selected {
+		selected = append(selected, t)
+	}
+	return selected
 }
 
 func handleError(err error) {
@@ -89,7 +95,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		desc := t.Fullname() + " (" + t.Duration() + ")"
 
 		var trackItem MenuItem
-		if contains(tm.selected, t) {
+		if contains := tm.selected[t.ID()]; contains {
 			trackItem = MenuItem{
 				Index: GreenString("A"),
 				Desc:  desc,
@@ -99,7 +105,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 			trackItem = MenuItem{
 				Index: strconv.Itoa(i + 1),
 				Desc:  desc,
-				Run:   func() { tm.selected = append(tm.selected, t) },
+				Run:   func() { tm.selected[t.ID()] = true },
 			}
 		}
 		trackItems = append(trackItems, trackItem)
