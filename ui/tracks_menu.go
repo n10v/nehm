@@ -113,28 +113,21 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	return trackItems
 }
 
-func contains(s []track.Track, t track.Track) bool {
-	for _, v := range s {
-		if v.ID() == t.ID() {
-			return true
-		}
-	}
-	return false
-}
-
 // clearPath is used for holding the path to clear binary,
 // so exec.Command() don't have to always look the path to command.
 var clearPath string
 
 func clearScreen() {
-	var err error
-	if runtime.GOOS == "windows" {
-		clearPath, err = exec.LookPath("cls")
-	} else {
-		clearPath, err = exec.LookPath("clear")
-	}
-	if err != nil { // if there is no clear command, just do not clear the screen
-		return
+	if clearPath == "" {
+		var err error
+		if runtime.GOOS == "windows" {
+			clearPath, err = exec.LookPath("cls")
+		} else {
+			clearPath, err = exec.LookPath("clear")
+		}
+		if err != nil { // if there is no clear command, just do not clear the screen
+			return
+		}
 	}
 	cmd := exec.Command(clearPath)
 	cmd.Stdout = os.Stdout
