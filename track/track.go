@@ -21,12 +21,15 @@ type Track struct {
 
 	// Properties needed for JSON unmarshalling
 	JArtworkURL string  `json:"artwork_url"`
-	JAuthor     Author  `json:"user"`
 	JCreatedAt  string  `json:"created_at"`
 	JDuration   float64 `json:"duration"`
 	JID         float64 `json:"id"`
 	JTitle      string  `json:"title"`
 	JURL        string  `json:"stream_url"`
+	JAuthor     struct {
+		AvatarURL string `json:"avatar_url"`
+		Username  string `json:"username"`
+	} `json:"user"`
 }
 
 func (t *Track) Artist() string {
