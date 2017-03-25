@@ -7,7 +7,6 @@ package client
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"net/url"
 	"strconv"
 
@@ -27,19 +26,18 @@ var (
 	uriBuffer = new(bytes.Buffer)
 )
 
-func addClientID(params *url.Values) {
-	params.Set("client_id", clientID)
-}
-
 func resolve(params url.Values) ([]byte, error) {
 	uri := formResolveURI(params)
 	return get(uri)
 }
 
 func formResolveURI(params url.Values) string {
+	params.Set("client_id", clientID)
+
 	uriBuffer.Reset()
-	addClientID(&params)
-	fmt.Fprintf(uriBuffer, "%v/resolve?%v", apiURL, params.Encode())
+	uriBuffer.WriteString(apiURL)
+	uriBuffer.WriteString("/resolve?")
+	uriBuffer.WriteString(params.Encode())
 	return uriBuffer.String()
 }
 
@@ -49,9 +47,12 @@ func search(params url.Values) ([]byte, error) {
 }
 
 func formSearchURI(params url.Values) string {
+	params.Set("client_id", clientID)
+
 	uriBuffer.Reset()
-	addClientID(&params)
-	fmt.Fprintf(uriBuffer, "%v/tracks?%v", apiURL, params.Encode())
+	uriBuffer.WriteString(apiURL)
+	uriBuffer.WriteString("/tracks?")
+	uriBuffer.WriteString(params.Encode())
 	return uriBuffer.String()
 }
 
@@ -61,9 +62,14 @@ func getFavorites(uid string, params url.Values) ([]byte, error) {
 }
 
 func formFavoritesURI(uid string, params url.Values) string {
+	params.Set("client_id", clientID)
+
 	uriBuffer.Reset()
-	addClientID(&params)
-	fmt.Fprintf(uriBuffer, "%v/users/%v/favorites?%v", apiURL, uid, params.Encode())
+	uriBuffer.WriteString(apiURL)
+	uriBuffer.WriteString("/users/")
+	uriBuffer.WriteString(uid)
+	uriBuffer.WriteString("/favorites?")
+	uriBuffer.WriteString(params.Encode())
 	return uriBuffer.String()
 }
 
