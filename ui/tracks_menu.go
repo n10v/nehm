@@ -123,6 +123,10 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 var clearPath string
 
 func clearScreen() {
+	if clearPath == "error" {
+		return
+	}
+
 	if clearPath == "" {
 		var err error
 		if runtime.GOOS == "windows" {
@@ -130,10 +134,12 @@ func clearScreen() {
 		} else {
 			clearPath, err = exec.LookPath("clear")
 		}
-		if err != nil { // if there is no clear command, just do not clear the screen
+		if err != nil { // if there is no clear command, just do not clear the screen ...
+			clearPath = "error" // ... and don't check it later
 			return
 		}
 	}
+
 	cmd := exec.Command(clearPath)
 	cmd.Stdout = os.Stdout
 	cmd.Run()
