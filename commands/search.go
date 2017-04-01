@@ -17,7 +17,7 @@ import (
 var (
 	searchCommand = &cobra.Command{
 		Use:     "search [query]",
-		Short:   "search tracks, show them, download, set tags and add to iTunes",
+		Short:   "Search tracks, show them, download, set tags and add to iTunes",
 		Aliases: []string{"s"},
 		Run:     searchAndShowTracks,
 	}
