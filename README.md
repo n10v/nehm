@@ -9,16 +9,6 @@
 <p><b>(click to zoom)</b></p>
 </div>
 
----
-
-<div align="center">
-<h2>DISCLAIMER</h2>
-<b><i><p>For personal use only</p>
-nehm developer doesn't responsible for any illegal usage of this program</i></b>
-</div>
-
----
-
 ## Description
 `nehm` is a console tool written in `Go`. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged and can be added to iTunes playlist, **if you use `macOS`**.
 
