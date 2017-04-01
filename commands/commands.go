@@ -32,10 +32,11 @@ func Execute() {
 	RootCmd.Execute()
 }
 
-// addCommonFlags adds common flags related to download tracks.
-func addCommonFlags(cmd *cobra.Command) {
+func addDlFolderFlag(cmd *cobra.Command) {
 	cmd.Flags().StringVarP(&dlFolder, "dlFolder", "f", "", "filesystem path to download folder")
+}
 
+func addItunesPlaylistFlag(cmd *cobra.Command) {
 	if runtime.GOOS == "darwin" {
 		cmd.Flags().StringVarP(&itunesPlaylist, "itunesPlaylist", "i", "", "name of iTunes playlist")
 	}
@@ -55,16 +56,31 @@ func addPermalinkFlag(cmd *cobra.Command) {
 
 // initializeConfig initializes a config with flags.
 func initializeConfig(cmd *cobra.Command) {
+	readInConfig()
+
+	flags := cmd.Flags()
+	if flagExists(flags, "dlFolder") {
+		initializeDlFolder(cmd)
+	}
+	if flagExists(flags, "permalink") {
+		initializePermalink(cmd)
+	}
+	if flagExists(flags, "itunesPlaylist") {
+		initializeItunesPlaylist(cmd)
+	}
+}
+
+func readInConfig() {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
 		ui.Warning("there is no config file. Read README to configure nehm")
 	} else if err != nil {
 		ui.Term("", err)
 	}
+}
 
-	initializeDlFolder(cmd)
-	initializePermalink(cmd)
-	initializeItunesPlaylist(cmd)
+func flagExists(fs *pflag.FlagSet, key string) bool {
+	return fs.Lookup(key) != nil
 }
 
 func flagChanged(fs *pflag.FlagSet, key string) bool {

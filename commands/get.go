@@ -26,7 +26,8 @@ var (
 )
 
 func init() {
-	addCommonFlags(getCommand)
+	addDlFolderFlag(getCommand)
+	addItunesPlaylistFlag(getCommand)
 	addOffsetFlag(getCommand)
 	addPermalinkFlag(getCommand)
 }

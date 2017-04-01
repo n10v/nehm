@@ -26,7 +26,8 @@ var (
 )
 
 func init() {
-	addCommonFlags(searchCommand)
+	addDlFolderFlag(searchCommand)
+	addItunesPlaylistFlag(searchCommand)
 	addLimitFlag(searchCommand)
 }
 

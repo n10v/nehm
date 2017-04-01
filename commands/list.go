@@ -23,7 +23,8 @@ var (
 )
 
 func init() {
-	addCommonFlags(listCommand)
+	addDlFolderFlag(listCommand)
+	addItunesPlaylistFlag(listCommand)
 	addLimitFlag(listCommand)
 	addOffsetFlag(listCommand)
 	addPermalinkFlag(listCommand)
