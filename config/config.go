@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-// Config is used for reading a config file and flags.
+// Package config is used for managing config data.
 // Inspired from spf13/viper.
 package config
 
