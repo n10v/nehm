@@ -54,6 +54,32 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 	return tracks, nil
 }
 
+func AllFavorites(permalink string) ([]track.Track, error) {
+	uid := UID(permalink)
+	offset := 0
+	tracks := make([]track.Track, 0)
+
+	// Run loop while len(fav) != 0.
+	// If len(fav) == 0, then we know, what there are no more favorites by user
+	for {
+		favs, err := Favorites(tracksLimit, uint(offset), uid)
+		tracks = append(tracks, favs...)
+		if err == ErrForbidden {
+			break
+		}
+		if err != nil {
+			return tracks, err
+		}
+		if len(favs) == 0 {
+			break
+		}
+
+		offset += tracksLimit
+	}
+
+	return tracks, nil
+}
+
 type JSONUser struct {
 	ID int `json:"id"`
 }
