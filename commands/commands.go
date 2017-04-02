@@ -55,6 +55,7 @@ func addPermalinkFlag(cmd *cobra.Command) {
 }
 
 // initializeConfig initializes a config with flags.
+// It only initializes field if cmd has corresponding flag.
 func initializeConfig(cmd *cobra.Command) {
 	readInConfig()
 
@@ -74,7 +75,9 @@ func readInConfig() {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
 		ui.Warning("there is no config file. Read README to configure nehm")
-	} else if err != nil {
+		return
+	}
+	if err != nil {
 		ui.Term("", err)
 	}
 }
@@ -132,7 +135,7 @@ func initializePermalink(cmd *cobra.Command) {
 // itunesPlaylist set up, then itunesPlaylist set up to blank string. Blank
 // string is the sign, what tracks should not to be added to iTunes.
 //
-// initializeItunesPlaylist sets blank string to config, if OS is darwin
+// initializeItunesPlaylist sets blank string to config, if OS is darwin.
 func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
 

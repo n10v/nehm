@@ -34,8 +34,6 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 	config.Set("UID", client.UID(config.Get("permalink")))
 
-	tp := tracksprocessor.NewConfiguredTracksProcessor()
-
 	tm := ui.TracksMenu{
 		GetTracks: listGetTracks,
 		Limit:     limit,
@@ -43,7 +41,7 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	}
 	downloadTracks := tm.Show()
 
-	tp.ProcessAll(downloadTracks)
+	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
 func listGetTracks(offset uint) ([]track.Track, error) {

@@ -35,8 +35,6 @@ func init() {
 func getTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
-	tp := tracksprocessor.NewConfiguredTracksProcessor()
-
 	var arg string
 	if len(args) == 0 {
 		arg = "1"
@@ -56,7 +54,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 		ui.Term("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 	}
 
-	tp.ProcessAll(downloadTracks)
+	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
