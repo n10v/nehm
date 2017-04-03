@@ -136,7 +136,7 @@ func initializePermalink(cmd *cobra.Command) {
 // itunesPlaylist set up, then itunesPlaylist set up to blank string. Blank
 // string is the sign, what tracks should not to be added to iTunes.
 //
-// initializeItunesPlaylist sets blank string to config, if OS is darwin.
+// initializeItunesPlaylist sets blank string to config, if OS is not darwin.
 func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
 
