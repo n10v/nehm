@@ -60,6 +60,10 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 
 	$ nehm -p nasa
 
+#### Synchronize your likes with current folder
+
+	$ nehm sync -f . -i ''
+
 #### Download last like
 
 	$ nehm get

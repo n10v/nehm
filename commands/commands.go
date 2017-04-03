@@ -28,6 +28,7 @@ var (
 func Execute() {
 	RootCmd.AddCommand(getCommand)
 	RootCmd.AddCommand(searchCommand)
+	RootCmd.AddCommand(syncCommand)
 	RootCmd.AddCommand(versionCommand)
 	RootCmd.Execute()
 }
