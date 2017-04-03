@@ -28,7 +28,7 @@ var (
 
 // Get has the behavior of returning the value associated with the first
 // place from where it is set. Get will check value in the following order:
-// flag, config file, defaults.
+// flag, config file, defaults. Get is case-sensitive.
 //
 // Get returns a string. For a specific value you can use one of the Get____ methods.
 func Get(key string) string {
@@ -66,6 +66,7 @@ func ReadInConfig() error {
 }
 
 // Set sets the value for the key in the override regiser.
+// Set is case-sensitive.
 func Set(key, value string) {
 	override[key] = value
 }
