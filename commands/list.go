@@ -32,6 +32,8 @@ func init() {
 
 func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
+
+	ui.Println("Getting ID of user")
 	config.Set("UID", client.UID(config.Get("permalink")))
 
 	tm := ui.TracksMenu{
