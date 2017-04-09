@@ -44,7 +44,7 @@ func addItunesPlaylistFlag(cmd *cobra.Command) {
 }
 
 func addLimitFlag(cmd *cobra.Command) {
-	cmd.Flags().UintVarP(&limit, "limit", "l", 10, "count of tracks on each page")
+	cmd.Flags().UintVarP(&limit, "limit", "l", 9, "count of tracks on each page")
 }
 
 func addOffsetFlag(cmd *cobra.Command) {
