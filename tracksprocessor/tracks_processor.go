@@ -119,7 +119,7 @@ func runDownloadCmd(path, url string) error {
 }
 
 func tag(t track.Track, trackPath string, artwork *os.File) error {
-	tag, e := id3v2.Open(trackPath)
+	tag, e := id3v2.Open(trackPath, id3v2.Options{Parse: false})
 	if e != nil {
 		return e
 	}
