@@ -61,6 +61,8 @@ func executeOSAScript(args ...string) (string, error) {
 		}
 	}
 
-	out, err := exec.Command("osascript", append([]string{scriptFile.Name()}, args...)...).Output()
+	args = append([]string{scriptFile.Name()}, args...)
+	jww.INFO.Println("Executing osascript with args :", args)
+	out, err := exec.Command("osascript", args...).Output()
 	return string(out), err
 }
