@@ -11,26 +11,28 @@ import (
 
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/config"
-	"github.com/bogem/nehm/ui"
 	"github.com/bogem/nehm/util"
 	"github.com/spf13/cobra"
+	jww "github.com/spf13/jWalterWeatherman"
 	"github.com/spf13/pflag"
 )
 
-var RootCmd = listCommand
+var rootCmd = listCommand
 
-// Variables used in flags
+// Variables used in flags.
 var (
 	limit, offset                       uint
 	dlFolder, itunesPlaylist, permalink string
+	verbose                             bool
 )
 
 func Execute() {
-	RootCmd.AddCommand(getCommand)
-	RootCmd.AddCommand(searchCommand)
-	RootCmd.AddCommand(syncCommand)
-	RootCmd.AddCommand(versionCommand)
-	RootCmd.Execute()
+	jww.SetFlags(0)
+	rootCmd.AddCommand(getCommand)
+	rootCmd.AddCommand(searchCommand)
+	rootCmd.AddCommand(syncCommand)
+	rootCmd.AddCommand(versionCommand)
+	rootCmd.Execute()
 }
 
 func addDlFolderFlag(cmd *cobra.Command) {
@@ -75,11 +77,11 @@ func initializeConfig(cmd *cobra.Command) {
 func readInConfig() {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
-		ui.Warning("there is no config file. Read README to configure nehm")
+		jww.WARN.Println("there is no config file. Read README to configure nehm")
 		return
 	}
 	if err != nil {
-		ui.Term("", err)
+		jww.FATAL.Fatalln(err)
 	}
 }
 
@@ -107,7 +109,7 @@ func initializeDlFolder(cmd *cobra.Command) {
 	}
 
 	if df == "" {
-		ui.Warning("you didn't set a download folder. Tracks will be downloaded to your home directory.")
+		jww.WARN.Println("you didn't set a download folder. Tracks will be downloaded to your home directory.")
 		df = os.Getenv("HOME")
 	}
 
@@ -126,7 +128,7 @@ func initializePermalink(cmd *cobra.Command) {
 	}
 
 	if p == "" {
-		ui.Term("you didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.", nil)
+		jww.FATAL.Fatalln("you didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
 	} else {
 		config.Set("permalink", p)
 	}
@@ -148,14 +150,14 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 		}
 
 		if playlist == "" {
-			ui.Warning("you didn't set an iTunes playlist. Tracks won't be added to iTunes.")
+			jww.WARN.Println("you didn't set an iTunes playlist. Tracks won't be added to iTunes.")
 		} else {
 			playlistsList, err := applescript.ListOfPlaylists()
 			if err != nil {
-				ui.Term("couldn't get list of playlists", err)
+				jww.FATAL.Fatalln("couldn't get list of playlists:", err)
 			}
 			if !strings.Contains(playlistsList, playlist) {
-				ui.Term("playlist "+playlist+" doesn't exist. Please enter correct name.", nil)
+				jww.FATAL.Fatalf("playlist %q doesn't exist. Please enter correct name.\n", playlist)
 			}
 		}
 	}

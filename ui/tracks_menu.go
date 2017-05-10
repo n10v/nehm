@@ -9,9 +9,11 @@ import (
 	"os/exec"
 	"runtime"
 	"strconv"
-	"strings"
+	"time"
 
+	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/track"
+	jww "github.com/spf13/jWalterWeatherman"
 )
 
 // TracksMenu gets tracks from GetTracks function, show these tracks in menu
@@ -36,33 +38,36 @@ type TracksMenu struct {
 // adds id of selected track to tm.isSelected to detect, what track is selected,
 // adds selected to tm.selectedTracks and returns them.
 func (tm TracksMenu) Show() []track.Track {
-	Println("Getting information about tracks")
+	jww.FEEDBACK.Println("Getting information about tracks")
 	tracks, err := tm.GetTracks(tm.Offset)
 	if err != nil {
-		handleError(err)
-		Term("", nil)
+		jww.FATAL.Fatalln(err)
 	}
-	oldOffset := tm.Offset
-
 	if len(tracks) == 0 {
-		Term("there are no tracks to show", nil)
+		jww.FEEDBACK.Println("There are no tracks to show")
+		os.Exit(0)
 	}
+
+	oldOffset := tm.Offset
 
 	tm.isSelected = make(map[float64]bool)
 	for !tm.selectionFinished {
-		if oldOffset != tm.Offset {
+		if oldOffset != tm.Offset { // If it's new page.
 			oldOffset = tm.Offset
 			tracks, err = tm.GetTracks(tm.Offset)
 			if err != nil {
-				handleError(err)
-				if tm.Offset >= tm.Limit {
-					Println("Downloading previous page")
-					Sleep() // pause the goroutine so user can read the errors
-					tm.Offset -= tm.Limit
-					continue
-				} else {
-					Term("", nil)
+				jww.ERROR.Println(err)
+
+				// If it's first page or it's unknown error, we should exit.
+				if tm.Offset < tm.Limit || !(err == client.ErrForbidden || err == client.ErrNotFound) {
+					os.Exit(1)
 				}
+
+				jww.FEEDBACK.Println("Downloading previous page")
+				time.Sleep(1 * time.Second) // Sleep so user can read the errors.
+
+				tm.Offset -= tm.Limit
+				continue
 			}
 		}
 
@@ -72,17 +77,6 @@ func (tm TracksMenu) Show() []track.Track {
 	}
 
 	return tm.selectedTracks
-}
-
-func handleError(err error) {
-	switch {
-	case strings.Contains(err.Error(), "403"):
-		Error("you're not allowed to see these tracks", nil)
-	case strings.Contains(err.Error(), "404"):
-		Error("there are no tracks", nil)
-	default:
-		Error("", err)
-	}
 }
 
 var trackItems []MenuItem
@@ -99,7 +93,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		var trackItem MenuItem
 		if _, contains := tm.isSelected[t.ID()]; contains {
 			trackItem = MenuItem{
-				Index: GreenString("A"),
+				Index: "A",
 				Desc:  desc,
 			}
 		} else {
@@ -165,7 +159,7 @@ func (tm *TracksMenu) controlItems() []MenuItem {
 	return []MenuItem{
 		MenuItem{
 			Index: "d",
-			Desc:  GreenString("Download tracks"),
+			Desc:  "Download tracks",
 			Run:   func() { tm.selectionFinished = true },
 		},
 

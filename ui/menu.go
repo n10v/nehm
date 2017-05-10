@@ -5,10 +5,14 @@
 package ui
 
 import (
+	"bufio"
 	"bytes"
+	"os"
 	"sort"
 	"strconv"
 	"strings"
+
+	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -19,8 +23,8 @@ var (
 	}
 	quitItem = MenuItem{
 		Index: "q",
-		Desc:  RedString("Quit"),
-		Run:   func() { Quit() },
+		Desc:  "Quit",
+		Run:   func() { os.Exit(0) },
 	}
 )
 
@@ -53,17 +57,17 @@ func (m Menu) Show() {
 			choices[item.Index] = item.Run
 		}
 	}
-	Println(output.String())
+	jww.FEEDBACK.Println(output.String())
 
 	choose(choices)
 }
 
 func choose(choices map[string]func()) {
-	Print("Enter option: ")
-	var index = ReadInput()
+	jww.FEEDBACK.Print("Enter option: ")
+	var index = readInput()
 	var chosen = choices[index]
 
-	Println("")
+	jww.FEEDBACK.Println()
 	for {
 		if chosen != nil {
 			chosen()
@@ -75,39 +79,45 @@ func choose(choices map[string]func()) {
 			}
 			keys = sortKeys(keys)
 
-			Print("You must choose one of [" + strings.Join(keys, ", ") + "]: ")
-			index = ReadInput()
+			jww.FEEDBACK.Printf("You must choose one of [" + strings.Join(keys, ", ") + "]: ")
+			index = readInput()
 			chosen = choices[index]
 		}
 	}
 }
 
+func readInput() string {
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	return strings.TrimSpace(input)
+}
+
+// sortKeys sorts strings and ints in keys.
 func sortKeys(keys []string) []string {
-	// find numeric keys
-	var numKeys []int
+	// Find numeric keys.
+	var intKeys []int
 	var stringKeys []string
-	for _, v := range keys {
-		vNum, err := strconv.Atoi(v)
+	for _, key := range keys {
+		intKey, err := strconv.Atoi(key)
 		if err != nil {
-			stringKeys = append(stringKeys, v)
-			continue
+			// It's a string.
+			stringKeys = append(stringKeys, key)
+		} else {
+			// It's an int.
+			intKeys = append(intKeys, intKey)
 		}
-		numKeys = append(numKeys, vNum)
 	}
 
-	// sort keys
-	sort.IntSlice(numKeys).Sort()
+	// Sort keys.
+	sort.IntSlice(intKeys).Sort()
 	sort.StringSlice(stringKeys).Sort()
 
-	// convert numeric keys to string
-	sNumKeys := make([]string, 0, len(numKeys))
-	for _, n := range numKeys {
-		sNumKeys = append(sNumKeys, strconv.Itoa(n))
+	// Return sorted keys.
+	sortedKeys := make([]string, 0, len(keys))
+	for _, key := range intKeys {
+		sortedKeys = append(sortedKeys, strconv.Itoa(key))
 	}
+	sortedKeys = append(sortedKeys, stringKeys...)
 
-	sorted := make([]string, 0, len(keys))
-	sorted = append(sorted, sNumKeys...)
-	sorted = append(sorted, stringKeys...)
-
-	return sorted
+	return sortedKeys
 }

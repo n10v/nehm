@@ -12,8 +12,8 @@ import (
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
 	"github.com/bogem/nehm/tracksprocessor"
-	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
+	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -48,17 +48,17 @@ func getTracks(cmd *cobra.Command, args []string) {
 	} else if num, err := strconv.Atoi(arg); err == nil {
 		downloadTracks, err = getLastTracks(uint(num))
 		if err != nil {
-			handleError(err)
+			jww.FATAL.Fatalln(err)
 		}
 	} else {
-		ui.Term("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
+		jww.FATAL.Fatalln("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 	}
 
 	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
-	ui.Println("Getting ID of user")
+	jww.FEEDBACK.Println("Getting ID of user")
 	uid := client.UID(config.Get("permalink"))
 	return client.Favorites(count, offset, uid)
 }
@@ -69,13 +69,4 @@ func isSoundCloudURL(url string) bool {
 
 func getTrackFromURL(url string) []track.Track {
 	return client.TrackFromURI(url)
-}
-
-func handleError(err error) {
-	switch {
-	case strings.Contains(err.Error(), "403"):
-		ui.Term("you're not allowed to see these tracks", nil)
-	case strings.Contains(err.Error(), "404"):
-		ui.Term("there are no tracks", nil)
-	}
 }

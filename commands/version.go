@@ -5,8 +5,8 @@
 package commands
 
 import (
-	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
+	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -21,5 +21,5 @@ var (
 const version = "3.2"
 
 func showVersion(cmd *cobra.Command, args []string) {
-	ui.Println(version)
+	jww.FEEDBACK.Println(version)
 }

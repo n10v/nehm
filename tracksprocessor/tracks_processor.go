@@ -15,7 +15,7 @@ import (
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/ui"
+	jww "github.com/spf13/jWalterWeatherman"
 )
 
 type TracksProcessor struct {
@@ -32,7 +32,7 @@ func NewConfiguredTracksProcessor() *TracksProcessor {
 
 func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		ui.Term("there are no tracks to download", nil)
+		jww.FATAL.Println("there are no tracks to download")
 	}
 
 	var errors []string
@@ -41,26 +41,23 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 		track := tracks[i]
 		if err := tp.Process(track); err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
-			ui.Error("there was an error while downloading "+track.Fullname(), err)
+			jww.ERROR.Println("there was an error while downloading", track.Fullname()+":", err)
 		}
-		ui.Println("")
+		jww.FEEDBACK.Println()
 	}
 
 	if len(errors) > 0 {
-		ui.Println(ui.RedString("There were errors while downloading tracks:"))
-		for _, errText := range errors {
-			ui.Println(ui.RedString("  " + errText))
+		jww.FEEDBACK.Println("There were errors while downloading tracks:")
+		for _, err := range errors {
+			jww.FEEDBACK.Println("  " + err)
 		}
-		ui.Println("")
+		jww.FEEDBACK.Println()
 	}
-
-	ui.Success("Done!")
-	ui.Quit()
 }
 
 func (tp TracksProcessor) Process(t track.Track) error {
 	// Download track
-	ui.Println("Downloading " + t.Fullname())
+	jww.FEEDBACK.Println("Downloading " + t.Fullname())
 	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
 		return fmt.Errorf("couldn't create track file: %v", e)
@@ -93,7 +90,7 @@ func (tp TracksProcessor) Process(t track.Track) error {
 
 	// Add to iTunes
 	if tp.ItunesPlaylist != "" {
-		ui.Println("Adding to iTunes")
+		jww.FEEDBACK.Println("Adding to iTunes")
 		if e := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); e != nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
@@ -107,7 +104,7 @@ func downloadTrack(t track.Track, path string) error {
 }
 
 func downloadArtwork(t track.Track, path string) error {
-	ui.Println("Downloading artwork")
+	jww.FEEDBACK.Println("Downloading artwork")
 	return runDownloadCmd(path, t.ArtworkURL())
 }
 

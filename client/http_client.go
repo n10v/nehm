@@ -8,9 +8,8 @@ import (
 	"bytes"
 	"errors"
 	"net/url"
-	"strconv"
 
-	"github.com/bogem/nehm/ui"
+	jww "github.com/spf13/jWalterWeatherman"
 	"github.com/valyala/fasthttp"
 )
 
@@ -20,8 +19,8 @@ const (
 )
 
 var (
-	ErrForbidden = errors.New("403 - Forbidden")
-	ErrNotFound  = errors.New("404 - Not Found")
+	ErrForbidden = errors.New("403 - you're not allowed to see these tracks")
+	ErrNotFound  = errors.New("404 - there are no tracks")
 
 	uriBuffer = new(bytes.Buffer)
 )
@@ -74,6 +73,7 @@ func formFavoritesURI(uid string, params url.Values) string {
 }
 
 func get(uri string) ([]byte, error) {
+	jww.INFO.Println("GET", uri)
 	statusCode, body, err := fasthttp.Get(nil, uri)
 	if err != nil {
 		return nil, err
@@ -91,9 +91,9 @@ func handleStatusCode(statusCode int) error {
 	case statusCode == 404:
 		return ErrNotFound
 	case statusCode >= 300 && statusCode < 500:
-		ui.Term("invalid response from SoundCloud: "+strconv.Itoa(statusCode), nil)
+		jww.FATAL.Fatalln("invalid response from SoundCloud:", statusCode)
 	case statusCode >= 500:
-		ui.Term("there is a problem by SoundCloud. Please wait a while", nil)
+		jww.FATAL.Fatalln("there is a problem by SoundCloud. Please wait a while")
 	}
 	return nil
 }
