@@ -39,7 +39,7 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	}
 
 	var errors []string
-	// Start with last track
+	// Start with last track.
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
 		if err := downloader.Download(track); err != nil {
@@ -59,7 +59,7 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 }
 
 func (downloader Downloader) Download(t track.Track) error {
-	// Download track
+	// Download track.
 	jww.FEEDBACK.Println("Downloading " + t.Fullname())
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
@@ -69,10 +69,11 @@ func (downloader Downloader) Download(t track.Track) error {
 		return fmt.Errorf("couldn't download track: %v", e)
 	}
 
-	// err lets us to not prevent the processing of track further
+	// err lets us to not prevent the processing of track further.
+	// err will only be returned at the end of this function.
 	var err error
 
-	// Download artwork
+	// Download artwork.
 	artworkFile, e := ioutil.TempFile("", "")
 	if e != nil {
 		err = fmt.Errorf("couldn't create artwork file: %v", e)
@@ -82,17 +83,17 @@ func (downloader Downloader) Download(t track.Track) error {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
 		}
 
-		// Defer deleting artwork
+		// Defer deleting artwork.
 		defer artworkFile.Close()
 		defer os.Remove(artworkFile.Name())
 	}
 
-	// Tag track
+	// Tag track.
 	if e := tag(t, trackPath, artworkFile); e != nil {
 		err = fmt.Errorf("there was an error while taging track: %v", e)
 	}
 
-	// Add to iTunes
+	// Add to iTunes.
 	if downloader.itunesPlaylist != "" {
 		jww.FEEDBACK.Println("Adding to iTunes")
 		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil {
@@ -131,18 +132,19 @@ func tag(t track.Track, trackPath string, artwork *os.File) error {
 
 	var err error
 
-	artworkBytes, e := ioutil.ReadAll(artwork)
-	if e != nil {
-		err = fmt.Errorf("couldn't read artwork file: %v", e)
-	}
-	if artworkBytes != nil {
-		pic := id3v2.PictureFrame{
-			Encoding:    id3v2.ENUTF8,
-			MimeType:    "image/jpeg",
-			PictureType: id3v2.PTFrontCover,
-			Picture:     artworkBytes,
+	if artwork != nil {
+		artworkBytes, e := ioutil.ReadAll(artwork)
+		if e != nil {
+			err = fmt.Errorf("couldn't read artwork file: %v", e)
+		} else {
+			pic := id3v2.PictureFrame{
+				Encoding:    id3v2.ENUTF8,
+				MimeType:    "image/jpeg",
+				PictureType: id3v2.PTFrontCover,
+				Picture:     artworkBytes,
+			}
+			tag.AddAttachedPicture(pic)
 		}
-		tag.AddAttachedPicture(pic)
 	}
 
 	if e := tag.Save(); e != nil {
