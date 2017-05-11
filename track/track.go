@@ -19,7 +19,7 @@ type Track struct {
 	artist string
 	title  string
 
-	// Properties needed for JSON unmarshalling
+	// Fields needed for JSON unmarshalling.
 	JArtworkURL string  `json:"artwork_url"`
 	JCreatedAt  string  `json:"created_at"`
 	JDuration   float64 `json:"duration"`
@@ -40,11 +40,11 @@ func (t *Track) Artist() string {
 }
 
 func (t Track) ArtworkURL() string {
-	au := t.JArtworkURL
-	if au == "" {
-		au = t.JAuthor.AvatarURL
+	artworkURL := t.JArtworkURL
+	if artworkURL == "" {
+		artworkURL = t.JAuthor.AvatarURL
 	}
-	return strings.Replace(au, "large", "t500x500", 1)
+	return strings.Replace(artworkURL, "large", "t500x500", 1)
 }
 
 func (t Track) Duration() string {
@@ -79,6 +79,8 @@ func (t Track) ID() float64 {
 
 // name splits track's title to artist and title if there is one of separators
 // in there.
+// If there is no separator in title, it returns t.JAuthor.Username and
+// t.JTitle.
 // E.g. if track has title "Michael Jackson - Thriller" then this function will
 // return as first string "Michael Jackson" and as second string "Thriller".
 func (t Track) name() (string, string) {

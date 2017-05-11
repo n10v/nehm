@@ -15,19 +15,6 @@ import (
 	jww "github.com/spf13/jWalterWeatherman"
 )
 
-var (
-	output bytes.Buffer
-
-	newlineItem = MenuItem{
-		Desc: "",
-	}
-	quitItem = MenuItem{
-		Index: "q",
-		Desc:  "Quit",
-		Run:   func() { os.Exit(0) },
-	}
-)
-
 type Menu struct {
 	items []MenuItem
 }
@@ -37,20 +24,30 @@ func (m *Menu) AddItems(mis ...MenuItem) {
 }
 
 func (m *Menu) AddNewline() {
-	m.AddItems(newlineItem)
+	m.AddItems(MenuItem{
+		Desc: "",
+	})
+}
+
+func (m *Menu) addQuitItem() {
+	m.AddItems(MenuItem{
+		Index: "q",
+		Desc:  "Quit",
+		Run:   func() { os.Exit(0) },
+	})
 }
 
 func (m *Menu) Clear() {
 	m.items = m.items[:0]
 }
 
+var output = new(bytes.Buffer)
+
 func (m Menu) Show() {
-	var choices = make(map[string]func())
-
-	m.AddItems(quitItem)
-
 	output.Reset()
 
+	m.addQuitItem()
+	var choices = make(map[string]func(), len(m.items))
 	for _, item := range m.items {
 		output.WriteString(item.String() + "\n")
 		if item.IsRunnable() {
