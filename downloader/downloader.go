@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-package tracksprocessor
+package downloader
 
 import (
 	"fmt"
@@ -18,19 +18,22 @@ import (
 	jww "github.com/spf13/jWalterWeatherman"
 )
 
-type TracksProcessor struct {
-	DownloadFolder string // In this folder tracks will be downloaded
-	ItunesPlaylist string // In this playlist tracks will be added
+type Downloader struct {
+	// dist is the folder, where tracks will be downloaded.
+	dist string
+
+	// itunesPlaylist is the iTunes playlist, where tracks will be added.
+	itunesPlaylist string
 }
 
-func NewConfiguredTracksProcessor() *TracksProcessor {
-	return &TracksProcessor{
-		DownloadFolder: config.Get("dlFolder"),
-		ItunesPlaylist: config.Get("itunesPlaylist"),
+func NewConfiguredDownloader() *Downloader {
+	return &Downloader{
+		dist:           config.Get("dlFolder"),
+		itunesPlaylist: config.Get("itunesPlaylist"),
 	}
 }
 
-func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
+func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	if len(tracks) == 0 {
 		jww.FATAL.Println("there are no tracks to download")
 	}
@@ -39,7 +42,7 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	// Start with last track
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
-		if err := tp.Process(track); err != nil {
+		if err := downloader.Download(track); err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
 			jww.ERROR.Println("there was an error while downloading", track.Fullname()+":", err)
 		}
@@ -55,10 +58,10 @@ func (tp TracksProcessor) ProcessAll(tracks []track.Track) {
 	}
 }
 
-func (tp TracksProcessor) Process(t track.Track) error {
+func (downloader Downloader) Download(t track.Track) error {
 	// Download track
 	jww.FEEDBACK.Println("Downloading " + t.Fullname())
-	trackPath := filepath.Join(tp.DownloadFolder, t.Filename())
+	trackPath := filepath.Join(downloader.dist, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
 		return fmt.Errorf("couldn't create track file: %v", e)
 	}
@@ -70,10 +73,11 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	var err error
 
 	// Download artwork
-	artworkFile, e := ioutil.TempFile("", "nehm")
+	artworkFile, e := ioutil.TempFile("", "")
 	if e != nil {
 		err = fmt.Errorf("couldn't create artwork file: %v", e)
 	} else {
+		jww.FEEDBACK.Println("Downloading artwork")
 		if e = downloadArtwork(t, artworkFile.Name()); e != nil {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
 		}
@@ -89,9 +93,9 @@ func (tp TracksProcessor) Process(t track.Track) error {
 	}
 
 	// Add to iTunes
-	if tp.ItunesPlaylist != "" {
+	if downloader.itunesPlaylist != "" {
 		jww.FEEDBACK.Println("Adding to iTunes")
-		if e := applescript.AddTrackToPlaylist(trackPath, tp.ItunesPlaylist); e != nil {
+		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
 	}
@@ -104,7 +108,6 @@ func downloadTrack(t track.Track, path string) error {
 }
 
 func downloadArtwork(t track.Track, path string) error {
-	jww.FEEDBACK.Println("Downloading artwork")
 	return runDownloadCmd(path, t.ArtworkURL())
 }
 

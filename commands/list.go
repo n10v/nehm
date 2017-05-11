@@ -7,14 +7,15 @@ package commands
 import (
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/tracksprocessor"
 	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
+	// listCommand is root command for nehm.
 	listCommand = &cobra.Command{
 		Use:              "nehm",
 		Short:            "List likes from your account, download them, set ID3 tags and add them to iTunes",
@@ -55,7 +56,7 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	}
 	downloadTracks := tm.Show()
 
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
+	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
 }
 
 func listGetTracks(offset uint) ([]track.Track, error) {

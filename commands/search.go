@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/tracksprocessor"
 	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 )
@@ -42,7 +42,7 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	}
 	downloadTracks := tm.Show()
 
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
+	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
 }
 
 func searchGetTracks(offset uint) ([]track.Track, error) {

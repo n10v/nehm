@@ -11,8 +11,8 @@ import (
 
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/tracksprocessor"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jWalterWeatherman"
 )
@@ -54,7 +54,7 @@ func sync(cmd *cobra.Command, args []string) {
 		os.Exit(0)
 	}
 	jww.FEEDBACK.Println("Downloading " + strconv.Itoa(len(tracks)) + " track(s)\n")
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(tracks)
+	downloader.NewConfiguredDownloader().DownloadAll(tracks)
 
 }
 

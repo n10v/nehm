@@ -10,8 +10,8 @@ import (
 
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/tracksprocessor"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jWalterWeatherman"
 )
@@ -54,7 +54,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 		jww.FATAL.Fatalln("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 	}
 
-	tracksprocessor.NewConfiguredTracksProcessor().ProcessAll(downloadTracks)
+	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
