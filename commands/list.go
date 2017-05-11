@@ -5,7 +5,7 @@
 package commands
 
 import (
-	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/menu"
@@ -47,7 +47,7 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
 	jww.FEEDBACK.Println("Getting ID of user")
-	config.Set("UID", client.UID(config.Get("permalink")))
+	config.Set("UID", api.UID(config.Get("permalink")))
 
 	tm := menu.TracksMenu{
 		GetTracks: listGetTracks,
@@ -60,5 +60,5 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 }
 
 func listGetTracks(offset uint) ([]track.Track, error) {
-	return client.Favorites(limit, offset, config.Get("UID"))
+	return api.Favorites(limit, offset, config.Get("UID"))
 }

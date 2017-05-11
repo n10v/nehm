@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
@@ -59,8 +59,8 @@ func getTracks(cmd *cobra.Command, args []string) {
 
 func getLastTracks(count uint) ([]track.Track, error) {
 	jww.FEEDBACK.Println("Getting ID of user")
-	uid := client.UID(config.Get("permalink"))
-	return client.Favorites(count, offset, uid)
+	uid := api.UID(config.Get("permalink"))
+	return api.Favorites(count, offset, uid)
 }
 
 func isSoundCloudURL(url string) bool {
@@ -68,5 +68,5 @@ func isSoundCloudURL(url string) bool {
 }
 
 func getTrackFromURL(url string) []track.Track {
-	return client.TrackFromURI(url)
+	return api.TrackFromURI(url)
 }

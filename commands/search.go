@@ -7,7 +7,7 @@ package commands
 import (
 	"strings"
 
-	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/menu"
 	"github.com/bogem/nehm/track"
@@ -46,5 +46,5 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 }
 
 func searchGetTracks(offset uint) ([]track.Track, error) {
-	return client.Search(searchQuery, limit, offset)
+	return api.Search(searchQuery, limit, offset)
 }

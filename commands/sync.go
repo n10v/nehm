@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/track"
@@ -39,7 +39,7 @@ func sync(cmd *cobra.Command, args []string) {
 	// Get favorites from user's profile
 	jww.FEEDBACK.Println("Getting favorites")
 	permalink := config.Get("permalink")
-	favs, err := client.AllFavorites(permalink)
+	favs, err := api.AllFavorites(permalink)
 	if err != nil {
 		jww.FATAL.Fatalln("can't get tracks from SoundCloud", err)
 	}

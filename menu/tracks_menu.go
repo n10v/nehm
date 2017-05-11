@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/bogem/nehm/client"
+	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/track"
 	jww "github.com/spf13/jWalterWeatherman"
 )
@@ -59,7 +59,7 @@ func (tm TracksMenu) Show() []track.Track {
 				jww.ERROR.Println(err)
 
 				// If it's first page or it's unknown error, we should exit.
-				if tm.Offset < tm.Limit || !(err == client.ErrForbidden || err == client.ErrNotFound) {
+				if tm.Offset < tm.Limit || !(err == api.ErrForbidden || err == api.ErrNotFound) {
 					os.Exit(1)
 				}
 
