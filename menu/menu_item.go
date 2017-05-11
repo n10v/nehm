@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-package ui
+package menu
 
 type MenuItem struct {
 	Index string
@@ -10,17 +10,9 @@ type MenuItem struct {
 	Run   func()
 }
 
-func (mi MenuItem) IsRunnable() bool {
-	return mi.Run != nil
-}
-
-func (mi MenuItem) HasIndex() bool {
-	return mi.Index != ""
-}
-
 func (mi MenuItem) String() string {
 	var s string
-	if mi.HasIndex() {
+	if mi.Index != "" {
 		s += mi.Index + " "
 	}
 	s += mi.Desc

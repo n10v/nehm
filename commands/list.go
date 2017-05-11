@@ -8,8 +8,8 @@ import (
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/menu"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 	jww "github.com/spf13/jWalterWeatherman"
 )
@@ -49,7 +49,7 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	jww.FEEDBACK.Println("Getting ID of user")
 	config.Set("UID", client.UID(config.Get("permalink")))
 
-	tm := ui.TracksMenu{
+	tm := menu.TracksMenu{
 		GetTracks: listGetTracks,
 		Limit:     limit,
 		Offset:    offset,

@@ -9,8 +9,8 @@ import (
 
 	"github.com/bogem/nehm/client"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/menu"
 	"github.com/bogem/nehm/track"
-	"github.com/bogem/nehm/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -36,7 +36,7 @@ func searchAndShowTracks(cmd *cobra.Command, args []string) {
 
 	searchQuery = strings.Join(args, " ")
 
-	tm := ui.TracksMenu{
+	tm := menu.TracksMenu{
 		GetTracks: searchGetTracks,
 		Limit:     limit,
 	}

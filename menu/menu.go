@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-package ui
+package menu
 
 import (
 	"bufio"
@@ -29,14 +29,6 @@ func (m *Menu) AddNewline() {
 	})
 }
 
-func (m *Menu) addQuitItem() {
-	m.AddItems(MenuItem{
-		Index: "q",
-		Desc:  "Quit",
-		Run:   func() { os.Exit(0) },
-	})
-}
-
 func (m *Menu) Clear() {
 	m.items = m.items[:0]
 }
@@ -46,14 +38,16 @@ var output = new(bytes.Buffer)
 func (m Menu) Show() {
 	output.Reset()
 
-	m.addQuitItem()
 	var choices = make(map[string]func(), len(m.items))
 	for _, item := range m.items {
 		output.WriteString(item.String() + "\n")
-		if item.IsRunnable() {
+		if item.Run != nil {
 			choices[item.Index] = item.Run
 		}
 	}
+	// Add quit note.
+	output.WriteString("\nCtrl-C to Quit\n")
+
 	jww.FEEDBACK.Println(output.String())
 
 	choose(choices)
