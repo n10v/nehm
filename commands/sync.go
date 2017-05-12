@@ -7,7 +7,6 @@ package commands
 import (
 	"os"
 	"path/filepath"
-	"strconv"
 
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
@@ -45,7 +44,7 @@ func sync(cmd *cobra.Command, args []string) {
 	}
 
 	// Get nonexistent tracks in dlFolder
-	jww.FEEDBACK.Println("Check unsynchronised tracks")
+	jww.FEEDBACK.Println("Check unsynchronised tracks\n")
 	tracks := nonexistentTracks(config.Get("dlFolder"), favs)
 
 	// Download not yet downloaded tracks
@@ -53,7 +52,7 @@ func sync(cmd *cobra.Command, args []string) {
 		jww.FEEDBACK.Println("Folder is already synchronised with favorites")
 		os.Exit(0)
 	}
-	jww.FEEDBACK.Println("Downloading " + strconv.Itoa(len(tracks)) + " track(s)\n")
+	jww.FEEDBACK.Printf("Downloading %v track(s):\n", len(tracks))
 	downloader.NewConfiguredDownloader().DownloadAll(tracks)
 
 }
