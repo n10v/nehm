@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"path/filepath"
 
 	"github.com/bogem/id3v2"
@@ -16,6 +15,7 @@ import (
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/track"
 	jww "github.com/spf13/jWalterWeatherman"
+	"github.com/valyala/fasthttp"
 )
 
 type Downloader struct {
@@ -44,12 +44,11 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 		track := tracks[i]
 		if err := downloader.Download(track); err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
-			jww.ERROR.Println("there was an error while downloading", track.Fullname()+":", err)
+			jww.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
 		}
-		jww.FEEDBACK.Println()
 	}
 
-	if len(errors) > 0 {
+	if len(errors) > 0 && len(tracks) > 1 {
 		jww.FEEDBACK.Println("There were errors while downloading tracks:")
 		for _, err := range errors {
 			jww.FEEDBACK.Println("  " + err)
@@ -60,7 +59,7 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 
 func (downloader Downloader) Download(t track.Track) error {
 	// Download track.
-	jww.FEEDBACK.Println("Downloading " + t.Fullname())
+	jww.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
 		return fmt.Errorf("couldn't create track file: %v", e)
@@ -78,7 +77,6 @@ func (downloader Downloader) Download(t track.Track) error {
 	if e != nil {
 		err = fmt.Errorf("couldn't create artwork file: %v", e)
 	} else {
-		jww.FEEDBACK.Println("Downloading artwork")
 		if e = downloadArtwork(t, artworkFile.Name()); e != nil {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
 		}
@@ -95,28 +93,51 @@ func (downloader Downloader) Download(t track.Track) error {
 
 	// Add to iTunes.
 	if downloader.itunesPlaylist != "" {
-		jww.FEEDBACK.Println("Adding to iTunes")
+		jww.FEEDBACK.Print(" adding to iTunes ...")
 		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
+	}
+
+	if err == nil {
+		jww.FEEDBACK.Println(" ✔︎")
+	} else {
+		jww.FEEDBACK.Println(" ✘")
 	}
 
 	return err
 }
 
 func downloadTrack(t track.Track, path string) error {
-	return runDownloadCmd(path, t.URL())
+	return download(path, t.URL())
 }
 
 func downloadArtwork(t track.Track, path string) error {
-	return runDownloadCmd(path, t.ArtworkURL())
+	return download(path, t.ArtworkURL())
 }
 
-func runDownloadCmd(path, url string) error {
-	cmd := exec.Command("curl", "-#", "-o", path, "-L", url)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+func download(path, url string) error {
+	jww.INFO.Println("Download from %q to %q", url, path)
+
+	// Download content to memory.
+	status, body, err := fasthttp.Get(nil, url)
+	if err != nil {
+		return err
+	}
+	if status/100 != 2 {
+		return fmt.Errorf("unexpected response status: %v", status)
+	}
+
+	// Create file.
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// Write content to file.
+	_, err = file.Write(body)
+	return err
 }
 
 func tag(t track.Track, trackPath string, artwork *os.File) error {
