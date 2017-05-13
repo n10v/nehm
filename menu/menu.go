@@ -8,19 +8,30 @@ import (
 	"bufio"
 	"bytes"
 	"os"
-	"sort"
-	"strconv"
 	"strings"
 
 	jww "github.com/spf13/jWalterWeatherman"
 )
 
 type Menu struct {
-	items []MenuItem
+	choices map[string]func()
+	output  *bytes.Buffer
 }
 
-func (m *Menu) AddItems(mis ...MenuItem) {
-	m.items = append(m.items, mis...)
+func (m *Menu) AddItems(items ...MenuItem) {
+	if m.choices == nil {
+		m.choices = make(map[string]func(), len(items))
+	}
+	if m.output == nil {
+		m.output = new(bytes.Buffer)
+	}
+
+	for _, item := range items {
+		if item.Run != nil {
+			m.choices[item.Index] = item.Run
+		}
+		m.output.WriteString(item.String() + "\n")
+	}
 }
 
 func (m *Menu) AddNewline() {
@@ -29,50 +40,36 @@ func (m *Menu) AddNewline() {
 	})
 }
 
-func (m *Menu) Clear() {
-	m.items = m.items[:0]
+func (m *Menu) Reset() {
+	m.choices = make(map[string]func())
+	if m.output == nil {
+		m.output = new(bytes.Buffer)
+	}
+	m.output.Reset()
 }
 
-var output = new(bytes.Buffer)
-
 func (m Menu) Show() {
-	output.Reset()
-
-	var choices = make(map[string]func(), len(m.items))
-	for _, item := range m.items {
-		output.WriteString(item.String() + "\n")
-		if item.Run != nil {
-			choices[item.Index] = item.Run
-		}
-	}
 	// Add quit note.
-	output.WriteString("\nCtrl-C to Quit\n")
+	m.output.WriteString("\nCtrl-C to Quit\n")
 
-	jww.FEEDBACK.Println(output.String())
+	// Print all items.
+	jww.FEEDBACK.Println(m.output.String())
 
-	choose(choices)
+	// Run choice.
+	choose(m.choices)
 }
 
 func choose(choices map[string]func()) {
 	jww.FEEDBACK.Print("Enter option: ")
-	var index = readInput()
-	var chosen = choices[index]
 
-	jww.FEEDBACK.Println()
 	for {
+		var index = readInput()
+		var chosen = choices[index]
 		if chosen != nil {
 			chosen()
 			break
 		} else {
-			var keys []string
-			for k := range choices {
-				keys = append(keys, k)
-			}
-			keys = sortKeys(keys)
-
-			jww.FEEDBACK.Printf("You must choose one of [" + strings.Join(keys, ", ") + "]: ")
-			index = readInput()
-			chosen = choices[index]
+			jww.FEEDBACK.Print("Invalid choice. Please choose the correct option: ")
 		}
 	}
 }
@@ -81,34 +78,4 @@ func readInput() string {
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	return strings.TrimSpace(input)
-}
-
-// sortKeys sorts strings and ints in keys.
-func sortKeys(keys []string) []string {
-	// Find numeric keys.
-	var intKeys []int
-	var stringKeys []string
-	for _, key := range keys {
-		intKey, err := strconv.Atoi(key)
-		if err != nil {
-			// It's a string.
-			stringKeys = append(stringKeys, key)
-		} else {
-			// It's an int.
-			intKeys = append(intKeys, intKey)
-		}
-	}
-
-	// Sort keys.
-	sort.IntSlice(intKeys).Sort()
-	sort.StringSlice(stringKeys).Sort()
-
-	// Return sorted keys.
-	sortedKeys := make([]string, 0, len(keys))
-	for _, key := range intKeys {
-		sortedKeys = append(sortedKeys, strconv.Itoa(key))
-	}
-	sortedKeys = append(sortedKeys, stringKeys...)
-
-	return sortedKeys
 }

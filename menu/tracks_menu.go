@@ -148,7 +148,7 @@ func (tm *TracksMenu) showMenu(trackItems []MenuItem) {
 	if controlItems == nil {
 		controlItems = tm.controlItems()
 	}
-	menu.Clear()
+	menu.Reset()
 	menu.AddItems(trackItems...)
 	menu.AddNewline()
 	menu.AddItems(controlItems...)
