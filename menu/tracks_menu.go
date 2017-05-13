@@ -16,8 +16,8 @@ import (
 	jww "github.com/spf13/jWalterWeatherman"
 )
 
-// TracksMenu gets tracks from GetTracks function, show these tracks in menu
-// and returns selected.
+// TracksMenu gets tracks from GetTracks function, shows them in menu
+// and returns selected tracks.
 //
 // TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
