@@ -37,7 +37,7 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 		params.Set("limit", strconv.Itoa(int(limit)))
 		params.Set("offset", strconv.Itoa(int((i*tracksLimit)+offset)))
 
-		bFavs, err := getFavorites(uid, params)
+		bFavs, err := get(formFavoritesURI(uid, params))
 		if err == ErrNotFound {
 			break
 		}
@@ -88,7 +88,7 @@ func UID(permalink string) string {
 	params := url.Values{}
 	params.Set("url", soundCloudLink+permalink)
 
-	bUser, err := resolve(params)
+	bUser, err := get(formResolveURI(params))
 	if err != nil {
 		jww.FATAL.Fatalln("there was a problem by resolving an id of user:", err)
 	}
@@ -107,7 +107,7 @@ func Search(query string, limit, offset uint) ([]track.Track, error) {
 	params.Set("limit", strconv.Itoa(int(limit)))
 	params.Set("offset", strconv.Itoa(int(offset)))
 
-	bFound, err := search(params)
+	bFound, err := get(formSearchURI(params))
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +124,7 @@ func TrackFromURI(uri string) []track.Track {
 	params := url.Values{}
 	params.Set("url", uri)
 
-	bTrack, err := resolve(params)
+	bTrack, err := get(formResolveURI(params))
 	if err == ErrForbidden {
 		jww.FATAL.Fatalln("you haven't got any access to this track:", err)
 	}

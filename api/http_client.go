@@ -25,11 +25,6 @@ var (
 	uriBuffer = new(bytes.Buffer)
 )
 
-func resolve(params url.Values) ([]byte, error) {
-	uri := formResolveURI(params)
-	return get(uri)
-}
-
 func formResolveURI(params url.Values) string {
 	params.Set("client_id", clientID)
 
@@ -40,11 +35,6 @@ func formResolveURI(params url.Values) string {
 	return uriBuffer.String()
 }
 
-func search(params url.Values) ([]byte, error) {
-	uri := formSearchURI(params)
-	return get(uri)
-}
-
 func formSearchURI(params url.Values) string {
 	params.Set("client_id", clientID)
 
@@ -53,11 +43,6 @@ func formSearchURI(params url.Values) string {
 	uriBuffer.WriteString("/tracks?")
 	uriBuffer.WriteString(params.Encode())
 	return uriBuffer.String()
-}
-
-func getFavorites(uid string, params url.Values) ([]byte, error) {
-	uri := formFavoritesURI(uid, params)
-	return get(uri)
 }
 
 func formFavoritesURI(uid string, params url.Values) string {
