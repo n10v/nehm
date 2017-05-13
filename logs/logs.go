@@ -18,8 +18,6 @@ var (
 	ERROR    = log.New(os.Stderr, color.RedString("ERROR: "), 0)
 	FATAL    = log.New(os.Stderr, color.RedString("FATAL ERROR: "), 0)
 	FEEDBACK = new(feedback)
-
-	DebugMode bool
 )
 
 func EnableDebug() {
