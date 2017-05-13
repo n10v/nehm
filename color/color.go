@@ -14,12 +14,9 @@ const escape = "\x1b"
 
 // Foreground text colors.
 const (
-	fgRed     = "31"
-	fgGreen   = "32"
-	fgYellow  = "33"
-	fgBlue    = "34"
-	fgMagenta = "35"
-	fgCyan    = "36"
+	fgRed    = "31"
+	fgGreen  = "32"
+	fgYellow = "33"
 )
 
 var noColor = !isatty.IsTerminal(os.Stdout.Fd())
@@ -49,16 +46,4 @@ func GreenString(text string) string {
 
 func YellowString(text string) string {
 	return colorize(fgYellow, text)
-}
-
-func BlueString(text string) string {
-	return colorize(fgBlue, text)
-}
-
-func MagentaString(text string) string {
-	return colorize(fgMagenta, text)
-}
-
-func CyanString(text string) string {
-	return colorize(fgCyan, text)
 }
