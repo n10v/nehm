@@ -11,9 +11,9 @@ import (
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -36,22 +36,22 @@ func sync(cmd *cobra.Command, args []string) {
 	initializePermalink(cmd)
 
 	// Get favorites from user's profile
-	jww.FEEDBACK.Println("Getting favorites")
+	logs.FEEDBACK.Println("Getting favorites")
 	favs, err := api.AllFavorites(api.UID(config.Get("permalink")))
 	if err != nil {
-		jww.FATAL.Fatalln("can't get tracks from SoundCloud", err)
+		logs.FATAL.Fatalln("can't get tracks from SoundCloud", err)
 	}
 
 	// Get nonexistent tracks in dlFolder
-	jww.FEEDBACK.Println("Check unsynchronised tracks\n")
+	logs.FEEDBACK.Println("Check unsynchronised tracks\n")
 	tracks := nonexistentTracks(config.Get("dlFolder"), favs)
 
 	// Download not yet downloaded tracks
 	if len(tracks) == 0 {
-		jww.FEEDBACK.Println("Folder is already synchronised with favorites")
+		logs.FEEDBACK.Println("Folder is already synchronised with favorites")
 		os.Exit(0)
 	}
-	jww.FEEDBACK.Printf("Downloading %v track(s):\n", len(tracks))
+	logs.FEEDBACK.Printf("Downloading %v track(s):\n", len(tracks))
 	downloader.NewConfiguredDownloader().DownloadAll(tracks)
 
 }

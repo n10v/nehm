@@ -11,9 +11,9 @@ import (
 
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/util"
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jWalterWeatherman"
 	"github.com/spf13/pflag"
 )
 
@@ -27,7 +27,6 @@ var (
 )
 
 func Execute() {
-	jww.SetFlags(0)
 	rootCmd.AddCommand(getCommand)
 	rootCmd.AddCommand(searchCommand)
 	rootCmd.AddCommand(syncCommand)
@@ -77,11 +76,11 @@ func initializeConfig(cmd *cobra.Command) {
 func readInConfig() {
 	err := config.ReadInConfig()
 	if err == config.ErrNotExist {
-		jww.WARN.Println("there is no config file. Read README to configure nehm")
+		logs.WARN.Println("there is no config file. Read README to configure nehm")
 		return
 	}
 	if err != nil {
-		jww.FATAL.Fatalln(err)
+		logs.FATAL.Fatalln(err)
 	}
 }
 
@@ -109,7 +108,7 @@ func initializeDlFolder(cmd *cobra.Command) {
 	}
 
 	if df == "" {
-		jww.WARN.Println("you didn't set a download folder. Tracks will be downloaded to your home directory.")
+		logs.WARN.Println("you didn't set a download folder. Tracks will be downloaded to your home directory.")
 		df = os.Getenv("HOME")
 	}
 
@@ -128,7 +127,7 @@ func initializePermalink(cmd *cobra.Command) {
 	}
 
 	if p == "" {
-		jww.FATAL.Fatalln("you didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
+		logs.FATAL.Fatalln("you didn't set a permalink. Use flag '-p' or set permalink in config file.\nTo know, what is permalink, read FAQ.")
 	} else {
 		config.Set("permalink", p)
 	}
@@ -150,14 +149,14 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 		}
 
 		if playlist == "" {
-			jww.WARN.Println("you didn't set an iTunes playlist. Tracks won't be added to iTunes.")
+			logs.WARN.Println("you didn't set an iTunes playlist. Tracks won't be added to iTunes.")
 		} else {
 			playlistsList, err := applescript.ListOfPlaylists()
 			if err != nil {
-				jww.FATAL.Fatalln("couldn't get list of playlists:", err)
+				logs.FATAL.Fatalln("couldn't get list of playlists:", err)
 			}
 			if !strings.Contains(playlistsList, playlist) {
-				jww.FATAL.Fatalf("playlist %q doesn't exist. Please enter correct name.\n", playlist)
+				logs.FATAL.Fatalf("playlist %q doesn't exist. Please enter correct name.\n", playlist)
 			}
 		}
 	}

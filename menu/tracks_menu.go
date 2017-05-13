@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/bogem/nehm/api"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
-	jww "github.com/spf13/jWalterWeatherman"
 )
 
 // TracksMenu gets tracks from GetTracks function, shows them in menu
@@ -38,13 +38,13 @@ type TracksMenu struct {
 // adds id of selected track to tm.isSelected to detect, what track is selected,
 // adds selected to tm.selectedTracks and returns them.
 func (tm *TracksMenu) Show() []track.Track {
-	jww.FEEDBACK.Println("Getting information about tracks")
+	logs.FEEDBACK.Println("Getting information about tracks")
 	tracks, err := tm.GetTracks(tm.Offset)
 	if err != nil {
-		jww.FATAL.Fatalln(err)
+		logs.FATAL.Fatalln(err)
 	}
 	if len(tracks) == 0 {
-		jww.FEEDBACK.Println("There are no tracks to show")
+		logs.FEEDBACK.Println("There are no tracks to show")
 		os.Exit(0)
 	}
 
@@ -56,14 +56,14 @@ func (tm *TracksMenu) Show() []track.Track {
 			oldOffset = tm.Offset
 			tracks, err = tm.GetTracks(tm.Offset)
 			if err != nil {
-				jww.ERROR.Println(err)
+				logs.ERROR.Println(err)
 
 				// If it's first page or it's unknown error, we should exit.
 				if tm.Offset < tm.Limit || !(err == api.ErrForbidden || err == api.ErrNotFound) {
 					os.Exit(1)
 				}
 
-				jww.FEEDBACK.Println("Downloading previous page")
+				logs.FEEDBACK.Println("Downloading previous page")
 				time.Sleep(1 * time.Second) // Sleep so user can read the errors.
 
 				tm.Offset -= tm.Limit

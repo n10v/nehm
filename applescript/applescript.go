@@ -10,7 +10,7 @@ import (
 	"os"
 	"os/exec"
 
-	jww "github.com/spf13/jWalterWeatherman"
+	"github.com/bogem/nehm/logs"
 )
 
 const (
@@ -64,7 +64,7 @@ func executeOSAScript(args ...string) (string, error) {
 	}
 
 	args = append([]string{scriptFile.Name()}, args...)
-	jww.INFO.Println("Executing osascript with args :", args)
+	logs.DEBUG.Println("Executing osascript with args :", args)
 	out, err := exec.Command("osascript", args...).Output()
 	return string(out), err
 }

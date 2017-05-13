@@ -8,10 +8,10 @@ import (
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/menu"
 	"github.com/bogem/nehm/track"
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -28,9 +28,7 @@ var (
 // activateVerboseOutput activates verbose output, if verbose flag is provided.
 func activateVerboseOutput(cmd *cobra.Command, args []string) {
 	if verbose {
-		jww.SetStdoutThreshold(jww.LevelInfo)
-	} else {
-		jww.SetStdoutThreshold(jww.LevelWarn)
+		logs.EnableDebug()
 	}
 }
 
@@ -46,7 +44,7 @@ func init() {
 func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
-	jww.FEEDBACK.Println("Getting ID of user")
+	logs.FEEDBACK.Println("Getting ID of user")
 	config.Set("UID", api.UID(config.Get("permalink")))
 
 	tm := menu.TracksMenu{

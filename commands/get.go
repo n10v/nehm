@@ -11,9 +11,9 @@ import (
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
 	"github.com/spf13/cobra"
-	jww "github.com/spf13/jWalterWeatherman"
 )
 
 var (
@@ -48,17 +48,17 @@ func getTracks(cmd *cobra.Command, args []string) {
 	} else if num, err := strconv.Atoi(arg); err == nil {
 		downloadTracks, err = getLastTracks(uint(num))
 		if err != nil {
-			jww.FATAL.Fatalln(err)
+			logs.FATAL.Fatalln(err)
 		}
 	} else {
-		jww.FATAL.Fatalln("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
+		logs.FATAL.Fatalln("you've entered invalid argument. Run 'nehm get --help' for usage.", nil)
 	}
 
 	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
-	jww.FEEDBACK.Println("Getting ID of user")
+	logs.FEEDBACK.Println("Getting ID of user")
 	uid := api.UID(config.Get("permalink"))
 	return api.Favorites(count, offset, uid)
 }

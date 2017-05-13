@@ -10,8 +10,8 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
-	jww "github.com/spf13/jWalterWeatherman"
 )
 
 const (
@@ -47,7 +47,7 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 
 		var favs []track.Track
 		if err := json.Unmarshal(bFavs, &favs); err != nil {
-			jww.FATAL.Fatalln("could't unmarshal JSON with likes:", err)
+			logs.FATAL.Fatalln("could't unmarshal JSON with likes:", err)
 		}
 		tracks = append(tracks, favs...)
 	}
@@ -89,12 +89,12 @@ func UID(permalink string) string {
 
 	bUser, err := get(formResolveURI(params))
 	if err != nil {
-		jww.FATAL.Fatalln("there was a problem by resolving an id of user:", err)
+		logs.FATAL.Fatalln("there was a problem by resolving an id of user:", err)
 	}
 
 	var jUser JSONUser
 	if err := json.Unmarshal(bUser, &jUser); err != nil {
-		jww.FATAL.Fatalln("couldn't unmarshall JSON with user object:", err)
+		logs.FATAL.Fatalln("couldn't unmarshall JSON with user object:", err)
 	}
 
 	return strconv.Itoa(jUser.ID)
@@ -113,7 +113,7 @@ func Search(query string, limit, offset uint) ([]track.Track, error) {
 
 	var found []track.Track
 	if err := json.Unmarshal(bFound, &found); err != nil {
-		jww.FATAL.Fatalln("couldn't unmarshal JSON with search results:", err)
+		logs.FATAL.Fatalln("couldn't unmarshal JSON with search results:", err)
 	}
 
 	return found, nil
@@ -125,18 +125,18 @@ func TrackFromURI(uri string) []track.Track {
 
 	bTrack, err := get(formResolveURI(params))
 	if err == ErrForbidden {
-		jww.FATAL.Fatalln("you haven't got any access to this track:", err)
+		logs.FATAL.Fatalln("you haven't got any access to this track:", err)
 	}
 	if err == ErrNotFound {
-		jww.FATAL.Fatalln("you've entered invalid url:", err)
+		logs.FATAL.Fatalln("you've entered invalid url:", err)
 	}
 	if err != nil {
-		jww.FATAL.Fatalln("couldn't get track from url:", err)
+		logs.FATAL.Fatalln("couldn't get track from url:", err)
 	}
 
 	var t track.Track
 	if err := json.Unmarshal(bTrack, &t); err != nil {
-		jww.FATAL.Fatalln("couldn't unmarshal JSON with track from URL:", err)
+		logs.FATAL.Fatalln("couldn't unmarshal JSON with track from URL:", err)
 	}
 
 	return []track.Track{t}

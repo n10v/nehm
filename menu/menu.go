@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	jww "github.com/spf13/jWalterWeatherman"
+	"github.com/bogem/nehm/logs"
 )
 
 type Menu struct {
@@ -53,14 +53,14 @@ func (m Menu) Show() {
 	m.output.WriteString("\nCtrl-C to Quit\n")
 
 	// Print all items.
-	jww.FEEDBACK.Println(m.output.String())
+	logs.FEEDBACK.Println(m.output.String())
 
 	// Run choice.
 	choose(m.choices)
 }
 
 func choose(choices map[string]func()) {
-	jww.FEEDBACK.Print("Enter option: ")
+	logs.FEEDBACK.Print("Enter option: ")
 
 	for {
 		var index = readInput()
@@ -69,7 +69,7 @@ func choose(choices map[string]func()) {
 			chosen()
 			break
 		} else {
-			jww.FEEDBACK.Print("Invalid choice. Please choose the correct option: ")
+			logs.FEEDBACK.Print("Invalid choice. Please choose the correct option: ")
 		}
 	}
 }

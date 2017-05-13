@@ -9,7 +9,7 @@ import (
 	"errors"
 	"net/url"
 
-	jww "github.com/spf13/jWalterWeatherman"
+	"github.com/bogem/nehm/logs"
 	"github.com/valyala/fasthttp"
 )
 
@@ -58,7 +58,7 @@ func formFavoritesURI(uid string, params url.Values) string {
 }
 
 func get(uri string) ([]byte, error) {
-	jww.INFO.Println("GET", uri)
+	logs.DEBUG.Println("GET", uri)
 	statusCode, body, err := fasthttp.Get(nil, uri)
 	if err != nil {
 		return nil, err
@@ -76,9 +76,9 @@ func handleStatusCode(statusCode int) error {
 	case statusCode == 404:
 		return ErrNotFound
 	case statusCode >= 300 && statusCode < 500:
-		jww.FATAL.Fatalln("invalid response from SoundCloud:", statusCode)
+		logs.FATAL.Fatalln("invalid response from SoundCloud:", statusCode)
 	case statusCode >= 500:
-		jww.FATAL.Fatalln("there is a problem by SoundCloud. Please wait a while")
+		logs.FATAL.Fatalln("there is a problem by SoundCloud. Please wait a while")
 	}
 	return nil
 }

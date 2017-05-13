@@ -13,8 +13,8 @@ import (
 	"github.com/bogem/id3v2"
 	"github.com/bogem/nehm/applescript"
 	"github.com/bogem/nehm/config"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
-	jww "github.com/spf13/jWalterWeatherman"
 	"github.com/valyala/fasthttp"
 )
 
@@ -35,7 +35,7 @@ func NewConfiguredDownloader() *Downloader {
 
 func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		jww.FATAL.Println("there are no tracks to download")
+		logs.FATAL.Println("there are no tracks to download")
 	}
 
 	var errors []string
@@ -44,22 +44,22 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 		track := tracks[i]
 		if err := downloader.Download(track); err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
-			jww.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
+			logs.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
 		}
 	}
 
 	if len(errors) > 0 && len(tracks) > 1 {
-		jww.FEEDBACK.Println("There were errors while downloading tracks:")
+		logs.FEEDBACK.Println("There were errors while downloading tracks:")
 		for _, err := range errors {
-			jww.FEEDBACK.Println("  " + err)
+			logs.FEEDBACK.Println("  " + err)
 		}
-		jww.FEEDBACK.Println()
+		logs.FEEDBACK.Println()
 	}
 }
 
 func (downloader Downloader) Download(t track.Track) error {
 	// Download track.
-	jww.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
+	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	if _, e := os.Create(trackPath); e != nil {
 		return fmt.Errorf("couldn't create track file: %v", e)
@@ -93,16 +93,16 @@ func (downloader Downloader) Download(t track.Track) error {
 
 	// Add to iTunes.
 	if downloader.itunesPlaylist != "" {
-		jww.FEEDBACK.Print(" adding to iTunes ...")
+		logs.FEEDBACK.Print(" adding to iTunes ...")
 		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
 	}
 
 	if err == nil {
-		jww.FEEDBACK.Println(" ✔︎")
+		logs.FEEDBACK.Println(" ✔︎")
 	} else {
-		jww.FEEDBACK.Println(" ✘")
+		logs.FEEDBACK.Println(" ✘")
 	}
 
 	return err
@@ -117,7 +117,7 @@ func downloadArtwork(t track.Track, path string) error {
 }
 
 func download(path, url string) error {
-	jww.INFO.Println("Download from %q to %q", url, path)
+	logs.DEBUG.Println("Download from %q to %q", url, path)
 
 	// Download content to memory.
 	status, body, err := fasthttp.Get(nil, url)
