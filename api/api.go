@@ -54,8 +54,7 @@ func Favorites(count, offset uint, uid string) ([]track.Track, error) {
 	return tracks, nil
 }
 
-func AllFavorites(permalink string) ([]track.Track, error) {
-	uid := UID(permalink)
+func AllFavorites(uid string) ([]track.Track, error) {
 	offset := 0
 	tracks := make([]track.Track, 0)
 

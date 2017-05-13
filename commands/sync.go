@@ -37,8 +37,7 @@ func sync(cmd *cobra.Command, args []string) {
 
 	// Get favorites from user's profile
 	jww.FEEDBACK.Println("Getting favorites")
-	permalink := config.Get("permalink")
-	favs, err := api.AllFavorites(permalink)
+	favs, err := api.AllFavorites(api.UID(config.Get("permalink")))
 	if err != nil {
 		jww.FATAL.Fatalln("can't get tracks from SoundCloud", err)
 	}
