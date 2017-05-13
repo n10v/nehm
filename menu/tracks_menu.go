@@ -37,7 +37,7 @@ type TracksMenu struct {
 // Show gets tracks from GetTracks function, show these tracks,
 // adds id of selected track to tm.isSelected to detect, what track is selected,
 // adds selected to tm.selectedTracks and returns them.
-func (tm TracksMenu) Show() []track.Track {
+func (tm *TracksMenu) Show() []track.Track {
 	jww.FEEDBACK.Println("Getting information about tracks")
 	tracks, err := tm.GetTracks(tm.Offset)
 	if err != nil {
@@ -112,7 +112,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	return trackItems
 }
 
-// clearPath is used for holding the path to clear binary,
+// clearPath is used for holding the path to 'clear'/'cls' binary,
 // so exec.Command() don't have to always look the path to command.
 var clearPath string
 
