@@ -50,7 +50,8 @@ func (m *Menu) Reset() {
 
 func (m Menu) Show() {
 	// Add quit note.
-	m.output.WriteString("\nCtrl-C to Quit\n")
+	// m.output.WriteString("Ctrl-C to " + color.RedString("Quit\n"))
+	m.output.WriteString("Ctrl-C to Quit\n")
 
 	// Print all items.
 	logs.FEEDBACK.Println(m.output.String())

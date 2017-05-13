@@ -8,13 +8,15 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/bogem/nehm/color"
 )
 
 var (
-	DEBUG    = log.New(new(emptyWriter), "DEBUG:", 0)
-	WARN     = log.New(os.Stdout, "WARN:", 0)
-	ERROR    = log.New(os.Stderr, "ERROR:", 0)
-	FATAL    = log.New(os.Stderr, "FATAL ERROR:", 0)
+	DEBUG    = log.New(new(emptyWriter), "DEBUG: ", 0)
+	WARN     = log.New(os.Stdout, color.YellowString("WARN: "), 0)
+	ERROR    = log.New(os.Stderr, color.RedString("ERROR: "), 0)
+	FATAL    = log.New(os.Stderr, color.RedString("FATAL ERROR: "), 0)
 	FEEDBACK = new(feedback)
 
 	DebugMode bool

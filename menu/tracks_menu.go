@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/bogem/nehm/api"
+	"github.com/bogem/nehm/color"
 	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
 )
@@ -93,7 +94,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 		var trackItem MenuItem
 		if _, contains := tm.isSelected[t.ID()]; contains {
 			trackItem = MenuItem{
-				Index: "A",
+				Index: color.GreenString("A"),
 				Desc:  desc,
 			}
 		} else {
@@ -159,8 +160,9 @@ func (tm *TracksMenu) controlItems() []MenuItem {
 	return []MenuItem{
 		MenuItem{
 			Index: "d",
-			Desc:  "Download tracks",
-			Run:   func() { tm.selectionFinished = true },
+			// Desc:  color.GreenString("Download tracks"),
+			Desc: "Download tracks",
+			Run:  func() { tm.selectionFinished = true },
 		},
 
 		MenuItem{
