@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	DEBUG    = log.New(new(emptyWriter), "DEBUG: ", 0)
+	DEBUG    = log.New(new(emptyWriter), "", 0)
 	WARN     = log.New(os.Stdout, color.YellowString("WARN: "), 0)
 	ERROR    = log.New(os.Stderr, color.RedString("ERROR: "), 0)
 	FATAL    = log.New(os.Stderr, color.RedString("FATAL ERROR: "), 0)
@@ -21,7 +21,7 @@ var (
 )
 
 func EnableDebug() {
-	DEBUG = log.New(os.Stdout, "DEBUG:", 0)
+	DEBUG = log.New(os.Stdout, "DEBUG: ", 0)
 }
 
 type emptyWriter struct{}
