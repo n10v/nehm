@@ -6,6 +6,7 @@ package downloader
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -117,7 +118,7 @@ func downloadArtwork(t track.Track, path string) error {
 }
 
 func download(path, url string) error {
-	logs.DEBUG.Println("Download from %q to %q", url, path)
+	logs.DEBUG.Printf("Download from %q to %q\n", url, path)
 
 	// Download content to memory.
 	status, body, err := fasthttp.Get(nil, url)
@@ -140,7 +141,7 @@ func download(path, url string) error {
 	return err
 }
 
-func tag(t track.Track, trackPath string, artwork *os.File) error {
+func tag(t track.Track, trackPath string, artwork io.Reader) error {
 	tag, e := id3v2.Open(trackPath, id3v2.Options{Parse: false})
 	if e != nil {
 		return e
