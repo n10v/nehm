@@ -65,6 +65,6 @@ func executeOSAScript(args ...string) (string, error) {
 
 	args = append([]string{scriptFile.Name()}, args...)
 	logs.DEBUG.Println("Executing osascript with args :", args)
-	out, err := exec.Command("osascript", args...).Output()
+	out, err := exec.Command("osascript", args...).CombinedOutput()
 	return string(out), err
 }
