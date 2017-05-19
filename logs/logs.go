@@ -13,33 +13,33 @@ import (
 )
 
 var (
-	DEBUG    = log.New(new(emptyWriter), "", 0)
+	INFO     = log.New(new(emptyWriter), "", 0)
 	WARN     = log.New(os.Stdout, color.YellowString("WARN: "), 0)
 	ERROR    = log.New(os.Stderr, color.RedString("ERROR: "), 0)
 	FATAL    = log.New(os.Stderr, color.RedString("FATAL ERROR: "), 0)
 	FEEDBACK = new(feedback)
 )
 
-func EnableDebug() {
-	DEBUG = log.New(os.Stdout, "DEBUG: ", 0)
+func EnableInfo() {
+	INFO = log.New(os.Stdout, "INFO: ", 0)
 }
 
 type emptyWriter struct{}
 
-func (w emptyWriter) Write(p []byte) (n int, err error) {
+func (emptyWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
 type feedback struct{}
 
-func (f feedback) Print(a ...interface{}) {
+func (feedback) Print(a ...interface{}) {
 	fmt.Print(a...)
 }
 
-func (f feedback) Println(a ...interface{}) {
+func (feedback) Println(a ...interface{}) {
 	fmt.Println(a...)
 }
 
-func (f feedback) Printf(format string, a ...interface{}) {
+func (feedback) Printf(format string, a ...interface{}) {
 	fmt.Printf(format, a...)
 }

@@ -28,7 +28,7 @@ var (
 // activateVerboseOutput activates verbose output, if verbose flag is provided.
 func activateVerboseOutput(cmd *cobra.Command, args []string) {
 	if verbose {
-		logs.EnableDebug()
+		logs.EnableInfo()
 	}
 }
 

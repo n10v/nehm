@@ -79,8 +79,8 @@ func (downloader Downloader) Download(t track.Track) error {
 	// err will only be returned at the end of this function.
 	var err error
 
-	logs.DEBUG.Printf("Downloading from %q to %q\n", t.URL(), trackPath)
-	logs.DEBUG.Printf("Downloading artwork from %q\n", t.ArtworkURL())
+	logs.INFO.Printf("Downloading from %q to %q\n", t.URL(), trackPath)
+	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
 	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 
 	// Download artwork.

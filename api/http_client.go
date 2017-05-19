@@ -58,7 +58,7 @@ func formFavoritesURI(uid string, params url.Values) string {
 }
 
 func get(uri string) ([]byte, error) {
-	logs.DEBUG.Println("GET", uri)
+	logs.INFO.Println("GET", uri)
 	statusCode, body, err := fasthttp.Get(nil, uri)
 	if err != nil {
 		return nil, err
