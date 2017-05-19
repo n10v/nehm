@@ -7,7 +7,6 @@ package downloader
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -44,8 +43,11 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
 		if err := downloader.Download(track); err != nil {
+			logs.FEEDBACK.Println(" ✘")
 			errors = append(errors, track.Fullname()+": "+err.Error())
 			logs.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
+		} else {
+			logs.FEEDBACK.Println(" ✔︎")
 		}
 	}
 
@@ -58,38 +60,47 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	}
 }
 
+// artworkBuf and musicBuf are used for reusing memory when
+// download artworks and tracks respectively.
+var artworkBuf, musicBuf []byte
+
 func (downloader Downloader) Download(t track.Track) error {
-	// Download track.
-	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
+	artworkBuf = artworkBuf[:0]
+	musicBuf = musicBuf[:0]
+
+	// Create track file.
 	trackPath := filepath.Join(downloader.dist, t.Filename())
-	if _, e := os.Create(trackPath); e != nil {
+	trackFile, e := os.Create(trackPath)
+	if e != nil {
 		return fmt.Errorf("couldn't create track file: %v", e)
-	}
-	if e := downloadTrack(t, trackPath); e != nil {
-		return fmt.Errorf("couldn't download track: %v", e)
 	}
 
 	// err lets us to not prevent the processing of track further.
 	// err will only be returned at the end of this function.
 	var err error
 
-	// Download artwork.
-	artworkFile, e := ioutil.TempFile("", "")
-	if e != nil {
-		err = fmt.Errorf("couldn't create artwork file: %v", e)
-	} else {
-		if e = downloadArtwork(t, artworkFile.Name()); e != nil {
-			err = fmt.Errorf("couldn't download artwork file: %v", e)
-		}
+	logs.DEBUG.Printf("Downloading from %q to %q\n", t.URL(), trackPath)
+	logs.DEBUG.Printf("Downloading artwork from %q\n", t.ArtworkURL())
+	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 
-		// Defer deleting artwork.
-		defer artworkFile.Close()
-		defer os.Remove(artworkFile.Name())
+	// Download artwork.
+	artworkBuf, e = download(artworkBuf, t.ArtworkURL())
+	if e != nil {
+		err = fmt.Errorf("couldn't download artwork file: %v", e)
 	}
 
-	// Tag track.
-	if e := tag(t, trackPath, artworkFile); e != nil {
-		err = fmt.Errorf("there was an error while taging track: %v", e)
+	// Write ID3 tag to trackFile.
+	if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil {
+		err = fmt.Errorf("there was an error while tagging track: %v", e)
+	}
+
+	// Download track and write to trackFile.
+	musicBuf, e = download(musicBuf, t.URL())
+	if e != nil {
+		return fmt.Errorf("couldn't download track: %v", e)
+	}
+	if _, e := trackFile.Write(musicBuf); e != nil {
+		return fmt.Errorf("couldn't write track to file: %v", e)
 	}
 
 	// Add to iTunes.
@@ -100,78 +111,38 @@ func (downloader Downloader) Download(t track.Track) error {
 		}
 	}
 
-	if err == nil {
-		logs.FEEDBACK.Println(" ✔︎")
-	} else {
-		logs.FEEDBACK.Println(" ✘")
-	}
-
 	return err
 }
 
-func downloadTrack(t track.Track, path string) error {
-	return download(path, t.URL())
-}
-
-func downloadArtwork(t track.Track, path string) error {
-	return download(path, t.ArtworkURL())
-}
-
-func download(path, url string) error {
-	logs.DEBUG.Printf("Download from %q to %q\n", url, path)
-
-	// Download content to memory.
-	status, body, err := fasthttp.Get(nil, url)
+func download(buf []byte, url string) ([]byte, error) {
+	status, buf, err := fasthttp.Get(buf, url)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if status/100 != 2 {
-		return fmt.Errorf("unexpected response status: %v", status)
+		return nil, fmt.Errorf("unexpected response status: %v", status)
 	}
+	return buf, nil
 
-	// Create file.
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	// Write content to file.
-	_, err = file.Write(body)
-	return err
 }
 
-func tag(t track.Track, trackPath string, artwork io.Reader) error {
-	tag, e := id3v2.Open(trackPath, id3v2.Options{Parse: false})
-	if e != nil {
-		return e
-	}
-	defer tag.Close()
+func writeTagToWriter(t track.Track, w io.Writer, artwork []byte) error {
+	tag := id3v2.NewEmptyTag()
 
 	tag.SetArtist(t.Artist())
 	tag.SetTitle(t.Title())
 	tag.SetYear(t.Year())
 
-	var err error
-
-	if artwork != nil {
-		artworkBytes, e := ioutil.ReadAll(artwork)
-		if e != nil {
-			err = fmt.Errorf("couldn't read artwork file: %v", e)
-		} else {
-			pic := id3v2.PictureFrame{
-				Encoding:    id3v2.ENUTF8,
-				MimeType:    "image/jpeg",
-				PictureType: id3v2.PTFrontCover,
-				Picture:     artworkBytes,
-			}
-			tag.AddAttachedPicture(pic)
+	if len(artwork) > 0 {
+		pic := id3v2.PictureFrame{
+			Encoding:    id3v2.ENUTF8,
+			MimeType:    "image/jpeg",
+			PictureType: id3v2.PTFrontCover,
+			Picture:     artwork,
 		}
+		tag.AddAttachedPicture(pic)
 	}
 
-	if e := tag.Save(); e != nil {
-		err = fmt.Errorf("couldn't save tag: %v", e)
-	}
-
+	_, err := tag.WriteTo(w)
 	return err
 }
