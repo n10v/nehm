@@ -60,14 +60,10 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	}
 }
 
-// artworkBuf and musicBuf are used for reusing memory when
-// download artworks and tracks respectively.
-var artworkBuf, musicBuf []byte
+// downloadBuf is used for reusing memory while downloading artworks and tracks.
+var downloadBuf []byte
 
 func (downloader Downloader) Download(t track.Track) error {
-	artworkBuf = artworkBuf[:0]
-	musicBuf = musicBuf[:0]
-
 	// Create track file.
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	trackFile, e := os.Create(trackPath)
@@ -84,22 +80,24 @@ func (downloader Downloader) Download(t track.Track) error {
 	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 
 	// Download artwork.
-	artworkBuf, e = download(artworkBuf, t.ArtworkURL())
+	downloadBuf = downloadBuf[:0]
+	downloadBuf, e = download(downloadBuf, t.ArtworkURL())
 	if e != nil {
 		err = fmt.Errorf("couldn't download artwork file: %v", e)
 	}
 
 	// Write ID3 tag to trackFile.
-	if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil && err == nil {
+	if e := writeTagToWriter(t, trackFile, downloadBuf); e != nil && err == nil {
 		err = fmt.Errorf("there was an error while tagging track: %v", e)
 	}
 
 	// Download track and write to trackFile.
-	musicBuf, e = download(musicBuf, t.URL())
+	downloadBuf = downloadBuf[:0]
+	downloadBuf, e = download(downloadBuf, t.URL())
 	if e != nil {
 		return fmt.Errorf("couldn't download track: %v", e)
 	}
-	if _, e := trackFile.Write(musicBuf); e != nil {
+	if _, e := trackFile.Write(downloadBuf); e != nil {
 		return fmt.Errorf("couldn't write track to file: %v", e)
 	}
 
