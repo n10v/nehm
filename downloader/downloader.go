@@ -90,7 +90,7 @@ func (downloader Downloader) Download(t track.Track) error {
 	}
 
 	// Write ID3 tag to trackFile.
-	if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil {
+	if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil && err == nil {
 		err = fmt.Errorf("there was an error while tagging track: %v", e)
 	}
 
@@ -106,7 +106,7 @@ func (downloader Downloader) Download(t track.Track) error {
 	// Add to iTunes.
 	if downloader.itunesPlaylist != "" {
 		logs.FEEDBACK.Print(" adding to iTunes ...")
-		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil {
+		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil && err == nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
 	}
