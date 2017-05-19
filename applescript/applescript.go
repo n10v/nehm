@@ -5,12 +5,11 @@
 package applescript
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
-
-	"github.com/bogem/nehm/logs"
 )
 
 const (
@@ -42,8 +41,8 @@ end list_of_playlists
 var scriptFile *os.File
 
 func AddTrackToPlaylist(trackPath, playlistName string) error {
-	_, err := executeOSAScript("add_track_to_playlist", trackPath, playlistName)
-	return err
+	out, _ := executeOSAScript("add_track_to_playlist", "./"+trackPath, playlistName)
+	return errors.New(out)
 }
 
 func ListOfPlaylists() (string, error) {
@@ -64,7 +63,6 @@ func executeOSAScript(args ...string) (string, error) {
 	}
 
 	args = append([]string{scriptFile.Name()}, args...)
-	logs.DEBUG.Println("Executing osascript with args :", args)
 	out, err := exec.Command("osascript", args...).CombinedOutput()
 	return string(out), err
 }
