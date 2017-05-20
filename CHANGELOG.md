@@ -1,5 +1,14 @@
 # nehm change log
 
+## 4.0
+* Added `sync` command. More in README [#11](https://github.com/bogem/nehm/pull/11). Thanks for [Snake4life](https://github.com/snake4life) for idea!
+* Got rid of `curl` dependency. Now you don't have to install even `curl`
+for working `nehm`! [#15](https://github.com/bogem/nehm/issues/15)
+* Added the ability to access more than 270 likes [#17](https://github.com/bogem/nehm/issues/17)
+* Major performance and memory consumption improvements
+* Made a lot of refactoring so code is much cleaner now
+* Many minor improvements
+
 ## 3.2
 * Add errors stack after the downloading if there were errors
 * Add "ERROR: " and "WARNING: " prefixes for errors and warnings respectively
