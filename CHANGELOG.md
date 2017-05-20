@@ -5,6 +5,7 @@
 * Got rid of `curl` dependency. Now you don't have to install even `curl`
 for working `nehm`! [#15](https://github.com/bogem/nehm/issues/15)
 * Added the ability to access more than 270 likes [#17](https://github.com/bogem/nehm/issues/17)
+* Delete the offset flag as we use now linked partitioning instead of offset-based pagination. More in commit description: [29cb18c](https://github.com/bogem/nehm/commit/29cb18cc4c702fb8cd3157eda58e44d6ec35f088)
 * Major performance and memory consumption improvements
 * Made a lot of refactoring so code is much cleaner now
 * Many minor improvements
