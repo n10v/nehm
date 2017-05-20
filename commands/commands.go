@@ -21,7 +21,7 @@ var rootCmd = listCommand
 
 // Variables used in flags.
 var (
-	limit, offset                       uint
+	limit                               uint
 	dlFolder, itunesPlaylist, permalink string
 	verbose                             bool
 )
@@ -46,10 +46,6 @@ func addItunesPlaylistFlag(cmd *cobra.Command) {
 
 func addLimitFlag(cmd *cobra.Command) {
 	cmd.Flags().UintVarP(&limit, "limit", "l", 9, "count of tracks on each page")
-}
-
-func addOffsetFlag(cmd *cobra.Command) {
-	cmd.Flags().UintVarP(&offset, "offset", "o", 0, "offset relative to first like")
 }
 
 func addPermalinkFlag(cmd *cobra.Command) {

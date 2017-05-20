@@ -10,7 +10,6 @@ import (
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/menu"
-	"github.com/bogem/nehm/track"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +20,6 @@ var (
 		Aliases: []string{"s"},
 		Run:     searchAndShowTracks,
 	}
-
-	searchQuery string
 )
 
 func init() {
@@ -34,17 +31,10 @@ func init() {
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
-	searchQuery = strings.Join(args, " ")
+	query := strings.Join(args, " ")
 
-	tm := menu.TracksMenu{
-		GetTracks: searchGetTracks,
-		Limit:     limit,
-	}
+	tm := menu.NewTracksMenu(api.FormSearchURL(limit, query))
 	downloadTracks := tm.Show()
 
 	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
-}
-
-func searchGetTracks(offset uint) ([]track.Track, error) {
-	return api.Search(searchQuery, limit, offset)
 }

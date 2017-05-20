@@ -28,7 +28,6 @@ var (
 func init() {
 	addDlFolderFlag(getCommand)
 	addItunesPlaylistFlag(getCommand)
-	addOffsetFlag(getCommand)
 	addPermalinkFlag(getCommand)
 }
 
@@ -59,8 +58,7 @@ func getTracks(cmd *cobra.Command, args []string) {
 
 func getLastTracks(count uint) ([]track.Track, error) {
 	logs.FEEDBACK.Println("Getting ID of user")
-	uid := api.UID(config.Get("permalink"))
-	return api.Favorites(count, offset, uid)
+	return api.Favorites(count, api.UID(config.Get("permalink")))
 }
 
 func isSoundCloudURL(url string) bool {
@@ -68,5 +66,5 @@ func isSoundCloudURL(url string) bool {
 }
 
 func getTrackFromURL(url string) []track.Track {
-	return api.TrackFromURI(url)
+	return api.TrackFromURL(url)
 }

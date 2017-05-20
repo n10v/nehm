@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"errors"
 	"net/url"
+	"strconv"
 
 	"github.com/bogem/nehm/logs"
 	"github.com/valyala/fasthttp"
@@ -22,44 +23,49 @@ var (
 	ErrForbidden = errors.New("403 - you're not allowed to see these tracks")
 	ErrNotFound  = errors.New("404 - there are no tracks")
 
-	uriBuffer = new(bytes.Buffer)
+	urlBuffer = new(bytes.Buffer)
 )
 
-func formResolveURI(params url.Values) string {
-	params.Set("client_id", clientID)
-
-	uriBuffer.Reset()
-	uriBuffer.WriteString(apiURL)
-	uriBuffer.WriteString("/resolve?")
-	uriBuffer.WriteString(params.Encode())
-	return uriBuffer.String()
+func formResolveURL(query string) string {
+	urlBuffer.Reset()
+	urlBuffer.WriteString(apiURL)
+	urlBuffer.WriteString("/resolve?")
+	urlBuffer.WriteString(query)
+	return urlBuffer.String()
 }
 
-func formSearchURI(params url.Values) string {
-	params.Set("client_id", clientID)
+func FormSearchURL(limit uint, query string) string {
+	params := url.Values{}
+	params.Set("limit", strconv.Itoa(int(limit)))
+	params.Set("linked_partitioning", "1")
+	params.Set("client_id", "11a37feb6ccc034d5975f3f803928a32")
+	params.Set("q", query)
 
-	uriBuffer.Reset()
-	uriBuffer.WriteString(apiURL)
-	uriBuffer.WriteString("/tracks?")
-	uriBuffer.WriteString(params.Encode())
-	return uriBuffer.String()
+	urlBuffer.Reset()
+	urlBuffer.WriteString(apiURL)
+	urlBuffer.WriteString("/tracks?")
+	urlBuffer.WriteString(params.Encode())
+	return urlBuffer.String()
 }
 
-func formFavoritesURI(uid string, params url.Values) string {
-	params.Set("client_id", clientID)
+func FormFavoritesURL(limit uint, uid string) string {
+	params := url.Values{}
+	params.Set("limit", strconv.Itoa(int(limit)))
+	params.Set("linked_partitioning", "1")
+	params.Set("client_id", "11a37feb6ccc034d5975f3f803928a32")
 
-	uriBuffer.Reset()
-	uriBuffer.WriteString(apiURL)
-	uriBuffer.WriteString("/users/")
-	uriBuffer.WriteString(uid)
-	uriBuffer.WriteString("/favorites?")
-	uriBuffer.WriteString(params.Encode())
-	return uriBuffer.String()
+	urlBuffer.Reset()
+	urlBuffer.WriteString(apiURL)
+	urlBuffer.WriteString("/users/")
+	urlBuffer.WriteString(uid)
+	urlBuffer.WriteString("/favorites?")
+	urlBuffer.WriteString(params.Encode())
+	return urlBuffer.String()
 }
 
-func get(uri string) ([]byte, error) {
-	logs.INFO.Println("GET", uri)
-	statusCode, body, err := fasthttp.Get(nil, uri)
+func get(url string) ([]byte, error) {
+	logs.INFO.Println("GET", url)
+	statusCode, body, err := fasthttp.Get(nil, url)
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,6 @@ import (
 	"github.com/bogem/nehm/downloader"
 	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/menu"
-	"github.com/bogem/nehm/track"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +36,6 @@ func init() {
 	addDlFolderFlag(listCommand)
 	addItunesPlaylistFlag(listCommand)
 	addLimitFlag(listCommand)
-	addOffsetFlag(listCommand)
 	addPermalinkFlag(listCommand)
 }
 
@@ -45,18 +43,10 @@ func showListOfTracks(cmd *cobra.Command, args []string) {
 	initializeConfig(cmd)
 
 	logs.FEEDBACK.Println("Getting ID of user")
-	config.Set("UID", api.UID(config.Get("permalink")))
+	uid := api.UID(config.Get("permalink"))
 
-	tm := menu.TracksMenu{
-		GetTracks: listGetTracks,
-		Limit:     limit,
-		Offset:    offset,
-	}
+	tm := menu.NewTracksMenu(api.FormFavoritesURL(limit, uid))
 	downloadTracks := tm.Show()
 
 	downloader.NewConfiguredDownloader().DownloadAll(downloadTracks)
-}
-
-func listGetTracks(offset uint) ([]track.Track, error) {
-	return api.Favorites(limit, offset, config.Get("UID"))
 }

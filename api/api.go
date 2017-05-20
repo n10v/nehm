@@ -6,8 +6,7 @@ package api
 
 import (
 	"encoding/json"
-	"math"
-	"net/url"
+	u "net/url"
 	"strconv"
 
 	"github.com/bogem/nehm/logs"
@@ -15,53 +14,21 @@ import (
 )
 
 const (
-	tracksLimit    = 150
+	maxLimit       = 200
 	soundCloudLink = "http://soundcloud.com/"
 )
 
-func Favorites(count, offset uint, uid string) ([]track.Track, error) {
-	requestsCount := float64(count) / float64(tracksLimit)
-	requestsCount = math.Ceil(requestsCount)
-
-	var limit uint
-	var tracks []track.Track
-	params := url.Values{}
-	for i := uint(0); i < uint(requestsCount); i++ {
-		if count < tracksLimit {
-			limit = count
-		} else {
-			limit = tracksLimit
-		}
-		count -= limit
-
-		params.Set("limit", strconv.Itoa(int(limit)))
-		params.Set("offset", strconv.Itoa(int((i*tracksLimit)+offset)))
-
-		bFavs, err := get(formFavoritesURI(uid, params))
-		if err == ErrNotFound {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-
-		var favs []track.Track
-		if err := json.Unmarshal(bFavs, &favs); err != nil {
-			logs.FATAL.Fatalln("could't unmarshal JSON with likes:", err)
-		}
-		tracks = append(tracks, favs...)
-	}
-	return tracks, nil
+func Favorites(limit uint, uid string) ([]track.Track, error) {
+	p := NewPaginator(FormFavoritesURL(limit, uid))
+	return p.NextPage()
 }
 
 func AllFavorites(uid string) ([]track.Track, error) {
-	offset := 0
+	p := NewPaginator(FormFavoritesURL(maxLimit, uid))
 	tracks := make([]track.Track, 0)
 
-	// Run loop while len(fav) != 0.
-	// If len(fav) == 0, then we know, what there are no more favorites by user
-	for {
-		favs, err := Favorites(tracksLimit, uint(offset), uid)
+	for !p.OnLastPage() {
+		favs, err := p.NextPage()
 		tracks = append(tracks, favs...)
 		if err == ErrForbidden {
 			break
@@ -72,8 +39,6 @@ func AllFavorites(uid string) ([]track.Track, error) {
 		if len(favs) == 0 {
 			break
 		}
-
-		offset += tracksLimit
 	}
 
 	return tracks, nil
@@ -84,10 +49,11 @@ type JSONUser struct {
 }
 
 func UID(permalink string) string {
-	params := url.Values{}
+	params := u.Values{}
 	params.Set("url", soundCloudLink+permalink)
+	params.Set("client_id", clientID)
 
-	bUser, err := get(formResolveURI(params))
+	bUser, err := get(formResolveURL(params.Encode()))
 	if err != nil {
 		logs.FATAL.Fatalln("there was a problem by resolving an id of user:", err)
 	}
@@ -100,30 +66,12 @@ func UID(permalink string) string {
 	return strconv.Itoa(jUser.ID)
 }
 
-func Search(query string, limit, offset uint) ([]track.Track, error) {
-	params := url.Values{}
-	params.Set("q", query)
-	params.Set("limit", strconv.Itoa(int(limit)))
-	params.Set("offset", strconv.Itoa(int(offset)))
+func TrackFromURL(url string) []track.Track {
+	params := u.Values{}
+	params.Set("url", url)
+	params.Set("client_id", clientID)
 
-	bFound, err := get(formSearchURI(params))
-	if err != nil {
-		return nil, err
-	}
-
-	var found []track.Track
-	if err := json.Unmarshal(bFound, &found); err != nil {
-		logs.FATAL.Fatalln("couldn't unmarshal JSON with search results:", err)
-	}
-
-	return found, nil
-}
-
-func TrackFromURI(uri string) []track.Track {
-	params := url.Values{}
-	params.Set("url", uri)
-
-	bTrack, err := get(formResolveURI(params))
+	bTrack, err := get(formResolveURL(params.Encode()))
 	if err == ErrForbidden {
 		logs.FATAL.Fatalln("you haven't got any access to this track:", err)
 	}

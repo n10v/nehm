@@ -66,10 +66,6 @@ Also commands may be abbreviated to one symbol length. For example, you can inpu
 
 	$ nehm get 3
 
-#### Download second like and don't add it to iTunes playlist
-
-	$ nehm get -o 1 -i ''
-
 #### Download track from URL
 
 	$ nehm get soundcloud.com/nasa/golden-record-russian-greeting

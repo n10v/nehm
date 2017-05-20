@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"runtime"
 	"strconv"
-	"time"
+	"strings"
 
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/color"
@@ -17,14 +17,18 @@ import (
 	"github.com/bogem/nehm/track"
 )
 
-// TracksMenu gets tracks from GetTracks function, shows them in menu
+func NewTracksMenu(firstPageURL string) *TracksMenu {
+	return &TracksMenu{paginator: api.NewPaginator(firstPageURL)}
+}
+
+// TracksMenu gets tracks from paginator, shows them in menu
 // and returns selected tracks.
 //
 // TracksMenu finishes when user pushes 'd' button.
 type TracksMenu struct {
-	GetTracks func(offset uint) ([]track.Track, error)
-	Limit     uint
-	Offset    uint
+	paginator *api.Paginator
+	tracks    []track.Track
+	err       error
 
 	// isSelected holds the ids of selected tracks. With map we can
 	// detect really fast if track is selected.
@@ -35,44 +39,44 @@ type TracksMenu struct {
 	selectionFinished bool
 }
 
-// Show gets tracks from GetTracks function, show these tracks,
+// Show gets tracks from tm.paginator, show these tracks,
 // adds id of selected track to tm.isSelected to detect, what track is selected,
 // adds selected to tm.selectedTracks and returns them.
 func (tm *TracksMenu) Show() []track.Track {
 	logs.FEEDBACK.Println("Getting information about tracks")
-	tracks, err := tm.GetTracks(tm.Offset)
-	if err != nil {
-		logs.FATAL.Fatalln(err)
+
+	tm.getNextPage()
+	if tm.err != nil {
+		logs.FATAL.Fatalln(tm.err)
 	}
-	if len(tracks) == 0 {
+	if len(tm.tracks) == 0 {
 		logs.FEEDBACK.Println("There are no tracks to show")
 		os.Exit(0)
 	}
 
-	oldOffset := tm.Offset
-
 	tm.isSelected = make(map[float64]bool)
 	for !tm.selectionFinished {
-		if oldOffset != tm.Offset { // If it's new page.
-			oldOffset = tm.Offset
-			tracks, err = tm.GetTracks(tm.Offset)
-			if err != nil {
-				logs.ERROR.Println(err)
-
-				// If it's first page or it's unknown error, we should exit.
-				if tm.Offset < tm.Limit || !(err == api.ErrForbidden || err == api.ErrNotFound) {
-					os.Exit(1)
-				}
-
-				logs.FEEDBACK.Println("Downloading previous page")
-				time.Sleep(1 * time.Second) // Sleep so user can read the errors.
-
-				tm.Offset -= tm.Limit
+		if tm.err != nil {
+			if tm.err == api.ErrLastPage {
+				tm.getPrevPage()
 				continue
+			}
+			if tm.err == api.ErrFirstPage {
+				tm.getNextPage()
+				continue
+			}
+
+			logs.ERROR.Println(tm.err)
+			logs.FEEDBACK.Print("There was an error. Do you want to download selected tracks before exit? (Y/n): ")
+			answer := readInput()
+			if strings.EqualFold(answer, "n") {
+				os.Exit(1)
+			} else {
+				break
 			}
 		}
 
-		trackItems := tm.formTrackItems(tracks)
+		trackItems := tm.formTrackItems(tm.tracks)
 		clearScreen()
 		tm.showMenu(trackItems)
 	}
@@ -83,9 +87,6 @@ func (tm *TracksMenu) Show() []track.Track {
 var trackItems []MenuItem
 
 func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
-	if trackItems == nil {
-		trackItems = make([]MenuItem, 0, tm.Limit)
-	}
 	trackItems = trackItems[:0]
 
 	for i, t := range tracks {
@@ -113,7 +114,7 @@ func (tm *TracksMenu) formTrackItems(tracks []track.Track) []MenuItem {
 	return trackItems
 }
 
-// clearPath is used for holding the path to 'clear'/'cls' binary,
+// clearPath is used for holding the path to 'clear' or 'cls' binary,
 // so exec.Command() don't have to always look the path to command.
 var clearPath string
 
@@ -140,47 +141,44 @@ func clearScreen() {
 	cmd.Run()
 }
 
-var (
-	controlItems []MenuItem
-	menu         Menu
-)
+var menu Menu
 
 func (tm *TracksMenu) showMenu(trackItems []MenuItem) {
-	if controlItems == nil {
-		controlItems = tm.controlItems()
-	}
 	menu.Reset()
 	menu.AddItems(trackItems...)
 	menu.AddNewline()
-	menu.AddItems(controlItems...)
+	menu.AddItems(tm.controlItems()...)
 	menu.Show()
 }
 
 func (tm *TracksMenu) controlItems() []MenuItem {
-	return []MenuItem{
-		MenuItem{
-			Index: "d",
-			// Desc:  color.GreenString("Download tracks"),
-			Desc: "Download tracks",
-			Run:  func() { tm.selectionFinished = true },
-		},
-
-		MenuItem{
+	items := make([]MenuItem, 0, 3)
+	items = append(items, MenuItem{
+		Index: "d",
+		Desc:  "Download tracks",
+		Run:   func() { tm.selectionFinished = true },
+	})
+	if !tm.paginator.OnLastPage() {
+		items = append(items, MenuItem{
 			Index: "n",
 			Desc:  "Next page",
-			Run:   func() { tm.Offset += tm.Limit },
-		},
-
-		MenuItem{
+			Run:   func() { tm.getNextPage() },
+		})
+	}
+	if !tm.paginator.OnFirstPage() {
+		items = append(items, MenuItem{
 			Index: "p",
 			Desc:  "Prev page",
-			Run: func() {
-				if tm.Offset >= tm.Limit {
-					tm.Offset -= tm.Limit
-				} else {
-					tm.Offset = 0
-				}
-			},
-		},
+			Run:   func() { tm.getPrevPage() },
+		})
 	}
+	return items
+}
+
+func (tm *TracksMenu) getNextPage() {
+	tm.tracks, tm.err = tm.paginator.NextPage()
+}
+
+func (tm *TracksMenu) getPrevPage() {
+	tm.tracks, tm.err = tm.paginator.PrevPage()
 }
