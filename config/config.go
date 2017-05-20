@@ -28,9 +28,7 @@ var (
 
 // Get has the behavior of returning the value associated with the first
 // place from where it is set. Get will check value in the following order:
-// flag, config file, defaults. Get is case-sensitive.
-//
-// Get returns a string. For a specific value you can use one of the Get____ methods.
+// override, config file, defaults. Get is case-sensitive.
 func Get(key string) string {
 	if value, exists := override[key]; exists {
 		return value
