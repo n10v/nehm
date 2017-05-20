@@ -20,7 +20,7 @@ var (
 	syncCommand = &cobra.Command{
 		Use:   "sync",
 		Short: "Synchronise your favorites with folder",
-		Long:  "This command downloads missing favorites to your folder. You can configure folder with dlFolder flag.",
+		Long:  "This command downloads missing favorites to dlFolder.",
 		Run:   sync,
 	}
 )
