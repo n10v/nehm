@@ -14,7 +14,6 @@ import (
 	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/util"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 )
 
 var rootCmd = listCommand
@@ -58,13 +57,13 @@ func initializeConfig(cmd *cobra.Command) {
 	readInConfig()
 
 	flags := cmd.Flags()
-	if flagExists(flags, "dlFolder") {
+	if flags.Lookup("dlFolder") != nil {
 		initializeDlFolder(cmd)
 	}
-	if flagExists(flags, "permalink") {
+	if flags.Lookup("permalink") != nil {
 		initializePermalink(cmd)
 	}
-	if flagExists(flags, "itunesPlaylist") {
+	if flags.Lookup("itunesPlaylist") != nil {
 		initializeItunesPlaylist(cmd)
 	}
 }
@@ -80,24 +79,12 @@ func readInConfig() {
 	}
 }
 
-func flagExists(fs *pflag.FlagSet, key string) bool {
-	return fs.Lookup(key) != nil
-}
-
-func flagChanged(fs *pflag.FlagSet, key string) bool {
-	flag := fs.Lookup(key)
-	if flag == nil {
-		return false
-	}
-	return flag.Changed
-}
-
 // initializeDlFolder initializes dlFolder value. If there is no dlFolder
 // set up, then dlFolder is set to HOME env variable.
 func initializeDlFolder(cmd *cobra.Command) {
 	var df string
 
-	if flagChanged(cmd.Flags(), "dlFolder") {
+	if cmd.Flags().Changed("dlFolder") {
 		df = dlFolder
 	} else {
 		df = config.Get("dlFolder")
@@ -116,7 +103,7 @@ func initializeDlFolder(cmd *cobra.Command) {
 func initializePermalink(cmd *cobra.Command) {
 	var p string
 
-	if flagChanged(cmd.Flags(), "permalink") {
+	if cmd.Flags().Changed("permalink") {
 		p = permalink
 	} else {
 		p = config.Get("permalink")
@@ -138,7 +125,7 @@ func initializeItunesPlaylist(cmd *cobra.Command) {
 	var playlist string
 
 	if runtime.GOOS == "darwin" {
-		if flagChanged(cmd.Flags(), "itunesPlaylist") {
+		if cmd.Flags().Changed("itunesPlaylist") {
 			playlist = itunesPlaylist
 		} else {
 			playlist = config.Get("itunesPlaylist")
