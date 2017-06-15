@@ -22,8 +22,8 @@ type Paginator struct {
 	// If it's -1, the Paginator was only initialized.
 	currentPage int
 
-	nextHref string
-	pages    []string
+	nextHref    string
+	tracksCache [][]track.Track
 }
 
 // NewPaginator returns new paginator.
@@ -54,12 +54,9 @@ func (p *Paginator) NextPage() ([]track.Track, error) {
 
 	p.currentPage++
 
-	// If p.pages already has a link to next page, then use it,
-	// else append p.nextHref to p.pages.
-	if len(p.pages) >= p.currentPage+1 {
-		p.nextHref = p.pages[p.currentPage]
-	} else if p.nextHref != "" {
-		p.pages = append(p.pages, p.nextHref)
+	// If p.tracksCache already has tracks of next page, then use them.
+	if len(p.tracksCache)-1 >= p.currentPage {
+		return p.tracksCache[p.currentPage], nil
 	}
 
 	response, err := getPage(p.nextHref)
@@ -67,6 +64,7 @@ func (p *Paginator) NextPage() ([]track.Track, error) {
 		return nil, err
 	}
 	p.nextHref = response.NextHref
+	p.tracksCache = append(p.tracksCache, response.Collection)
 	return response.Collection, nil
 }
 
@@ -84,19 +82,12 @@ func (p *Paginator) PrevPage() ([]track.Track, error) {
 
 	p.currentPage--
 
-	var url string
-	if len(p.pages) >= p.currentPage-1 {
-		url = p.pages[p.currentPage]
-	} else {
-		// This should never happen! :)
-		return nil, ErrFirstPage
+	if len(p.tracksCache)+1 >= p.currentPage {
+		return p.tracksCache[p.currentPage], nil
 	}
 
-	response, err := getPage(url)
-	if err != nil {
-		return nil, err
-	}
-	return response.Collection, nil
+	// This should never happen!
+	return nil, ErrFirstPage
 }
 
 // OnFirstPage checks, if current page is first.
