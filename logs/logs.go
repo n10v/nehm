@@ -6,6 +6,7 @@ package logs
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -13,7 +14,7 @@ import (
 )
 
 var (
-	INFO     = log.New(new(emptyWriter), "", 0)
+	INFO     = log.New(ioutil.Discard, "", 0)
 	WARN     = log.New(os.Stdout, color.YellowString("WARN: "), 0)
 	ERROR    = log.New(os.Stderr, color.RedString("ERROR: "), 0)
 	FATAL    = log.New(os.Stderr, color.RedString("FATAL ERROR: "), 0)
@@ -22,12 +23,6 @@ var (
 
 func EnableInfo() {
 	INFO = log.New(os.Stdout, "INFO: ", 0)
-}
-
-type emptyWriter struct{}
-
-func (emptyWriter) Write(p []byte) (n int, err error) {
-	return len(p), nil
 }
 
 type feedback struct{}
