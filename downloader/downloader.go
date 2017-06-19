@@ -89,14 +89,17 @@ func (downloader Downloader) Download(t track.Track) error {
 
 	go func() {
 		defer wg.Done()
+
 		// Download artwork.
 		artworkBuf = artworkBuf[:0]
 		_, artworkBuf, e = fasthttp.Get(artworkBuf, t.ArtworkURL())
 		if e != nil {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
+			return
 		}
+
 		// Write ID3 tag to trackFile.
-		if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil && err == nil {
+		if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil {
 			err = fmt.Errorf("there was an error while tagging track: %v", e)
 		}
 	}()
