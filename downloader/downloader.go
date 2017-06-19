@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"sync"
 
 	"github.com/bogem/id3v2"
 	"github.com/bogem/nehm/applescript"
@@ -60,8 +61,11 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	}
 }
 
-// downloadBuf is used for reusing memory while downloading artworks and tracks.
-var downloadBuf []byte
+// artworks and trackBuf are used for reusing memory while downloading artworks and tracks.
+var (
+	artworkBuf []byte
+	trackBuf   []byte
+)
 
 func (downloader Downloader) Download(t track.Track) error {
 	// Create track file.
@@ -79,25 +83,35 @@ func (downloader Downloader) Download(t track.Track) error {
 	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
 	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
 
-	// Download artwork.
-	downloadBuf = downloadBuf[:0]
-	downloadBuf, e = download(downloadBuf, t.ArtworkURL())
-	if e != nil {
-		err = fmt.Errorf("couldn't download artwork file: %v", e)
-	}
+	// Parallelize downloading of track and artwork.
+	var wg sync.WaitGroup
+	wg.Add(1)
 
-	// Write ID3 tag to trackFile.
-	if e := writeTagToWriter(t, trackFile, downloadBuf); e != nil && err == nil {
-		err = fmt.Errorf("there was an error while tagging track: %v", e)
-	}
+	go func() {
+		defer wg.Done()
+		// Download artwork.
+		artworkBuf = artworkBuf[:0]
+		_, artworkBuf, e = fasthttp.Get(artworkBuf, t.ArtworkURL())
+		if e != nil {
+			err = fmt.Errorf("couldn't download artwork file: %v", e)
+		}
+		// Write ID3 tag to trackFile.
+		if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil && err == nil {
+			err = fmt.Errorf("there was an error while tagging track: %v", e)
+		}
+	}()
 
-	// Download track and write to trackFile.
-	downloadBuf = downloadBuf[:0]
-	downloadBuf, e = download(downloadBuf, t.URL())
+	// Download track.
+	trackBuf = trackBuf[:0]
+	_, trackBuf, e = fasthttp.Get(trackBuf, t.URL())
 	if e != nil {
 		return fmt.Errorf("couldn't download track: %v", e)
 	}
-	if _, e := trackFile.Write(downloadBuf); e != nil {
+
+	wg.Wait()
+
+	// Write track to track file.
+	if _, e := trackFile.Write(trackBuf); e != nil {
 		return fmt.Errorf("couldn't write track to file: %v", e)
 	}
 
@@ -110,18 +124,6 @@ func (downloader Downloader) Download(t track.Track) error {
 	}
 
 	return err
-}
-
-func download(buf []byte, url string) ([]byte, error) {
-	status, buf, err := fasthttp.Get(buf, url)
-	if err != nil {
-		return nil, err
-	}
-	if status/100 != 2 {
-		return nil, fmt.Errorf("unexpected response status: %v", status)
-	}
-	return buf, nil
-
 }
 
 func writeTagToWriter(t track.Track, w io.Writer, artwork []byte) error {
