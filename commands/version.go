@@ -12,7 +12,7 @@ import (
 var (
 	versionCommand = &cobra.Command{
 		Use:     "version",
-		Short:   "nehm's version",
+		Short:   "nehm's version.",
 		Aliases: []string{"v"},
 		Run:     showVersion,
 	}
