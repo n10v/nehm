@@ -9,11 +9,11 @@
 </div>
 
 ## Description
-`nehm` is a console tool written in `Go`. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged and can be added to iTunes playlist, **if you use `macOS`**.
+*nehm* is a console tool written in Go. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged and can be added to iTunes playlist **if you use macOS**.
 
-`nehm` *wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
+*nehm wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
 
-***If you have ideas to improve `nehm`, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of `nehm`, don't hesitate to write an issue. I will answer as soon as possible.***
+***If you have ideas to improve nehm, issues and pull requests are always welcome! Also, if you have difficulties with installation/configuration/usage of nehm, don't hesitate to write an issue. I will answer as soon as possible.***
 
 ## Installation
 Install via `go` command:
@@ -23,7 +23,7 @@ Install via `go` command:
 or you can download and install binary from [latest release](https://github.com/bogem/nehm/releases).
 
 ## Configuration
-First of all, you should configure `nehm`:
+First of all, you should configure nehm:
 
 1. Create a file `.nehmconfig` in your home directory
 
