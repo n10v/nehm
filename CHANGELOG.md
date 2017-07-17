@@ -1,7 +1,7 @@
 # nehm change log
 
 ## 4.0
-* Added `sync` command. More in README [#11](https://github.com/bogem/nehm/pull/11). Thanks for [Snake4life](https://github.com/snake4life) for idea!
+* Added `sync` command. Thanks for [Snake4life](https://github.com/snake4life) for idea! [#11](https://github.com/bogem/nehm/pull/11)
 * Got rid of `curl` dependency. Now you don't have to install even `curl`
 for working `nehm`! [#15](https://github.com/bogem/nehm/issues/15)
 * Added the ability to access more than 270 likes [#17](https://github.com/bogem/nehm/issues/17)
