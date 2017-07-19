@@ -102,7 +102,11 @@ func (t *Track) Title() string {
 }
 
 func (t Track) URL() string {
-	return t.JURL + "?client_id=" + clientID
+	url := t.JURL
+	if strings.ContainsRune(url, '?') { // Check if there is already query in URL.
+		return url + "&client_id=" + clientID
+	}
+	return url + "?client_id=" + clientID
 }
 
 func (t Track) Year() string {
