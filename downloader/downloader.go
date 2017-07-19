@@ -139,7 +139,7 @@ func writeTagToWriter(t track.Track, w io.Writer, artwork []byte) error {
 
 	if len(artwork) > 0 {
 		pic := id3v2.PictureFrame{
-			Encoding:    id3v2.ENUTF8,
+			Encoding:    id3v2.EncodingUTF8,
 			MimeType:    "image/jpeg",
 			PictureType: id3v2.PTFrontCover,
 			Picture:     artwork,
