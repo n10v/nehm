@@ -13,6 +13,7 @@ import (
 
 	"github.com/bogem/id3v2"
 	"github.com/bogem/nehm/applescript"
+	"github.com/bogem/nehm/color"
 	"github.com/bogem/nehm/config"
 	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
@@ -53,7 +54,7 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	}
 
 	if len(errors) > 0 && len(tracks) > 1 {
-		logs.FEEDBACK.Println("There were errors while downloading tracks:")
+		logs.FEEDBACK.Println("\n" + color.RedString("There were errors while downloading tracks:"))
 		for _, err := range errors {
 			logs.FEEDBACK.Println("  " + err)
 		}
