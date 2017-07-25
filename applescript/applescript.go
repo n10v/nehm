@@ -10,16 +10,16 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"strings"
 )
 
-const (
-	script = `
+var (
+	script = []byte(`
 on run argv
 	set commandType to first item of argv as string
 	if (commandType is equal to "add_track_to_playlist") then
 		add_track_to_playlist(second item of argv, third item of argv)
-	end if
-	if (commandType is equal to "list_of_playlists") then
+	else if (commandType is equal to "list_of_playlists") then
 		list_of_playlists()
 	end if
 end run
@@ -35,16 +35,13 @@ on list_of_playlists()
 		get name of playlists
 	end tell
 end list_of_playlists
-`
+`)
+
+	scriptFile *os.File
 )
 
-var scriptFile *os.File
-
 func AddTrackToPlaylist(trackPath, playlistName string) error {
-	out, err := executeOSAScript("add_track_to_playlist", "./"+trackPath, playlistName)
-	if err != nil && out != "" {
-		return errors.New(out + ": " + err.Error())
-	}
+	_, err := executeOSAScript("add_track_to_playlist", "./"+trackPath, playlistName)
 	return err
 }
 
@@ -56,16 +53,21 @@ func ListOfPlaylists() (string, error) {
 func executeOSAScript(args ...string) (string, error) {
 	if scriptFile == nil {
 		var err error
-		scriptFile, err = ioutil.TempFile("", "")
+		scriptFile, err = ioutil.TempFile("", "nehm-osascript")
 		if err != nil {
 			return "", fmt.Errorf("couldn't create osascript file: %v", err)
 		}
-		if _, err = scriptFile.Write([]byte(script)); err != nil {
+		if _, err = scriptFile.Write(script); err != nil {
 			return "", fmt.Errorf("couldn't write script to file: %v", err)
 		}
 	}
 
 	args = append([]string{scriptFile.Name()}, args...)
-	out, err := exec.Command("osascript", args...).CombinedOutput()
-	return string(out), err
+	bOut, err := exec.Command("osascript", args...).CombinedOutput()
+	out := strings.TrimSpace(string(bOut))
+	// When osascript failed, out contains error message.
+	if err != nil && out != "" {
+		err = errors.New(out)
+	}
+	return out, err
 }
