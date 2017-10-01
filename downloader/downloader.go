@@ -44,7 +44,8 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	// Start with last track.
 	for i := len(tracks) - 1; i >= 0; i-- {
 		track := tracks[i]
-		if err := downloader.Download(track); err != nil {
+		err := downloader.download(track)
+		if err != nil {
 			logs.FEEDBACK.Println(" ✘")
 			errors = append(errors, track.Fullname()+": "+err.Error())
 			logs.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
@@ -68,7 +69,7 @@ var (
 	trackBuf   []byte
 )
 
-func (downloader Downloader) Download(t track.Track) error {
+func (downloader Downloader) download(t track.Track) error {
 	// Create track file.
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	trackFile, e := os.Create(trackPath)
