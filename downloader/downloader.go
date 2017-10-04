@@ -46,9 +46,8 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 		track := tracks[i]
 		err := downloader.download(track)
 		if err != nil {
-			logs.FEEDBACK.Println(" ✘")
 			errors = append(errors, track.Fullname()+": "+err.Error())
-			logs.ERROR.Printf("there was an error while downloading %v: %v\n\n", track.Fullname(), err)
+			logs.ERROR.Printf("error while downloading %q: %v\n", track.Fullname(), err)
 		} else {
 			logs.FEEDBACK.Println(" ✔︎")
 		}
@@ -57,7 +56,7 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	if len(errors) > 0 && len(tracks) > 1 {
 		logs.FEEDBACK.Println("\n" + color.RedString("There were errors while downloading tracks:"))
 		for _, err := range errors {
-			logs.FEEDBACK.Println("  " + err)
+			logs.FEEDBACK.Println(err)
 		}
 		logs.FEEDBACK.Println()
 	}
