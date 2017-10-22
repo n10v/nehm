@@ -1,9 +1,9 @@
 <div align="center">
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
-<a href="https://raw.githubusercontent.com/bogem/nehm/master/Pictures/list.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/list.thumb.png" alt="List"></img></a>
-<a href="https://raw.githubusercontent.com/bogem/nehm/master/Pictures/get.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/get.thumb.png" alt="List"></img></a>
-<a href="https://raw.githubusercontent.com/bogem/nehm/master/Pictures/search.png" target="_blank"><img src="https://raw.github.com/bogem/nehm/master/Pictures/search.thumb.png" alt="List"></img></a>
+<a href="https://raw.github.com/bogem/nehm/master/Pictures/screen.png" target="_blank">
+  <img src="https://raw.github.com/bogem/nehm/master/Pictures/screen.png" alt="Screenshot">
+</a>
 <p><b>(click to zoom)</b></p>
 </div>
 
