@@ -4,7 +4,6 @@
 <a href="https://raw.github.com/bogem/nehm/master/Pictures/screen.png" target="_blank">
   <img src="https://raw.github.com/bogem/nehm/master/Pictures/screen.png" alt="Screenshot">
 </a>
-<p><b>(click to zoom)</b></p>
 </div>
 
 ## Description
