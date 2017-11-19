@@ -47,9 +47,10 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 		err := downloader.download(track)
 		if err != nil {
 			errors = append(errors, track.Fullname()+": "+err.Error())
-			logs.ERROR.Printf("error while downloading %q: %v\n", track.Fullname(), err)
+			logs.FEEDBACK.Println("✘")
+			logs.ERROR.Printf("error while downloading %q: %v", track.Fullname(), err)
 		} else {
-			logs.FEEDBACK.Println(" ✔︎")
+			logs.FEEDBACK.Println("✔︎")
 		}
 	}
 
@@ -82,7 +83,7 @@ func (downloader Downloader) download(t track.Track) error {
 
 	logs.INFO.Printf("Downloading from %q to %q\n", t.URL(), trackPath)
 	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
-	logs.FEEDBACK.Printf("Downloading %q ...", t.Fullname())
+	logs.FEEDBACK.Printf("Downloading %q ... ", t.Fullname())
 
 	// Parallelize downloading of track and artwork.
 	var wg sync.WaitGroup
