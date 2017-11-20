@@ -7,7 +7,7 @@
 </div>
 
 ## Description
-*nehm* is a console tool written in Go. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged and can be added to iTunes playlist **if you use macOS**.
+*nehm* is a console tool written in Go. It can download your likes and search tracks from SoundCloud. All downloaded tracks are ID3 tagged.
 
 *nehm wasn't tested on Windows machine, so it can be very buggy on it. I'll be very thankful, if you will report any bug.*
 
@@ -33,7 +33,7 @@ First of all, you should configure nehm:
 `dlFolder` - filesystem path to download folder, where will be downloaded all tracks.
 By default, your tracks are being downloaded to your home directory
 
-`itunesPlaylist` - (optional) name of iTunes playlist, where will be added all tracks *(if you're using `macOS`)*.
+`itunesPlaylist` - (optional, only for macOS) name of iTunes playlist, where will be added all tracks.
 By default, your tracks are **not** being added to iTunes
 
 #### Example:
