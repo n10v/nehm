@@ -32,7 +32,7 @@ type TracksMenu struct {
 
 	// isSelected holds the ids of selected tracks. With map we can
 	// detect really fast if track is selected.
-	isSelected map[float32]bool
+	isSelected map[int]bool
 	// selectedTracks holds selected tracks in initial sequence.
 	selectedTracks []track.Track
 
@@ -54,7 +54,7 @@ func (tm *TracksMenu) Show() []track.Track {
 		os.Exit(0)
 	}
 
-	tm.isSelected = make(map[float32]bool)
+	tm.isSelected = make(map[int]bool)
 	for !tm.selectionFinished {
 		if tm.err != nil {
 			if tm.err == api.ErrLastPage {
