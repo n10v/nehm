@@ -103,6 +103,10 @@ func (t *Track) Title() string {
 
 func (t Track) URL() string {
 	url := t.JURL
+	if url == "" {
+		return ""
+	}
+
 	if strings.ContainsRune(url, '?') { // Check if there is already query in URL.
 		return url + "&client_id=" + clientID
 	}

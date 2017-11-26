@@ -5,6 +5,7 @@
 package downloader
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -70,6 +71,14 @@ var (
 )
 
 func (downloader Downloader) download(t track.Track) error {
+	logs.INFO.Printf("Downloading track from %q\n", t.URL())
+	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
+	logs.FEEDBACK.Printf("Downloading %q ... ", t.Fullname())
+
+	if t.URL() == "" {
+		return errors.New("track is not downloadable")
+	}
+
 	// Create track file.
 	trackPath := filepath.Join(downloader.dist, t.Filename())
 	trackFile, e := os.Create(trackPath)
@@ -80,10 +89,6 @@ func (downloader Downloader) download(t track.Track) error {
 	// err lets us to not prevent the processing of track further.
 	// err will only be returned at the end of this function.
 	var err error
-
-	logs.INFO.Printf("Downloading from %q to %q\n", t.URL(), trackPath)
-	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
-	logs.FEEDBACK.Printf("Downloading %q ... ", t.Fullname())
 
 	// Parallelize downloading of track and artwork.
 	var wg sync.WaitGroup
