@@ -11,9 +11,7 @@ import (
 	"github.com/bogem/nehm/util"
 )
 
-const (
-	clientID = "11a37feb6ccc034d5975f3f803928a32"
-)
+const clientID = "11a37feb6ccc034d5975f3f803928a32"
 
 type Track struct {
 	artist string
@@ -33,9 +31,7 @@ type Track struct {
 }
 
 func (t *Track) Artist() string {
-	if t.artist == "" {
-		t.artist, t.title = t.name()
-	}
+	t.setArtistAndTitle()
 	return t.artist
 }
 
@@ -52,13 +48,14 @@ func (t Track) Duration() string {
 }
 
 func (t Track) Filename() string {
-	// Replace all filesystem non-friendly runes with the underscore
+	// Replace all filesystem non-friendly runes with the underscore.
 	var toReplace string
 	if runtime.GOOS == "windows" {
 		toReplace = "<>:\"\\/|?*" // https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx
 	} else {
 		toReplace = ":/\\"
 	}
+
 	replaceRunes := func(r rune) rune {
 		if strings.ContainsRune(toReplace, r) {
 			return '_'
@@ -78,26 +75,34 @@ func (t Track) ID() int {
 }
 
 // name splits track's title to artist and title if there is one of separators
-// in there.
-// If there is no separator in title, it returns t.JAuthor.Username and
+// and sets to t.artist and to t.title respectively.
+// If t.artist or t.title are not blank, it will do nothing.
+// If there is no separator in title, it willt use t.JAuthor.Username and
 // t.JTitle.
-// E.g. if track has title "Michael Jackson - Thriller" then this function will
-// return as first string "Michael Jackson" and as second string "Thriller".
-func (t Track) name() (string, string) {
+//
+// E.g. if track has title "Michael Jackson - Thriller", then it will use
+// "Michael Jackson" as artist and "Thriller" as title.
+func (t *Track) setArtistAndTitle() {
+	if t.artist != "" || t.title != "" {
+		return
+	}
+
 	separators := [...]string{" - ", " ~ ", " – "}
 	for _, sep := range separators {
 		if strings.Contains(t.JTitle, sep) {
 			splitted := strings.SplitN(t.JTitle, sep, 2)
-			return strings.TrimSpace(splitted[0]), strings.TrimSpace(splitted[1])
+			t.artist = strings.TrimSpace(splitted[0])
+			t.title = strings.TrimSpace(splitted[1])
+			return
 		}
 	}
-	return strings.TrimSpace(t.JAuthor.Username), strings.TrimSpace(t.JTitle)
+
+	t.artist = strings.TrimSpace(t.JAuthor.Username)
+	t.title = strings.TrimSpace(t.JTitle)
 }
 
 func (t *Track) Title() string {
-	if t.title == "" {
-		t.artist, t.title = t.name()
-	}
+	t.setArtistAndTitle()
 	return t.title
 }
 
@@ -107,10 +112,13 @@ func (t Track) URL() string {
 		return ""
 	}
 
-	if strings.ContainsRune(url, '?') { // Check if there is already query in URL.
-		return url + "&client_id=" + clientID
+	if strings.ContainsRune(url, '?') {
+		url += "&"
+	} else {
+		url += "?"
 	}
-	return url + "?client_id=" + clientID
+
+	return url + "client_id=" + clientID
 }
 
 func (t Track) Year() string {
