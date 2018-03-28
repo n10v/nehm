@@ -6,17 +6,13 @@ package api
 
 import (
 	"encoding/json"
-	u "net/url"
 	"strconv"
 
 	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/track"
 )
 
-const (
-	maxLimit       = 200
-	soundCloudLink = "http://soundcloud.com/"
-)
+const maxLimit = 200
 
 func Favorites(limit uint, uid string) ([]track.Track, error) {
 	p := NewPaginator(FormFavoritesURL(limit, uid))
@@ -49,11 +45,8 @@ type JSONUser struct {
 }
 
 func UID(permalink string) string {
-	params := u.Values{}
-	params.Set("url", soundCloudLink+permalink)
-	params.Set("client_id", clientID)
-
-	bUser, err := get(formResolveURL(params.Encode()))
+	query := "url=http://soundcloud.com/" + permalink
+	bUser, err := get(formResolveURL(query))
 	if err != nil {
 		logs.FATAL.Fatalln("there was a problem by resolving an id of user:", err)
 	}
@@ -67,11 +60,8 @@ func UID(permalink string) string {
 }
 
 func TrackFromURL(url string) []track.Track {
-	params := u.Values{}
-	params.Set("url", url)
-	params.Set("client_id", clientID)
-
-	bTrack, err := get(formResolveURL(params.Encode()))
+	query := "url=" + url
+	bTrack, err := get(formResolveURL(query))
 	if err == ErrForbidden {
 		logs.FATAL.Fatalln("you haven't got any access to this track:", err)
 	}

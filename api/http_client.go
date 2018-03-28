@@ -5,9 +5,7 @@
 package api
 
 import (
-	"bytes"
 	"errors"
-	"net/url"
 	"strconv"
 
 	"github.com/bogem/nehm/logs"
@@ -15,52 +13,30 @@ import (
 )
 
 const (
-	apiURL   = "https://api.soundcloud.com"
-	clientID = "11a37feb6ccc034d5975f3f803928a32"
+	apiURL     = "https://api.soundcloud.com"
+	clientID   = "11a37feb6ccc034d5975f3f803928a32"
+	baseParams = "linked_partitioning=1&client_id=" + clientID
 )
 
 var (
 	ErrForbidden = errors.New("403 - you're not allowed to see these tracks")
 	ErrNotFound  = errors.New("404 - there are no tracks")
-
-	urlBuffer = new(bytes.Buffer)
 )
 
 func formResolveURL(query string) string {
-	urlBuffer.Reset()
-	urlBuffer.WriteString(apiURL)
-	urlBuffer.WriteString("/resolve?")
-	urlBuffer.WriteString(query)
-	return urlBuffer.String()
+	return apiURL + "/resolve?client_id=" + clientID + "&" + query
 }
 
 func FormSearchURL(limit uint, query string) string {
-	params := url.Values{}
-	params.Set("limit", strconv.Itoa(int(limit)))
-	params.Set("linked_partitioning", "1")
-	params.Set("client_id", "11a37feb6ccc034d5975f3f803928a32")
-	params.Set("q", query)
-
-	urlBuffer.Reset()
-	urlBuffer.WriteString(apiURL)
-	urlBuffer.WriteString("/tracks?")
-	urlBuffer.WriteString(params.Encode())
-	return urlBuffer.String()
+	url := apiURL + "/tracks?" + baseParams
+	url += "&limit=" + utoa(limit) + "&q=" + query
+	return url
 }
 
 func FormFavoritesURL(limit uint, uid string) string {
-	params := url.Values{}
-	params.Set("limit", strconv.Itoa(int(limit)))
-	params.Set("linked_partitioning", "1")
-	params.Set("client_id", "11a37feb6ccc034d5975f3f803928a32")
-
-	urlBuffer.Reset()
-	urlBuffer.WriteString(apiURL)
-	urlBuffer.WriteString("/users/")
-	urlBuffer.WriteString(uid)
-	urlBuffer.WriteString("/favorites?")
-	urlBuffer.WriteString(params.Encode())
-	return urlBuffer.String()
+	url := apiURL + "/users/" + uid + "/favorites?" + baseParams
+	url += "&limit=" + utoa(limit)
+	return url
 }
 
 func get(url string) ([]byte, error) {
@@ -87,4 +63,8 @@ func handleStatusCode(statusCode int) error {
 		logs.FATAL.Fatalln("there is a problem by SoundCloud. Please wait a while")
 	}
 	return nil
+}
+
+func utoa(u uint) string {
+	return strconv.Itoa(int(u))
 }
