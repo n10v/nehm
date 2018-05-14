@@ -5,6 +5,7 @@
 package track
 
 import (
+	"net/url"
 	"runtime"
 	"strings"
 
@@ -107,18 +108,16 @@ func (t *Track) Title() string {
 }
 
 func (t Track) URL() string {
-	url := t.JURL
-	if url == "" {
+	u, err := url.Parse(t.JURL)
+	if err != nil {
 		return ""
 	}
 
-	if strings.ContainsRune(url, '?') {
-		url += "&"
-	} else {
-		url += "?"
-	}
+	q := u.Query()
+	q.Add("client_id", clientID)
+	u.RawQuery = q.Encode()
 
-	return url + "client_id=" + clientID
+	return u.String()
 }
 
 func (t Track) Year() string {

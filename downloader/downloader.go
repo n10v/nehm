@@ -71,11 +71,14 @@ var (
 )
 
 func (downloader Downloader) download(t track.Track) error {
-	logs.INFO.Printf("Downloading track from %q\n", t.URL())
-	logs.INFO.Printf("Downloading artwork from %q\n", t.ArtworkURL())
+	artworkURL := t.ArtworkURL()
+	url := t.URL()
+
+	logs.INFO.Printf("Downloading track from %q\n", url)
+	logs.INFO.Printf("Downloading artwork from %q\n", artworkURL)
 	logs.FEEDBACK.Printf("Downloading %q ... ", t.Fullname())
 
-	if t.URL() == "" {
+	if url == "" {
 		return errors.New("track is not downloadable")
 	}
 
@@ -99,7 +102,7 @@ func (downloader Downloader) download(t track.Track) error {
 
 		// Download artwork.
 		artworkBuf = artworkBuf[:0]
-		_, artworkBuf, e = fasthttp.Get(artworkBuf, t.ArtworkURL())
+		_, artworkBuf, e = fasthttp.Get(artworkBuf, artworkURL)
 		if e != nil {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
 			return
@@ -113,7 +116,7 @@ func (downloader Downloader) download(t track.Track) error {
 
 	// Download track.
 	trackBuf = trackBuf[:0]
-	_, trackBuf, e = fasthttp.Get(trackBuf, t.URL())
+	_, trackBuf, e = fasthttp.Get(trackBuf, url)
 	if e != nil {
 		return fmt.Errorf("couldn't download track: %v", e)
 	}
