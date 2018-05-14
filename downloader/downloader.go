@@ -127,7 +127,7 @@ func (downloader Downloader) download(t track.Track) error {
 
 	// Add to iTunes.
 	if downloader.itunesPlaylist != "" {
-		logs.FEEDBACK.Print(" adding to iTunes ... ")
+		logs.FEEDBACK.Print("adding to iTunes ... ")
 		if e := applescript.AddTrackToPlaylist(trackPath, downloader.itunesPlaylist); e != nil && err == nil {
 			err = fmt.Errorf("couldn't add track to playlist: %v", e)
 		}
