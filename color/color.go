@@ -19,7 +19,7 @@ const (
 	fgYellow = "33"
 )
 
-var noColor = !isatty.IsTerminal(os.Stdout.Fd())
+const noColor = !isatty.IsTerminal(os.Stdout.Fd())
 
 func colorize(code, text string) string {
 	if noColor {
