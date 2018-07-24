@@ -5,6 +5,7 @@
 package downloader
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -20,6 +21,12 @@ import (
 	"github.com/bogem/nehm/track"
 	"github.com/valyala/fasthttp"
 )
+
+var errRateLimitExceeded = errors.New(`Unfortunately, rate limit is exceeded. Please try tomorrow ¯\_(ツ)_/¯`)
+
+type errorResponse struct {
+	errors []struct{}
+}
 
 type Downloader struct {
 	// dist is the folder, where tracks will be downloaded.
@@ -38,7 +45,7 @@ func NewConfiguredDownloader() *Downloader {
 
 func (downloader Downloader) DownloadAll(tracks []track.Track) {
 	if len(tracks) == 0 {
-		logs.FATAL.Println("there are no tracks to download")
+		logs.FATAL.Fatalln("there are no tracks to download")
 	}
 
 	var errors []string
@@ -47,6 +54,10 @@ func (downloader Downloader) DownloadAll(tracks []track.Track) {
 		track := tracks[i]
 		err := downloader.download(track)
 		if err != nil {
+			if err == errRateLimitExceeded {
+				logs.FEEDBACK.Println()
+				logs.FATAL.Fatalln(err)
+			}
 			errors = append(errors, track.Fullname()+": "+err.Error())
 			logs.FEEDBACK.Println("✘")
 			logs.ERROR.Printf("error while downloading %q: %v", track.Fullname(), err)
@@ -122,6 +133,12 @@ func (downloader Downloader) download(t track.Track) error {
 	}
 
 	wg.Wait()
+
+	// Check if rate limit is not exceeded.
+	errResp := new(errorResponse)
+	if e := json.Unmarshal(trackBuf, errResp); e == nil {
+		return errRateLimitExceeded
+	}
 
 	// Write track to track file.
 	if _, e := trackFile.Write(trackBuf); e != nil {
