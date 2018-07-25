@@ -25,7 +25,7 @@ import (
 var errRateLimitExceeded = errors.New(`Unfortunately, rate limit is exceeded. Please try tomorrow ¯\_(ツ)_/¯`)
 
 type errorResponse struct {
-	errors []struct{}
+	errors []interface{}
 }
 
 type Downloader struct {
@@ -93,41 +93,29 @@ func (downloader Downloader) download(t track.Track) error {
 		return errors.New("track is not downloadable")
 	}
 
-	// Create track file.
-	trackPath := filepath.Join(downloader.dist, t.Filename())
-	trackFile, e := os.Create(trackPath)
-	if e != nil {
-		return fmt.Errorf("couldn't create track file: %v", e)
-	}
-
 	// err lets us to not prevent the processing of track further.
 	// err will only be returned at the end of this function.
 	var err error
+
+	var e error
 
 	// Parallelize downloading of track and artwork.
 	var wg sync.WaitGroup
 	wg.Add(1)
 
 	go func() {
-		defer wg.Done()
-
 		// Download artwork.
 		artworkBuf = artworkBuf[:0]
 		_, artworkBuf, e = fasthttp.Get(artworkBuf, artworkURL)
 		if e != nil {
 			err = fmt.Errorf("couldn't download artwork file: %v", e)
-			return
 		}
-
-		// Write ID3 tag to trackFile.
-		if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil {
-			err = fmt.Errorf("there was an error while tagging track: %v", e)
-		}
+		wg.Done()
 	}()
 
 	// Download track.
 	trackBuf = trackBuf[:0]
-	_, trackBuf, e = fasthttp.Get(trackBuf, url)
+	_, trackBuf, e := fasthttp.Get(trackBuf, url)
 	if e != nil {
 		return fmt.Errorf("couldn't download track: %v", e)
 	}
@@ -138,6 +126,18 @@ func (downloader Downloader) download(t track.Track) error {
 	errResp := new(errorResponse)
 	if e := json.Unmarshal(trackBuf, errResp); e == nil {
 		return errRateLimitExceeded
+	}
+
+	// Create track file.
+	trackPath := filepath.Join(downloader.dist, t.Filename())
+	trackFile, e := os.Create(trackPath)
+	if e != nil {
+		return fmt.Errorf("couldn't create track file: %v", e)
+	}
+
+	// Write ID3 tag to track file.
+	if e := writeTagToWriter(t, trackFile, artworkBuf); e != nil {
+		return fmt.Errorf("there was an error while tagging track: %v", e)
 	}
 
 	// Write track to track file.
