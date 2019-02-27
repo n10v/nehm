@@ -12,7 +12,7 @@ import (
 	"github.com/bogem/nehm/util"
 )
 
-const clientID = "11a37feb6ccc034d5975f3f803928a32"
+const clientID = "a3e059563d7fd3372b49b37f00a00bcf"
 
 type Track struct {
 	artist string
