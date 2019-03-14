@@ -25,6 +25,7 @@ type Track struct {
 	JID         int    `json:"id"`
 	JTitle      string `json:"title"`
 	JURL        string `json:"stream_url"`
+	JURI        string `json:"uri"`
 	JAuthor     struct {
 		AvatarURL string `json:"avatar_url"`
 		Username  string `json:"username"`
@@ -108,8 +109,18 @@ func (t *Track) Title() string {
 }
 
 func (t Track) URL() string {
-	u, err := url.Parse(t.JURL)
-	if err != nil {
+	var streamURL string
+
+	if t.JURL != "" {
+		streamURL = t.JURL
+	} else if t.JURI != "" {
+		streamURL = t.JURI + "/stream"
+	} else {
+		return ""
+	}
+
+	u, err := url.Parse(streamURL)
+	if err != nil || u.String() == "" {
 		return ""
 	}
 
