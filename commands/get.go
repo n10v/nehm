@@ -57,7 +57,8 @@ func getTracks(cmd *cobra.Command, args []string) {
 }
 
 func getLastTracks(count uint) ([]track.Track, error) {
-	logs.FEEDBACK.Println("Getting ID of user")
+	logs.FEEDBACK.Println("Loading...")
+
 	return api.Favorites(count, api.UID(config.Get("permalink")))
 }
 

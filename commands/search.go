@@ -9,6 +9,7 @@ import (
 
 	"github.com/bogem/nehm/api"
 	"github.com/bogem/nehm/downloader"
+	"github.com/bogem/nehm/logs"
 	"github.com/bogem/nehm/menu"
 	"github.com/spf13/cobra"
 )
@@ -29,6 +30,8 @@ func init() {
 }
 
 func searchAndShowTracks(cmd *cobra.Command, args []string) {
+	logs.FEEDBACK.Println("Loading...")
+
 	initializeConfig(cmd)
 
 	query := strings.Join(args, " ")

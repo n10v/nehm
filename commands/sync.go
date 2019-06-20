@@ -32,18 +32,18 @@ func init() {
 }
 
 func sync(cmd *cobra.Command, args []string) {
+	logs.FEEDBACK.Println("Loading...")
+
 	initializeConfig(cmd)
 	initializePermalink(cmd)
 
 	// Get favorites from user's profile
-	logs.FEEDBACK.Println("Getting favorites")
 	favs, err := api.AllFavorites(api.UID(config.Get("permalink")))
 	if err != nil {
 		logs.FATAL.Fatalln("can't get tracks from SoundCloud", err)
 	}
 
 	// Get nonexistent tracks in dlFolder
-	logs.FEEDBACK.Println("Check unsynchronised tracks\n")
 	tracks := nonexistentTracks(config.Get("dlFolder"), favs)
 
 	// Download not yet downloaded tracks

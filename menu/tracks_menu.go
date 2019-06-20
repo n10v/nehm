@@ -43,8 +43,6 @@ type TracksMenu struct {
 // adds id of selected track to tm.isSelected to detect, what track is selected,
 // adds selected to tm.selectedTracks and returns them.
 func (tm *TracksMenu) Show() []track.Track {
-	logs.FEEDBACK.Println("Getting information about tracks")
-
 	tm.getNextPage()
 	if tm.err != nil {
 		logs.FATAL.Fatalln(tm.err)

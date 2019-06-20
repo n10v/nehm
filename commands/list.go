@@ -40,9 +40,10 @@ func init() {
 }
 
 func showListOfTracks(cmd *cobra.Command, args []string) {
+	logs.FEEDBACK.Println("Loading...")
+
 	initializeConfig(cmd)
 
-	logs.FEEDBACK.Println("Getting ID of user")
 	uid := api.UID(config.Get("permalink"))
 
 	tm := menu.NewTracksMenu(api.FormFavoritesURL(limit, uid))
