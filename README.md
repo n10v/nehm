@@ -1,3 +1,11 @@
+# The project is deprecated
+
+Main reasons of deprecation:
+* SoundCloud constantly adding changes to API that complicates development of this app;
+* After 6 years of using iTunes, I switched to Spotify. In macOS Catalina iTunes was removed and Apple Music was added. Apple Music on Mac worked really badly in that moment. Actually I like Spotify and almost glad with it.
+
+---
+
 <div align="center">
 <img src="https://raw.github.com/bogem/nehm/master/Pictures/logo.png" alt="Logo"></img>
 
